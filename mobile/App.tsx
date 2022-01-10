@@ -1,20 +1,59 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+
+function SplashScreen2() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {/* <StatusBar style="auto" /> */}
+      <Image
+        style = {styles.ystemLogo}
+        source={require('./assets/YStemLogo 1.png')}
+      />
     </View>
   );
 }
 
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator> 
+        <Stack.Screen name="Splash Screen 2" component={SplashScreen2} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
+
+
+// export default function App() {
+//   return (
+//     <View style={styles.container}>
+//       <StatusBar style="auto" />
+//       <Image
+//         style = {styles.ystemLogo}
+//         source={require('./assets/YStemLogo 1.png')}
+//        />
+//     </View>
+//   );
+// }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E5E5E5',
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  ystemLogo: {
+    width:327,
+    height:142
+  },
+
 });
