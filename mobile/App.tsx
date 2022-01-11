@@ -10,7 +10,7 @@ function SplashScreen2() {
       {/* <StatusBar style="auto" /> */}
       <Image
         style = {styles.ystemLogo}
-        source={require('./assets/YStemLogo 1.png')}
+        source={require('./assets/YStemLogo1.png')}
       />
     </View>
   );
@@ -22,7 +22,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator> 
-        <Stack.Screen name="Splash Screen 2" component={SplashScreen2} />
+        <Stack.Screen name="Splash Screen 2" component={SplashScreen2}  options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
