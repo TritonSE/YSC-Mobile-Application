@@ -27,6 +27,8 @@ function SplashScreen2() {
           source={require('./assets/Stemett.png')}
         />
 
+        {/* <br>
+        </br> */}
        
         <Pressable 
             style = {styles.LoginButton}>
