@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -15,8 +15,35 @@ function SplashScreen2() {
   );
   }
 
-// hi
 
+  function LogInScreen() {
+    return (
+      <View style={styles.container}>
+
+        <Image
+          style = {styles.Stemett}
+          source={require('./assets/Stemett.png')}
+        />
+
+        <Pressable 
+            style = {styles.LoginButton}>
+            <Text
+              style = {styles.LogInScreenButton}> 
+              {'Login'}
+            </Text>
+        </Pressable>
+
+        <Pressable 
+            style = {styles.SignUpButton}>
+            <Text 
+              style = {styles.LogInScreenButton}> 
+              {'Sign Up'}
+            </Text>
+        </Pressable>
+
+      </View>
+    );
+    }
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +51,8 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator> 
-        <Stack.Screen name="Splash Screen 2" component={SplashScreen2}  options={{headerShown:false}}/>
+        {/* <Stack.Screen name="Splash Screen 2" component={SplashScreen2}  options={{headerShown:false}}/> */}
+        <Stack.Screen name="Login page" component={LogInScreen}  options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -56,6 +84,32 @@ const styles = StyleSheet.create({
   ystemLogo: {
     width:327,
     height:142
+  },
+
+  Stemett: {
+    width:156,
+    height: 369
+  },
+
+  LoginButton: {
+    backgroundColor: '#96C957',
+    width: 327,
+    height: 52,
+    // position: 'absolute',
+    // borderRadius: 3,
+  },
+
+  SignUpButton: {
+    backgroundColor: '#96C957',
+    width: 327,
+    height: 52,
+    // position: 'absolute',
+    // borderRadius: 3,
+  },
+
+  LogInScreenButton: {
+    position: 'absolute',
+    fontSize: 18,
   },
 
 });
