@@ -7,14 +7,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function SplashScreen2() {
   return (
     <View style={styles.container}>
-      {/* <StatusBar style="auto" /> */}
       <Image
         style = {styles.ystemLogo}
         source={require('./assets/YStemLogo1.png')}
       />
     </View>
   );
-}
+  }
+
+// hi
+
 
 const Stack = createNativeStackNavigator();
 
