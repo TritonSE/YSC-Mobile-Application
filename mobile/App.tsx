@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
+
 
 
 function SplashScreen2() {
@@ -25,18 +27,22 @@ function SplashScreen2() {
           source={require('./assets/Stemett.png')}
         />
 
+       
         <Pressable 
             style = {styles.LoginButton}>
             <Text
-              style = {styles.LogInScreenButton}> 
+              style = {styles.LogInScreenButtonText}> 
               {'Login'}
             </Text>
         </Pressable>
 
+        {/* <br>
+        </br> */}
+
         <Pressable 
             style = {styles.SignUpButton}>
             <Text 
-              style = {styles.LogInScreenButton}> 
+              style = {styles.LogInScreenButtonText}> 
               {'Sign Up'}
             </Text>
         </Pressable>
@@ -107,9 +113,11 @@ const styles = StyleSheet.create({
     // borderRadius: 3,
   },
 
-  LogInScreenButton: {
+  LogInScreenButtonText: {
     position: 'absolute',
     fontSize: 18,
+    // alignContent: 'center',
+    // fontFamily: Roboto_400Regular,
   },
 
 });
