@@ -8,7 +8,7 @@ import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
 
 function SplashScreen2() {
   return (
-    <View style={styles.container}>
+    <View style={[{backgroundColor: "#D4DDDD"}, styles.container]}>
       <Image
         style = {styles.ystemLogo}
         source={require('./assets/YStemLogo1.png')}
@@ -20,35 +20,40 @@ function SplashScreen2() {
 
   function LogInScreen() {
     return (
-      <View style={styles.container}>
-
+      <View style={[{backgroundColor: "#FFF"}, styles.container]}>
+        <View>
         <Image
           style = {styles.Stemett}
           source={require('./assets/Stemett.png')}
         />
+        </View>
 
-        {/* <br>
-        </br> */}
-       
+        <View> 
         <Pressable 
-            style = {styles.LoginButton}>
+            style = {styles.LogInScreenButton}>
             <Text
               style = {styles.LogInScreenButtonText}> 
               {'Login'}
             </Text>
         </Pressable>
 
-        {/* <br>
-        </br> */}
-
         <Pressable 
-            style = {styles.SignUpButton}>
+            style = {styles.LogInScreenButton}>
             <Text 
               style = {styles.LogInScreenButtonText}> 
               {'Sign Up'}
             </Text>
         </Pressable>
 
+        <Pressable 
+            style = {styles.ForgotPassword}>
+            <Text 
+              style = {styles.ForgotPasswordText}> 
+              {'Forgot Password'}
+            </Text>
+        </Pressable>
+
+        </View>
       </View>
     );
     }
@@ -84,7 +89,6 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5E5E5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -99,27 +103,50 @@ const styles = StyleSheet.create({
     height: 369
   },
 
-  LoginButton: {
-    backgroundColor: '#96C957',
-    width: 327,
-    height: 52,
-    // position: 'absolute',
-    // borderRadius: 3,
+  ForgotPassword: {
+    width: 114,
+    height: 18,
+    marginTop: 20
   },
 
-  SignUpButton: {
+  ForgotPasswordText: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 15,
+    lineHeight: 18,
+    /* identical to box height */
+
+    textAlign: 'center',
+    textDecorationLine: 'underline'
+  },
+
+  LogInScreenButton: {
     backgroundColor: '#96C957',
     width: 327,
     height: 52,
-    // position: 'absolute',
-    // borderRadius: 3,
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20
+    // flex: 1,
+    // order: 0,
+    // flexGrow: 0,
+    
   },
+
 
   LogInScreenButtonText: {
     position: 'absolute',
     fontSize: 18,
-    // alignContent: 'center',
-    // fontFamily: Roboto_400Regular,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    lineHeight: 21,
+    /* identical to box height */
+
+    // textAlign: 'center',
+    // textTransform: 'capitalize'
   },
 
 });
