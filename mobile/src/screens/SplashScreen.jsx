@@ -3,10 +3,15 @@ import { StyleSheet, Text, View, Image, Button, Pressable } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
-// import SplashScreen2 from "./src/screens/splashScreen"
+// import {useNavigation } from "@reactive-navigation/native"
 
+// const navigation = useNavigation();
 
-function SplashScreen() {
+function SplashScreen({navigation}) {
+  setTimeout ( () => {
+    navigation.navigate('Login page');
+  }, 5000);
+
   return (
     <View style={[{backgroundColor: "#D4DDDD"}, styles.container]}>
       <Image

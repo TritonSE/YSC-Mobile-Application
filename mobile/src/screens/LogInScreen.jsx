@@ -20,14 +20,6 @@ function LogInScreen() {
         </Pressable>
 
         <Pressable 
-            style = {styles.LogInScreenButton}>
-            <Text 
-              style = {styles.LogInScreenButtonText}> 
-              {'Sign Up'}
-            </Text>
-        </Pressable>
-
-        <Pressable 
             style = {styles.ForgotPassword}>
             <Text 
               style = {styles.ForgotPasswordText}> 

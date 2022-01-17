@@ -6,13 +6,15 @@ import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
 import SplashScreen from "./src/screens/SplashScreen"
 import LogInScreen from "./src/screens/LogInScreen"
 
+
 const Stack = createNativeStackNavigator();
+
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator> 
-        {/* <Stack.Screen name="Splash Screen" component={SplashScreen}  options={{headerShown:false}}/> */}
+      <Stack.Navigator initialRouteName="Splash Screen"> 
+        <Stack.Screen name="Splash Screen" component={SplashScreen}  options={{headerShown:false}}/>
         <Stack.Screen name="Login page" component={LogInScreen}  options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
