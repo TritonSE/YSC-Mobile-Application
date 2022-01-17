@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, Image, Pressable, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView} from 'react-native';
+import React from 'react';
 
 
-function LoginScreen2()
+function LoginScreen2 ()
 {
+    const [text, changedText] = React.useState("Example Padding");
 
     return (
         <View 
@@ -14,6 +16,17 @@ function LoginScreen2()
             source={require('../../assets/STEMy_Mascot.png')}
             />
         </View>
+
+
+        {/* username text input field */}
+        <SafeAreaView>
+            <TextInput
+                style = {styles.UsernameTextField}
+                onChangeText={changedText}
+                value = {text}
+            />
+        </SafeAreaView>
+
 
         {/* reusing same code from LoginScreen.jsx */}
         <View> 
@@ -73,6 +86,26 @@ const styles = StyleSheet.create({
     
         // textAlign: 'center',
         // textTransform: 'capitalize'
+    },
+
+    UsernameTextField: {
+        fontSize: 16,
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        // position: 'absolute',    
+        borderRadius: 3,
+        background: '#FFFFFF',
+        width: 327,
+        height: 37,
+        // top: 19,
+        // bottom: 3,
+        borderWidth: 1,
+        borderColor: '#000000',
+        alignContent: 'center',
+        left: '0%',
+        right: '0%',
+        top: '33.93%',
     },
 
 });
