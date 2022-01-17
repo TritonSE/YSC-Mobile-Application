@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    
     Stemett: {
       width:156,
       height: 369
