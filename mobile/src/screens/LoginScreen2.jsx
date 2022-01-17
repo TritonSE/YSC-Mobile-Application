@@ -4,7 +4,8 @@ import React from 'react';
 
 function LoginScreen2 ()
 {
-    const [text, changedText] = React.useState("Example Padding");
+    const [usernameText, changedUsernameText] = React.useState("Example Padding");
+    const [passwordText, changedPasswordText] = React.useState("Example Padding");
 
     return (
         <View 
@@ -17,13 +18,27 @@ function LoginScreen2 ()
             />
         </View>
 
+        <br>
+        </br>
 
         {/* username text input field */}
         <SafeAreaView>
             <TextInput
                 style = {styles.UsernameTextField}
-                onChangeText={changedText}
-                value = {text}
+                onChangeText={changedUsernameText}
+                value = {usernameText}
+            />
+        </SafeAreaView>
+
+        <br>
+        </br>
+
+        {/* password text input field */}
+        <SafeAreaView>
+            <TextInput
+                style = {styles.PasswordTextField}
+                onChangeText={changedPasswordText}
+                value = {passwordText}
             />
         </SafeAreaView>
 
@@ -38,6 +53,15 @@ function LoginScreen2 ()
             </Text>
         </Pressable>
         </View>
+    
+        {/* same code from LoginInScreen.jsx */}
+        <Pressable 
+            style = {styles.ForgotPassword}>
+            <Text 
+              style = {styles.ForgotPasswordText}> 
+              {'Forgot Password'}
+            </Text>
+        </Pressable>
 
         </View>
     );
@@ -50,6 +74,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: '#FFFFFF',
     },
 
     STEMy_Mascot: {
@@ -107,6 +132,60 @@ const styles = StyleSheet.create({
         right: '0%',
         top: '33.93%',
     },
+
+    PasswordTextField: {
+        fontSize: 16,
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        // position: 'absolute',    
+        borderRadius: 3,
+        background: '#FFFFFF',
+        width: 327,
+        height: 37,
+        // top: 19,
+        // bottom: 3,
+        borderWidth: 1,
+        borderColor: '#000000',
+        alignContent: 'center',
+        left: '0%',
+        right: '0%',
+        top: '33.93%',
+    },
+
+    // same code from LoginInScreen.jsx
+    ForgotPassword: {
+        width: 114,
+        height: 18,
+        marginTop: 20
+      },
+    
+    // same code from LoginInScreen.jsx
+    ForgotPasswordText: {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: 15,
+        lineHeight: 18,
+        /* identical to box height */
+    
+        textAlign: 'center',
+        textDecorationLine: 'underline'
+      },
+    
+      LogInScreenButton: {
+        backgroundColor: '#96C957',
+        width: 327,
+        height: 52,
+        borderRadius: 3,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20
+        // flex: 1,
+        // order: 0,
+        // flexGrow: 0,
+        
+      },  
 
 });
   

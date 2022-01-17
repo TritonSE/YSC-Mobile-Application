@@ -15,8 +15,8 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator> 
         {/* <Stack.Screen name="Splash Screen 2" component={SplashScreen}  options={{headerShown:false}}/> */}
-        {/* <Stack.Screen name="Login page" component={LogInScreen}  options={{headerShown:false}}/> */}
-        <Stack.Screen name="Login page 2" component={LoginScreen2}  options={{headerShown:false}}/>
+        <Stack.Screen name="Login page" component={LogInScreen}  options={{headerShown:false}}/>
+        {/* <Stack.Screen name="Login page 2" component={LoginScreen2}  options={{headerShown:false}} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

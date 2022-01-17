@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 
 function LogInScreen() {
     return (
-      <View style={[{backgroundColor: "#FFF"}, styles.container]}>
+      <View style={styles.container}>
         <View>
         <Image
           style = {styles.Stemett}
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: '#FFFFFF',
     },
     
     Stemett: {
