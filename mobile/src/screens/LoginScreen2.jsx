@@ -21,6 +21,10 @@ function LoginScreen2 ()
         <br>
         </br>
 
+        <Text style = {styles.TextHeader}>
+            {"Username"}
+        </Text>
+
         {/* username text input field */}
         <SafeAreaView>
             <TextInput
@@ -32,6 +36,11 @@ function LoginScreen2 ()
 
         <br>
         </br>
+
+
+        <Text style = {styles.TextHeader}>
+            {"Password"}
+        </Text>
 
         {/* password text input field */}
         <SafeAreaView>
@@ -81,6 +90,17 @@ const styles = StyleSheet.create({
         width:375,
         height:375,
 
+    },
+
+    // same code from ForgotPassword.jsx file 
+    TextHeader: {
+        color: '#000000',
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontWeight: 700,
+        fontSize: 16,
+        // alignContent: 'left',
     },
 
     // same code from LoginInScreen.jsx
