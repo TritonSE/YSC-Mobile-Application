@@ -18,8 +18,8 @@ function LoginScreen2 ()
             />
         </View>
 
-        <br>
-        </br>
+        {/* <br>
+        </br> */}
 
         <Text style = {styles.TextHeader}>
             {"Username"}
@@ -34,8 +34,8 @@ function LoginScreen2 ()
             />
         </SafeAreaView>
 
-        <br>
-        </br>
+        {/* <br>
+        </br> */}
 
 
         <Text style = {styles.TextHeader}>
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: 'normal',
-        fontWeight: 700,
         fontSize: 16,
         // alignContent: 'left',
     },
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         // position: 'absolute',    
         borderRadius: 3,
-        background: '#FFFFFF',
+        // background: '#FFFFFF',
         width: 327,
         height: 37,
         // top: 19,
@@ -160,7 +159,7 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         // position: 'absolute',    
         borderRadius: 3,
-        background: '#FFFFFF',
+        // background: '#FFFFFF',
         width: 327,
         height: 37,
         // top: 19,
