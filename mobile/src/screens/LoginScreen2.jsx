@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView} from
 import React from 'react';
 
 
-function LoginScreen2 ()
+function LoginScreen2 ({navigation})
 {
     const [usernameText, changedUsernameText] = React.useState("Example Padding");
     const [passwordText, changedPasswordText] = React.useState("Example Padding");
@@ -65,7 +65,8 @@ function LoginScreen2 ()
     
         {/* same code from LoginInScreen.jsx */}
         <Pressable 
-            style = {styles.ForgotPassword}>
+            style = {styles.ForgotPassword}
+            onPress={() => navigation.navigate("forgot password screen")}>
             <Text 
               style = {styles.ForgotPasswordText}> 
               {'Forgot Password'}

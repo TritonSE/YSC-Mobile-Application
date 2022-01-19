@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 
-function LogInScreen() {
+function LogInScreen({navigation}) {
     return (
       <View style={styles.container}>
         <View>
@@ -12,7 +12,8 @@ function LogInScreen() {
 
         <View> 
         <Pressable 
-            style = {styles.LogInScreenButton}>
+            style = {styles.LogInScreenButton}
+            onPress={() => navigation.navigate("Login page 2")}>
             <Text
               style = {styles.LogInScreenButtonText}> 
               {'Login'}
@@ -20,9 +21,11 @@ function LogInScreen() {
         </Pressable>
 
         <Pressable 
-            style = {styles.ForgotPassword}>
+            style = {styles.ForgotPassword}
+            onPress={() => navigation.navigate("forgot password screen")}>
             <Text 
-              style = {styles.ForgotPasswordText}> 
+              style = {styles.ForgotPasswordText}
+              > 
               {'Forgot Password'}
             </Text>
         </Pressable>
