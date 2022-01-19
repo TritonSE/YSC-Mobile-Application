@@ -15,7 +15,8 @@ function SplashScreen({navigation}) {
   return (
     <View style={[{backgroundColor: "#D4DDDD"}, styles.container]}>
       <Image
-        style = {styles.ystemLogo} source={require('../../assets/YStemLogo1.png')}
+        style = {styles.ystemLogo} 
+        source={require('../../assets/YStemLogo1.png')}
       />
     </View>
   );
