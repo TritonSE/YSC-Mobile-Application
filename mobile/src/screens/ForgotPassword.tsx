@@ -72,7 +72,7 @@ function ForgotPassword()
          <Pressable 
             style = {styles.ResetPasswordButton}>
             <Text 
-              style = {styles.ResetPassworButtonText}> 
+              style = {styles.ResetPasswordButtonText}> 
               {'Reset Password'}
             </Text>
         </Pressable>
