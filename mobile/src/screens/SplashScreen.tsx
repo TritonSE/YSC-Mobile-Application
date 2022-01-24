@@ -3,13 +3,20 @@ import { StyleSheet, Text, View, Image, Button, Pressable } from 'react-native';
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
-// import {useNavigation } from "@reactive-navigation/native"
+import {useNavigation } from '@react-navigation/native'
 
-// const navigation = useNavigation();
 
-function SplashScreen({navigation}) {
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from './RootStackParams';
+
+type splashScreenProp = StackNavigationProp<RootStackParamList, "Splash Screen">;
+
+
+function SplashScreen() {
+  const navigation = useNavigation<splashScreenProp>();
+  
   setTimeout ( () => {
-    navigation.navigate('Login page');
+    navigation.navigate("Login page");
   }, 5000);
 
   return (

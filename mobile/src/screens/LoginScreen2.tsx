@@ -2,8 +2,17 @@ import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView} from
 import React from 'react';
 
 
-function LoginScreen2 ({navigation})
+import {useNavigation } from '@react-navigation/native'
+
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from './RootStackParams';
+
+type logIn2ScreenProp = StackNavigationProp<RootStackParamList, "Login page 2">;
+
+
+function LoginScreen2 ()
 {
+    const navigation = useNavigation<logIn2ScreenProp>();
     const [usernameText, changedUsernameText] = React.useState("Example Padding");
     const [passwordText, changedPasswordText] = React.useState("Example Padding");
 
@@ -192,20 +201,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textDecorationLine: 'underline'
       },
-    
-      LogInScreenButton: {
-        backgroundColor: '#96C957',
-        width: 327,
-        height: 52,
-        borderRadius: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 20
-        // flex: 1,
-        // order: 0,
-        // flexGrow: 0,
-        
-      },  
-
 });
   

@@ -1,6 +1,15 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 
-function LogInScreen({navigation}) {
+import {useNavigation } from '@react-navigation/native'
+
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from './RootStackParams';
+
+type logInScreenProp = StackNavigationProp<RootStackParamList, "Login page">;
+
+
+function LogInScreen() {
+    const navigation = useNavigation<logInScreenProp>();
     return (
       <View style={styles.container}>
         <View>
