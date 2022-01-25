@@ -6,34 +6,7 @@ import { RootStackParamList } from "./RootStackParams";
 
 type logInScreenProp = StackNavigationProp<RootStackParamList, "Login page">;
 
-function LogInScreen() {
-  const navigation = useNavigation<logInScreenProp>();
-  return (
-    <View style={styles.container}>
-      <View>
-        <Image style={styles.Stemett} source={require("../../assets/Stemett.png")} />
-      </View>
 
-      <View>
-        <Pressable
-          style={styles.LogInScreenButton}
-          onPress={() => navigation.navigate("Login page 2")}
-        >
-          <Text style={styles.LogInScreenButtonText}>Login</Text>
-        </Pressable>
-
-        <Pressable
-          style={styles.ForgotPassword}
-          onPress={() => navigation.navigate("forgot password screen")}
-        >
-          <Text style={styles.ForgotPasswordText}>Forgot Password</Text>
-        </Pressable>
-      </View>
-    </View>
-  );
-}
-
-export default LogInScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -92,3 +65,34 @@ const styles = StyleSheet.create({
     // textTransform: 'capitalize'
   },
 });
+
+
+
+function LogInScreen() {
+  const navigation = useNavigation<logInScreenProp>();
+  return (
+    <View style={styles.container}>
+      <View>
+        <Image style={styles.Stemett} source={require("../../assets/Stemett.png")} />
+      </View>
+
+      <View>
+        <Pressable
+          style={styles.LogInScreenButton}
+          onPress={() => navigation.navigate("Login page 2")}
+        >
+          <Text style={styles.LogInScreenButtonText}>Login</Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.ForgotPassword}
+          onPress={() => navigation.navigate("forgot password screen")}
+        >
+          <Text style={styles.ForgotPasswordText}>Forgot Password</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+export default LogInScreen;
