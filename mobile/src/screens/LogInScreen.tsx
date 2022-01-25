@@ -1,8 +1,7 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
-
-import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "./RootStackParams";
 
 type logInScreenProp = StackNavigationProp<RootStackParamList, "Login page">;
@@ -20,14 +19,14 @@ function LogInScreen() {
           style={styles.LogInScreenButton}
           onPress={() => navigation.navigate("Login page 2")}
         >
-          <Text style={styles.LogInScreenButtonText}>{"Login"}</Text>
+          <Text style={styles.LogInScreenButtonText}>Login</Text>
         </Pressable>
 
         <Pressable
           style={styles.ForgotPassword}
           onPress={() => navigation.navigate("forgot password screen")}
         >
-          <Text style={styles.ForgotPasswordText}>{"Forgot Password"}</Text>
+          <Text style={styles.ForgotPasswordText}>Forgot Password</Text>
         </Pressable>
       </View>
     </View>

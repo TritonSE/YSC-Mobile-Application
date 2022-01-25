@@ -1,11 +1,11 @@
 // import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, Pressable } from "react-native";
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
 import { useNavigation } from "@react-navigation/native";
-
 import { StackNavigationProp } from "@react-navigation/stack";
+import { StyleSheet, Text, View, Image, Button, Pressable } from "react-native";
+
 import { RootStackParamList } from "./RootStackParams";
 
 type splashScreenProp = StackNavigationProp<RootStackParamList, "Splash Screen">;

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 import React from "react";
+import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
 function ForgotPassword() {
   const [currentPasswordText, changedCurrentPasswordText] = React.useState("Example Padding");
@@ -15,7 +15,7 @@ function ForgotPassword() {
         />
       </View>
 
-      <Text style={styles.TextHeader}>{"Current Password"}</Text>
+      <Text style={styles.TextHeader}>Current Password</Text>
 
       {/* used same code from loginscreen 2.jsx screen */}
       <SafeAreaView>
@@ -29,7 +29,7 @@ function ForgotPassword() {
       {/* <br>
         </br> */}
 
-      <Text style={styles.TextHeader}>{"New Password"}</Text>
+      <Text style={styles.TextHeader}>New Password</Text>
 
       {/* used same code from loginscreen 2.jsx screen */}
       <SafeAreaView>
@@ -43,7 +43,7 @@ function ForgotPassword() {
       {/* <br>
         </br> */}
 
-      <Text style={styles.TextHeader}>{"Confirm New Password"}</Text>
+      <Text style={styles.TextHeader}>Confirm New Password</Text>
 
       {/* used same code from loginscreen 2.jsx screen */}
       <SafeAreaView>
@@ -56,7 +56,7 @@ function ForgotPassword() {
 
       {/* same code from LoginInScreen.jsx */}
       <Pressable style={styles.ResetPasswordButton}>
-        <Text style={styles.ResetPasswordButtonText}>{"Reset Password"}</Text>
+        <Text style={styles.ResetPasswordButtonText}>Reset Password</Text>
       </Pressable>
     </View>
   );

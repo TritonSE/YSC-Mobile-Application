@@ -1,14 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Button, Pressable } from "react-native";
+import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
-import LogInScreen from "./src/screens/LogInScreen";
-import SplashScreen from "./src/screens/SplashScreen";
-import LoginScreen2 from "./src/screens/LoginScreen2";
-import ForgotPassword from "./src/screens/ForgotPassword";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, Image, Button, Pressable } from "react-native";
 
+import ForgotPassword from "./src/screens/ForgotPassword";
+import LogInScreen from "./src/screens/LogInScreen";
+import LoginScreen2 from "./src/screens/LoginScreen2";
 import { RootStackParamList } from "./src/screens/RootStackParams";
+import SplashScreen from "./src/screens/SplashScreen";
+
 // export type RootStackParamList = {
 //   "Splash Screen": undefined;
 //   Login: undefined;

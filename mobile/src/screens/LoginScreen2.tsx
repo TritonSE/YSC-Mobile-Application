@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
-import React from "react";
-
 import { useNavigation } from "@react-navigation/native";
-
 import { StackNavigationProp } from "@react-navigation/stack";
+import React from "react";
+import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
+
 import { RootStackParamList } from "./RootStackParams";
 
 type logIn2ScreenProp = StackNavigationProp<RootStackParamList, "Login page 2">;
@@ -22,7 +21,7 @@ function LoginScreen2() {
       {/* <br>
         </br> */}
 
-      <Text style={styles.TextHeader}>{"Username"}</Text>
+      <Text style={styles.TextHeader}>Username</Text>
 
       {/* username text input field */}
       <SafeAreaView>
@@ -36,7 +35,7 @@ function LoginScreen2() {
       {/* <br>
         </br> */}
 
-      <Text style={styles.TextHeader}>{"Password"}</Text>
+      <Text style={styles.TextHeader}>Password</Text>
 
       {/* password text input field */}
       <SafeAreaView>
@@ -50,7 +49,7 @@ function LoginScreen2() {
       {/* reusing same code from LoginScreen.jsx */}
       <View>
         <Pressable style={styles.LogInScreenButton}>
-          <Text style={styles.LogInScreenButtonText}>{"Login"}</Text>
+          <Text style={styles.LogInScreenButtonText}>Login</Text>
         </Pressable>
       </View>
 
@@ -59,7 +58,7 @@ function LoginScreen2() {
         style={styles.ForgotPassword}
         onPress={() => navigation.navigate("forgot password screen")}
       >
-        <Text style={styles.ForgotPasswordText}>{"Forgot Password"}</Text>
+        <Text style={styles.ForgotPasswordText}>Forgot Password</Text>
       </Pressable>
     </View>
   );
