@@ -15,5 +15,12 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/style-prop-object": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
