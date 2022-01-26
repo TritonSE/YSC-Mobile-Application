@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-// import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
+import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";

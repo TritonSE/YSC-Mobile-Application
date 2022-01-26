@@ -1,4 +1,3 @@
-import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
