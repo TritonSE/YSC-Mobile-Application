@@ -1,10 +1,9 @@
 // import { StatusBar } from 'expo-status-bar';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { useFonts, Roboto_400Regular} from '@expo-google-fonts/roboto';
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { StyleSheet, Text, View, Image, Button, Pressable } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 
 import { RootStackParamList } from "./RootStackParams";
 
