@@ -10,7 +10,6 @@ import { RootStackParamList } from "./RootStackParams";
 
 type splashScreenProp = StackNavigationProp<RootStackParamList, "Splash Screen">;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,7 +22,6 @@ const styles = StyleSheet.create({
     height: 142,
   },
 });
-
 
 function SplashScreen() {
   const navigation = useNavigation<splashScreenProp>();

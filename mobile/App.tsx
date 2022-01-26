@@ -2,7 +2,7 @@ import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Button, Pressable } from "react-native";
+import { StyleSheet} from "react-native";
 
 import ForgotPassword from "./src/screens/ForgotPassword";
 import LogInScreen from "./src/screens/LogInScreen";

@@ -6,8 +6,6 @@ import { RootStackParamList } from "./RootStackParams";
 
 type logInScreenProp = StackNavigationProp<RootStackParamList, "Login page">;
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -65,8 +63,6 @@ const styles = StyleSheet.create({
     // textTransform: 'capitalize'
   },
 });
-
-
 
 function LogInScreen() {
   const navigation = useNavigation<logInScreenProp>();
