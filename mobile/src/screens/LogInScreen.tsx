@@ -1,11 +1,28 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { useFonts , Roboto} from 'expo-font';
 
 import { RootStackParamList } from "./RootStackParams";
 
 type logInScreenProp = StackNavigationProp<RootStackParamList, "Login page">;
+
+let fontFinal;
+
+function loadFontInApp()
+{
+  let [fontsLoaded] = useFonts({
+    Roboto,
+  });
+  
+  if(fontsLoaded)
+    fontFinal = "Roboto";
+  else 
+    fontFinal = "Arial";
+
+}
+
+loadFontInApp();
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +44,7 @@ const styles = StyleSheet.create({
   },
 
   ForgotPasswordText: {
-    fontFamily: "Roboto",
+    fontFamily: fontFinal,
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 15,
