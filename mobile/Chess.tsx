@@ -2,7 +2,6 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import Board from "./Board";
-import Display from "./Display"
 
 const styles = StyleSheet.create({
   container: {

@@ -4,7 +4,7 @@ import { Chess } from "chess.js";
 
 import Background from "./Background";
 import Piece from "./Piece";
-import Display from "./Display";
+import Gameover from "./Gameover";
 
 const { width } = Dimensions.get("window");
 
@@ -34,21 +34,24 @@ const styles = StyleSheet.create({
 const Board = () => {
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
-    player: "w",
+    player: chess.turn(),
     board: chess.board(),
-    fenString : 'Game has not started'
+    fenString : 'Game has not started',
+    gameState: chess.game_over(),
   });
-  // Sets the player color and sets the board to a certain state which is then
-  // mapped
+  // Updates game information after a turn
   const onTurn = useCallback(() => {
     setState({
-      player: state.player === "w" ? "b" : "w",
+      player: chess.turn(),
       board: chess.board(),
       fenString: chess.fen(),
+      // Tracks the game state every turn
+      gameState: chess.game_over(),
     });
   }, [chess, state.player]);
   return (
     <View>
+        <Gameover isGameOver = {state.gameState}/>
         <Text style = {{color: 'azure'}}>{state.fenString}</Text>
         <View style={styles.container}>
             <Background />
