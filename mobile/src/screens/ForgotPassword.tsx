@@ -1,4 +1,6 @@
+import React from "react";
 import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
+
 
 const styles = StyleSheet.create({
   container: {

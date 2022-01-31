@@ -1,7 +1,7 @@
 // import { StatusBar } from 'expo-status-bar';
-
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 
 import { RootStackParamList } from "./RootStackParams";
