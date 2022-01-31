@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { View, StyleSheet, Dimensions, Text, Alert, Modal, Pressable } from "react-native";
 import { Chess } from "chess.js";
 
 import Background from "./Background";
@@ -51,7 +51,7 @@ const Board = () => {
   }, [chess, state.player]);
   return (
     <View>
-        <Gameover isGameOver = {state.gameState}/>
+        <Gameover isGameOver = {state.gameState} playerWhoWon = {state.player}/>
         <Text style = {{color: 'azure'}}>{state.fenString}</Text>
         <View style={styles.container}>
             <Background />
