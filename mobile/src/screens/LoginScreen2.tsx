@@ -3,6 +3,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
+import mascotImg from "../../assets/STEMy_Mascot.png";
+
 import { RootStackParamList } from "./RootStackParams";
 
 type logIn2ScreenProp = StackNavigationProp<RootStackParamList, "Login page 2">;
@@ -127,7 +129,7 @@ function LoginScreen2() {
   return (
     <View style={styles.container}>
       <View>
-        <Image style={styles.STEMy_Mascot} source={require("../../assets/STEMy_Mascot.png")} />
+        <Image style={styles.STEMy_Mascot} source={mascotImg} />
       </View>
 
       {/* <br>

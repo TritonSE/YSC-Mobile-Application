@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
+import img from "../../assets/forgotPasswordScreenImage.png";
 
 const styles = StyleSheet.create({
   container: {
@@ -83,7 +84,7 @@ function ForgotPassword() {
       <View>
         <Image
           style={styles.characterImage}
-          source={require("../../assets/forgotPasswordScreenImage.png")}
+          source={img}
         />
       </View>
 
