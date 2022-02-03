@@ -1,7 +1,6 @@
 
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useFonts } from "expo-font";
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 
