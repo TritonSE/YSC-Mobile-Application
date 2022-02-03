@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
   TextHeader: {
     color: "#000000",
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 16,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
   textInputField: {
     fontSize: 16,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     // position: 'absolute',
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   ResetPasswordButtonText: {
     position: "absolute",
     fontSize: 18,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     lineHeight: 21,

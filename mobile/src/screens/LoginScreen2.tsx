@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   // same code from ForgotPassword.jsx file
   TextHeader: {
     color: "#000000",
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 16,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   LogInScreenButtonText: {
     position: "absolute",
     fontSize: 18,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     lineHeight: 21,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
   UsernameTextField: {
     fontSize: 16,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     // position: 'absolute',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 
   PasswordTextField: {
     fontSize: 16,
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     // position: 'absolute',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
 
   // same code from LoginInScreen.jsx
   ForgotPasswordText: {
-    fontFamily: "Roboto",
+    // fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 15,
