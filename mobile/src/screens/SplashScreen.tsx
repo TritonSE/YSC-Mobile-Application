@@ -4,6 +4,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 
+import logoImg from "../../assets/YStemLogo1.png";
+
 import { RootStackParamList } from "./RootStackParams";
 
 type splashScreenProp = StackNavigationProp<RootStackParamList, "Splash Screen">;
@@ -30,7 +32,7 @@ function SplashScreen() {
 
   return (
     <View style={[{ backgroundColor: "#D4DDDD" }, styles.container]}>
-      <Image style={styles.ystemLogo} source={require("../../assets/YStemLogo1.png")} />
+      <Image style={styles.ystemLogo} source={logoImg} />
     </View>
   );
 }

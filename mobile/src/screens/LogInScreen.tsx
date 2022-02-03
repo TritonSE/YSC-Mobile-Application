@@ -5,6 +5,8 @@ import { useFonts } from "expo-font";
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 
+import stemettImg from "../../assets/Stemett.png";
+
 import { RootStackParamList } from "./RootStackParams";
 
 type logInScreenProp = StackNavigationProp<RootStackParamList, "Login page">;
@@ -74,7 +76,7 @@ function LogInScreen() {
   return (
     <View style={styles.container}>
       <View>
-        <Image style={styles.Stemett} source={require("../../assets/Stemett.png")} />
+        <Image style={styles.Stemett} source={stemettImg} />
       </View>
 
       <View>
