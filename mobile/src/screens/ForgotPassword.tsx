@@ -82,10 +82,7 @@ function ForgotPassword() {
   return (
     <View style={styles.container}>
       <View>
-        <Image
-          style={styles.characterImage}
-          source={img}
-        />
+        <Image style={styles.characterImage} source={img} />
       </View>
 
       <Text style={styles.TextHeader}>Current Password</Text>

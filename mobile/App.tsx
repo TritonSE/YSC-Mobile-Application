@@ -1,4 +1,3 @@
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
@@ -7,7 +6,6 @@ import ForgotPassword from "./src/screens/ForgotPassword";
 import LogInScreen from "./src/screens/LogInScreen";
 import LoginScreen2 from "./src/screens/LoginScreen2";
 import SplashScreen from "./src/screens/SplashScreen";
-
 
 const Stack = createNativeStackNavigator();
 

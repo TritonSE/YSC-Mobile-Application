@@ -1,4 +1,3 @@
-
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
@@ -69,7 +68,6 @@ const styles = StyleSheet.create({
 });
 
 function LogInScreen() {
-  
   const navigation = useNavigation<logInScreenProp>();
 
   return (

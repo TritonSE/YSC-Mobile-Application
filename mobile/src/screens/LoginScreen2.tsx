@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 16,
+    // right: '30%',
+
     // alignContent: 'left',
   },
 
@@ -132,9 +134,6 @@ function LoginScreen2() {
         <Image style={styles.STEMy_Mascot} source={mascotImg} />
       </View>
 
-      {/* <br>
-        </br> */}
-
       <Text style={styles.TextHeader}>Username</Text>
 
       {/* username text input field */}
@@ -146,9 +145,7 @@ function LoginScreen2() {
         />
       </SafeAreaView>
 
-      {/* <br>
-        </br> */}
-
+      <Text />
       <Text style={styles.TextHeader}>Password</Text>
 
       {/* password text input field */}
