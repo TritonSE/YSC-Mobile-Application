@@ -75,9 +75,7 @@ const styles = StyleSheet.create({
 });
 
 function ForgotPassword() {
-  const [currentPasswordText, changedCurrentPasswordText] = React.useState("Example Padding");
-  const [newPasswordText, changednewPasswordText] = React.useState("Example Padding");
-  const [confirmPasswordText, changedConfirmPasswordText] = React.useState("Example Padding");
+  const [currentEmailText, changedUserEmailText] = React.useState("Example Padding");
 
   return (
     <View style={styles.container}>
@@ -85,44 +83,20 @@ function ForgotPassword() {
         <Image style={styles.characterImage} source={img} />
       </View>
 
-      <Text style={styles.TextHeader}>Current Password</Text>
+      <Text style={styles.TextHeader}>User Email</Text>
 
       {/* used same code from loginscreen 2.jsx screen */}
       <SafeAreaView>
         <TextInput
           style={styles.textInputField}
-          onChangeText={changedCurrentPasswordText}
-          value={currentPasswordText}
+          onChangeText={changedUserEmailText}
+          value={currentEmailText}
         />
       </SafeAreaView>
+
 
       {/* <br>
         </br> */}
-
-      <Text style={styles.TextHeader}>New Password</Text>
-
-      {/* used same code from loginscreen 2.jsx screen */}
-      <SafeAreaView>
-        <TextInput
-          style={styles.textInputField}
-          onChangeText={changednewPasswordText}
-          value={newPasswordText}
-        />
-      </SafeAreaView>
-
-      {/* <br>
-        </br> */}
-
-      <Text style={styles.TextHeader}>Confirm New Password</Text>
-
-      {/* used same code from loginscreen 2.jsx screen */}
-      <SafeAreaView>
-        <TextInput
-          style={styles.textInputField}
-          onChangeText={changedConfirmPasswordText}
-          value={confirmPasswordText}
-        />
-      </SafeAreaView>
 
       {/* same code from LoginInScreen.jsx */}
       <Pressable style={styles.ResetPasswordButton}>
