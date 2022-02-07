@@ -94,7 +94,6 @@ function ForgotPassword() {
         />
       </SafeAreaView>
 
-
       {/* <br>
         </br> */}
 
