@@ -32,13 +32,13 @@ io.on("connection", (socket:any) => {
     let board:BoardState = {lock: 0, board: "", players: [username]};
     // socket only has socket ID room => create new room
     if(socket.rooms.size == 1) {
-      if(io.sockets.adapter.rooms.get(currRoom) == null) {
-        //Do Nothing
-      } else if(io.sockets.adapter.rooms.get(currRoom).size == 2) {
-        numRooms++;
-        currRoom = "Room " + numRooms;
-      } else {
-        board = {...board, players: [boards.get(currRoom).players[0], username]}
+      if(io.sockets.adapter.rooms.get(currRoom) != null) {
+        if(io.sockets.adapter.rooms.get(currRoom).size == 2) {
+          numRooms++;
+          currRoom = "Room " + numRooms;
+        } else {
+          board = {...board, players: [boards.get(currRoom).players[0], username]}
+        }
       }
       boards.set(currRoom, board);
       rooms.set(username, {room: currRoom, socket:socket.id});
@@ -48,10 +48,12 @@ io.on("connection", (socket:any) => {
 
   // server updates board state and broadcasts the new board to the other player
   socket.on("try chess move", (newBoard:any) => {
-    let room = Array.from(socket.rooms).find(e => e != socket.id);
-    if (boards.get(room).lock == socket.id) {
-      let nextLock = Array.from(io.sockets.adapter.rooms.get(room)).find(e => e != socket.id);
-      boards.set(room, {lock: nextLock, board: newBoard});
+    let room = rooms.get(username).room;
+    let currLock = boards.get(room).lock;
+    if (boards.get(room).players[currLock] == username) {
+      let nextLock = (currLock + 1) % 2;
+      let newBoardState = {...boards.get(room), lock: nextLock, board: newBoard};
+      boards.set(room, newBoardState);
       // currently sends to both players
       io.in(room).emit("updated board", newBoard);
     } else {
@@ -60,25 +62,25 @@ io.on("connection", (socket:any) => {
   });
 
   socket.on("resign", () => {
-    let room = Array.from(socket.rooms).find(e => e != socket.id);
-    io.in(room).emit("game resigned", socket.id);
+    let room = rooms.get(username).room;
+    io.in(room).emit("game resigned", username);
     boards.delete(room);
   });
 
   socket.on("try draw", () => {
-    let room = Array.from(socket.rooms).find(e => e != socket.id);
-    socket.to(room).emit("draw request", socket.id);
+    let room = rooms.get(username).room;
+    socket.to(room).emit("draw request", username);
   });
 
   socket.on("draw accepted", () => {
-    let room = Array.from(socket.rooms).find(e => e != socket.id);
-    io.in(room).emit("game drawed", socket.id);
+    let room = rooms.get(username).room;
+    io.in(room).emit("game drawed", username);
     boards.delete(room);
   });
 
   socket.on("draw rejected", () => {
-    let room = Array.from(socket.rooms).find(e => e != socket.id);
-    socket.to(room).emit("draw request rejected", socket.id); 
+    let room = rooms.get(username).room;
+    socket.to(room).emit("draw request rejected", username); 
   });
 });
 
