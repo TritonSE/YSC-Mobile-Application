@@ -1,12 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
+
 import { StackNavigationProp } from "@react-navigation/stack";
+
 import React from "react";
+
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
 import mascotImg from "../../assets/STEMy_Mascot.png";
 
 import { RootStackParamList } from "./RootStackParams";
+
 import {AppStylesheet} from '../styles/AppStylesheet'
+
+
+
 
 type logIn2ScreenProp = StackNavigationProp<RootStackParamList, "Login page 2">;
 
