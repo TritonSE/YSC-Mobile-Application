@@ -1,105 +1,39 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
+import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
+import {AppStylesheet} from '../styles/AppStylesheet'
+
 
 import img from "../../assets/forgotPasswordScreenImage.png";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF",
-  },
-
-  TextHeader: {
-    color: "#000000",
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 16,
-    // alignContent: 'left',
-  },
-
-  characterImage: {
-    width: 234,
-    height: 395,
-  },
-
-  textInputField: {
-    fontSize: 16,
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    // position: 'absolute',
-    borderRadius: 3,
-    // background: '#FFFFFF',
-    width: 327,
-    height: 37,
-    // top: 19,
-    // bottom: 3,
-    borderWidth: 1,
-    borderColor: "#000000",
-    alignContent: "center",
-    left: "0%",
-    right: "0%",
-    top: "33.93%",
-  },
-
-  // same code from LoginInScreen.jsx
-  ResetPasswordButton: {
-    backgroundColor: "#96C957",
-    width: 327,
-    height: 52,
-    borderRadius: 3,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    // flex: 1,
-    // order: 0,
-    // flexGrow: 0,
-  },
-
-  // reusing same code from LoginInScreen.jsx
-  ResetPasswordButtonText: {
-    position: "absolute",
-    fontSize: 18,
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    lineHeight: 21,
-    /* identical to box height */
-
-    // textAlign: 'center',
-    // textTransform: 'capitalize'
-  },
-});
 
 function ForgotPassword() {
   const [currentEmailText, changedUserEmailText] = React.useState("Example Padding");
 
   return (
-    <View style={styles.container}>
+    <View style={AppStylesheet.container}>
       <View>
-        <Image style={styles.characterImage} source={img} />
+        <Image style={AppStylesheet.forgotPasswordImage} source={img} />
       </View>
 
-      <Text style={styles.TextHeader}>User Email</Text>
+      <View style = {AppStylesheet.input}>
+      <Text style={AppStylesheet.textInputHeader}>User Email</Text>
 
       {/* used same code from loginscreen 2.jsx screen */}
       <SafeAreaView>
         <TextInput
-          style={styles.textInputField}
+          style={AppStylesheet.textInputField}
           onChangeText={changedUserEmailText}
           value={currentEmailText}
         />
       </SafeAreaView>
+      </View>
 
       {/* <br>
         </br> */}
 
       {/* same code from LoginInScreen.jsx */}
-      <Pressable style={styles.ResetPasswordButton}>
-        <Text style={styles.ResetPasswordButtonText}>Reset Password</Text>
+      <Pressable style={AppStylesheet.button}>
+        <Text style={AppStylesheet.buttonText}>Reset Password</Text>
       </Pressable>
     </View>
   );

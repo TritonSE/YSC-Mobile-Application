@@ -1,127 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet, Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
+import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
 import mascotImg from "../../assets/STEMy_Mascot.png";
 
 import { RootStackParamList } from "./RootStackParams";
+import {AppStylesheet} from '../styles/AppStylesheet'
 
 type logIn2ScreenProp = StackNavigationProp<RootStackParamList, "Login page 2">;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF",
-  },
-
-  STEMy_Mascot: {
-    width: 375,
-    height: 375,
-  },
-
-  // same code from ForgotPassword.jsx file
-  TextHeader: {
-    color: "#000000",
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 16,
-    // right: '30%',
-
-    // alignContent: 'left',
-  },
-
-  // same code from LoginInScreen.jsx
-  LogInScreenButton: {
-    backgroundColor: "#96C957",
-    width: 327,
-    height: 52,
-    borderRadius: 3,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    // flex: 1,
-    // order: 0,
-    // flexGrow: 0,
-  },
-
-  // reusing same code from LoginInScreen.jsx
-  LogInScreenButtonText: {
-    position: "absolute",
-    fontSize: 18,
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    lineHeight: 21,
-    /* identical to box height */
-
-    // textAlign: 'center',
-    // textTransform: 'capitalize'
-  },
-
-  UsernameTextField: {
-    fontSize: 16,
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    // position: 'absolute',
-    borderRadius: 3,
-    // background: '#FFFFFF',
-    width: 327,
-    height: 37,
-    // top: 19,
-    // bottom: 3,
-    borderWidth: 1,
-    borderColor: "#000000",
-    alignContent: "center",
-    left: "0%",
-    right: "0%",
-    top: "33.93%",
-  },
-
-  PasswordTextField: {
-    fontSize: 16,
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    // position: 'absolute',
-    borderRadius: 3,
-    // background: '#FFFFFF',
-    width: 327,
-    height: 37,
-    // top: 19,
-    // bottom: 3,
-    borderWidth: 1,
-    borderColor: "#000000",
-    alignContent: "center",
-    left: "0%",
-    right: "0%",
-    top: "33.93%",
-  },
-
-  // same code from LoginInScreen.jsx
-  ForgotPassword: {
-    width: 114,
-    height: 18,
-    marginTop: 20,
-  },
-
-  // same code from LoginInScreen.jsx
-  ForgotPasswordText: {
-    // fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 15,
-    lineHeight: 18,
-    /* identical to box height */
-
-    textAlign: "center",
-    textDecorationLine: "underline",
-  },
-});
 
 function LoginScreen2() {
   const navigation = useNavigation<logIn2ScreenProp>();
@@ -129,47 +16,48 @@ function LoginScreen2() {
   const [passwordText, changedPasswordText] = React.useState("Example Padding");
 
   return (
-    <View style={styles.container}>
+    <View style={AppStylesheet.container}>
       <View>
-        <Image style={styles.STEMy_Mascot} source={mascotImg} />
+        <Image style={AppStylesheet.STEMy_Mascot} source={mascotImg} />
       </View>
 
-      <Text style={styles.TextHeader}>Username</Text>
-
+      <View style = {AppStylesheet.input}>
+      <Text style={AppStylesheet.textInputHeader}>Username</Text>
       {/* username text input field */}
       <SafeAreaView>
         <TextInput
-          style={styles.UsernameTextField}
+          style={AppStylesheet.textInputField}
           onChangeText={changedUsernameText}
           value={usernameText}
         />
       </SafeAreaView>
+      </View>
 
-      <Text />
-      <Text style={styles.TextHeader}>Password</Text>
-
+      <View style = {AppStylesheet.input}>
+      <Text style={AppStylesheet.textInputHeader}>Password</Text>
       {/* password text input field */}
       <SafeAreaView>
         <TextInput
-          style={styles.PasswordTextField}
+          style={AppStylesheet.textInputField}
           onChangeText={changedPasswordText}
-          value={passwordText}
+          value={passwordText} 
         />
       </SafeAreaView>
+      </View>
 
       {/* reusing same code from LoginScreen.jsx */}
       <View>
-        <Pressable style={styles.LogInScreenButton}>
-          <Text style={styles.LogInScreenButtonText}>Login</Text>
+        <Pressable style={AppStylesheet.button}>
+          <Text style={AppStylesheet.buttonText}>Login</Text>
         </Pressable>
       </View>
 
       {/* same code from LoginInScreen.jsx */}
       <Pressable
-        style={styles.ForgotPassword}
+        style={AppStylesheet.ForgotPassword}
         onPress={() => navigation.navigate("forgot password screen")}
       >
-        <Text style={styles.ForgotPasswordText}>Forgot Password</Text>
+        <Text style={AppStylesheet.ForgotPasswordText}>Forgot Password</Text>
       </Pressable>
     </View>
   );
