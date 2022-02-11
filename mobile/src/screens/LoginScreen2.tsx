@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
+
 import mascotImg from "../../assets/STEMy_Mascot.png";
 import {AppStylesheet} from '../styles/AppStylesheet'
+
 import { RootStackParamList } from "./RootStackParams";
 
 
