@@ -1,9 +1,7 @@
 import React from "react";
 
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
-
 import {AppStylesheet} from '../styles/AppStylesheet'
-
 import img from "../../assets/forgotPasswordScreenImage.png";
 
 

@@ -1,15 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-
 import React from "react";
-
 import { Text, View, Image, Pressable } from "react-native";
-
-import {AppStylesheet} from '../styles/AppStylesheet'
-
 import stemettImg from "../../assets/Stemett.png";
-
+import {AppStylesheet} from '../styles/AppStylesheet'
 import { RootStackParamList } from "./RootStackParams";
 
 
