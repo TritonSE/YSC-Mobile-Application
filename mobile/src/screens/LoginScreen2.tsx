@@ -13,7 +13,7 @@ import { RootStackParamList } from "./RootStackParams";
 
 type logIn2ScreenProp = StackNavigationProp<RootStackParamList, "Login page 2">;
 
-function LoginScreen2() {
+const LoginScreen2 = () => {
   const navigation = useNavigation<logIn2ScreenProp>();
   const [usernameText, changedUsernameText] = React.useState("Example Padding");
   const [passwordText, changedPasswordText] = React.useState("Example Padding");

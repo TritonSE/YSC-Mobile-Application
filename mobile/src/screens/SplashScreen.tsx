@@ -14,11 +14,11 @@ import { RootStackParamList } from "./RootStackParams";
 type splashScreenProp = StackNavigationProp<RootStackParamList, "Splash Screen">;
 
 
-function SplashScreen() {
+const SplashScreen = () =>{
   const navigation = useNavigation<splashScreenProp>();
 
   setTimeout(() => {
-    navigation.navigate("Login page");
+    navigation.navigate("Login page 2");
   }, 5000);
 
   return (
