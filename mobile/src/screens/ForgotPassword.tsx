@@ -3,9 +3,7 @@ import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-nat
 import {AppStylesheet} from '../styles/AppStylesheet'
 import img from "../../assets/forgotPasswordScreenImage.png";
 
-
-
-function ForgotPassword() {
+const ForgotPassword = () => {
   const [currentEmailText, changedUserEmailText] = React.useState("Example Padding");
 
   return (
@@ -30,7 +28,6 @@ function ForgotPassword() {
       {/* <br>
         </br> */}
 
-      {/* same code from LoginInScreen.jsx */}
       <Pressable style={AppStylesheet.button}>
         <Text style={AppStylesheet.buttonText}>Reset Password</Text>
       </Pressable>
