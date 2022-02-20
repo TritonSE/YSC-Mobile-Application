@@ -1,10 +1,10 @@
-import React, { useCallback, useRef, useState } from "react";
-import { View, StyleSheet, Dimensions, Text, Alert, Modal, Pressable } from "react-native";
 import { Chess } from "chess.js";
+import React, { useCallback, useRef, useState } from "react";
+import { View, StyleSheet, Dimensions, Text } from "react-native";
 
-import Background from "./Background";
-import Piece from "./Piece";
-import Gameover from "./Gameover";
+import Background from "./Background.tsx";
+import Gameover from "./Gameover.tsx";
+import Piece from "./Piece.tsx";
 
 const { width } = Dimensions.get("window");
 
@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = () => {
+function Board() {
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
     player: chess.turn(),
     board: chess.board(),
-    fenString : 'Game has not started',
+    fenString: "Game has not started",
     gameState: chess.game_over(),
   });
   // Updates game information after a turn
@@ -51,30 +51,30 @@ const Board = () => {
   }, [chess, state.player]);
   return (
     <View>
-        <Gameover isGameOver = {state.gameState} playerWhoWon = {state.player}/>
-        <Text style = {{color: 'azure'}}>{state.fenString}</Text>
-        <View style={styles.container}>
-            <Background />
-            {state.board.map((row, y) =>
-            row.map((piece, x) => {
-                if (piece !== null) {
-                return (
-                    <Piece
-                    key={`${x}-${y}`}
-                    id={`${piece.color}${piece.type}` as const}
-                    startPosition={{ x, y }}
-                    chess={chess}
-                    onTurn={onTurn}
-                    enabled={state.player === piece.color}
-                    />
-                );
-                }
-                return null;
-            })
-            )}
-        </View>
+      <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
+      <Text style={{ color: "black" }}>{state.fenString}</Text>
+      <View style={styles.container}>
+        <Background />
+        {state.board.map((row, y) =>
+          row.map((piece, x) => {
+            if (piece !== null) {
+              return (
+                <Piece
+                  key={`${x}-${y}`}
+                  id={`${piece.color}${piece.type}` as const}
+                  startPosition={{ x, y }}
+                  chess={chess}
+                  onTurn={onTurn}
+                  enabled={state.player === piece.color}
+                />
+              );
+            }
+            return null;
+          })
+        )}
+      </View>
     </View>
   );
-};
+}
 
 export default Board;
