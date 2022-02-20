@@ -1,3 +1,6 @@
+// Initial chessboard code credits go to William Candillon
+// Github: https://github.com/wcandillon
+// Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess, Position } from "chess.js";
 import React, { useCallback } from "react";
 import { StyleSheet, Image } from "react-native";
