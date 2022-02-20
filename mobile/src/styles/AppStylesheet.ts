@@ -12,7 +12,7 @@ export const AppStylesheet = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#E5E5E5",
+        backgroundColor: "#D4DDDD",
     },
 
     button: {
