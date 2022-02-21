@@ -1,7 +1,9 @@
 import React from "react";
-import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
-import {AppStylesheet} from '../styles/AppStylesheet'
+import { Text, View, Image, TextInput, SafeAreaView } from "react-native";
+
 import img from "../../assets/forgotPasswordScreenImage.png";
+import Button from "../components/Button";
+import {AppStylesheet} from '../styles/AppStylesheet'
 
 const ForgotPassword = () => {
   const [currentEmailText, changedUserEmailText] = React.useState("Example Padding");
@@ -28,9 +30,7 @@ const ForgotPassword = () => {
       {/* <br>
         </br> */}
 
-      <Pressable style={AppStylesheet.button}>
-        <Text style={AppStylesheet.buttonText}>Reset Password</Text>
-      </Pressable>
+      <Button text="Reset Password"/>
     </View>
   );
 }

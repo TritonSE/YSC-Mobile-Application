@@ -4,9 +4,8 @@ import React from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
 import mascotImg from "../../assets/STEMy_Mascot.png";
-import {AppStylesheet} from '../styles/AppStylesheet'
-
-import { RootStackParamList } from "./RootStackParams";
+import Button from "../components/Button";
+import {AppStylesheet} from '../styles/AppStylesheet';
 
 
 
@@ -48,12 +47,7 @@ const LoginScreen2 = () => {
       </SafeAreaView>
       </View>
 
-      {/* reusing same code from LoginScreen.jsx */}
-      <View>
-        <Pressable style={AppStylesheet.button}>
-          <Text style={AppStylesheet.buttonText}>Login</Text>
-        </Pressable>
-      </View>
+      <Button text="Login" />
 
       {/* same code from LoginInScreen.jsx */}
       <Pressable
