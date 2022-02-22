@@ -17,7 +17,7 @@ const ForgotPassword = () => {
       <View style = {AppStylesheet.input}>
       <Text style={AppStylesheet.textInputHeader}>User Email</Text>
 
-      {/* used same code from loginscreen 2.jsx screen */}
+      {/* used same code from loginscreen.jsx screen */}
       <SafeAreaView>
         <TextInput
           style={AppStylesheet.textInputField}

@@ -10,7 +10,7 @@ const SplashScreen = () =>{
   const navigation = useNavigation();
 
   setTimeout(() => {
-    navigation.navigate("Login page 2");
+    navigation.navigate("Login page");
   }, 5000);
 
   return (

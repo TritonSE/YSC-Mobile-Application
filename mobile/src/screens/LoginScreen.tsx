@@ -7,7 +7,7 @@ import mascotImg from "../../assets/STEMy_Mascot.png";
 import Button from "../components/Button";
 import {AppStylesheet} from '../styles/AppStylesheet';
 
-const LoginScreen2 = () => {
+const LoginScreen = () => {
   const navigation = useNavigation();
   const [usernameText, changedUsernameText] = useState("Example Padding");
   const [passwordText, changedPasswordText] = useState("Example Padding");
@@ -45,7 +45,6 @@ const LoginScreen2 = () => {
 
       <Button text="Login" />
 
-      {/* same code from LoginInScreen.jsx */}
       <Pressable
         style={AppStylesheet.forgotPassword}
         onPress={() => navigation.navigate("forgot password screen")}
@@ -56,4 +55,4 @@ const LoginScreen2 = () => {
   );
 }
 
-export default LoginScreen2;
+export default LoginScreen;
