@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+// import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
@@ -7,13 +7,8 @@ import mascotImg from "../../assets/STEMy_Mascot.png";
 import Button from "../components/Button";
 import {AppStylesheet} from '../styles/AppStylesheet';
 
-
-
-
-type logIn2ScreenProp = StackNavigationProp<RootStackParamList, "Login page 2">;
-
 const LoginScreen2 = () => {
-  const navigation = useNavigation<logIn2ScreenProp>();
+  const navigation = useNavigation();
   const [usernameText, changedUsernameText] = React.useState("Example Padding");
   const [passwordText, changedPasswordText] = React.useState("Example Padding");
 

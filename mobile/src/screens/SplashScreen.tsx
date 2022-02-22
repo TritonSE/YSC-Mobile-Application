@@ -1,21 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { View, Image } from "react-native";
 
 import logoImg from "../../assets/YStemLogo1.png";
 import {AppStylesheet} from '../styles/AppStylesheet'
 
-import { RootStackParamList } from "./RootStackParams";
-
-
-
-
-type splashScreenProp = StackNavigationProp<RootStackParamList, "Splash Screen">;
-
 
 const SplashScreen = () =>{
-  const navigation = useNavigation<splashScreenProp>();
+  const navigation = useNavigation();
 
   setTimeout(() => {
     navigation.navigate("Login page 2");

@@ -2,18 +2,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
+import { RootStackParamList } from "./src/navigation/types";
 import ForgotPassword from "./src/screens/ForgotPassword";
 import LoginScreen2 from "./src/screens/LoginScreen2";
 import SplashScreen from "./src/screens/SplashScreen";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const App = () => {
-  return (
+const App = () => (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash Screen" screenOptions={{headerShown: false}}>
         <Stack.Screen
-          name="Splash Screen 2"
+          name="Splash Screen"
           component={SplashScreen}
         />
         <Stack.Screen
@@ -26,7 +26,6 @@ const App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-}
+  )
 
 export default App;
