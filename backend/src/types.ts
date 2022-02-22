@@ -1,17 +1,11 @@
 type RoomData = {
-        room: string;
-        socket: string;
+  room: string;
+  socket: string;
 };
 type BoardState = {
-        lock: number;
-        board: string;
-        players: string[];
+  lock: number;
+  board: string;
+  players: string[];
 };
 
-export {
-    RoomData,
-    BoardState,
-
-}
-
-
+export { RoomData, BoardState };
