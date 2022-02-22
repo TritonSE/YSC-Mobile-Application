@@ -78,11 +78,6 @@ export const AppStylesheet = StyleSheet.create({
         width: 327,
         height: 142,
     },   
-    
-    stemett: {
-        width: 156,
-        height: 369,
-    },
 
     forgotPasswordImage: {
         width: 234,
