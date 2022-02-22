@@ -52,6 +52,7 @@ export const AppStylesheet = StyleSheet.create({
 
     textInputField: {
         fontSize: 16,
+        padding: 5,
         fontStyle: "normal",
         fontWeight: "normal",
         borderRadius: 3,
