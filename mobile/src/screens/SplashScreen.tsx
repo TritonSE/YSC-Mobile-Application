@@ -23,7 +23,7 @@ const SplashScreen = () =>{
 
   return (
     <View style={AppStylesheet.containerSplashScreen}>
-      <Image style={AppStylesheet.ystemLogo} source={logoImg} />
+      <Image style={AppStylesheet.yStemLogo} source={logoImg} />
     </View>
   );
 }

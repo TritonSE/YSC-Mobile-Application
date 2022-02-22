@@ -20,7 +20,7 @@ const LoginScreen2 = () => {
   return (
     <View style={AppStylesheet.container}>
       <View>
-        <Image style={AppStylesheet.STEMy_Mascot} source={mascotImg} />
+        <Image style={AppStylesheet.stemyMascot} source={mascotImg} />
       </View>
 
       <View style = {AppStylesheet.input}>
@@ -51,10 +51,10 @@ const LoginScreen2 = () => {
 
       {/* same code from LoginInScreen.jsx */}
       <Pressable
-        style={AppStylesheet.ForgotPassword}
+        style={AppStylesheet.forgotPassword}
         onPress={() => navigation.navigate("forgot password screen")}
       >
-        <Text style={AppStylesheet.ForgotPasswordText}>Forgot Password</Text>
+        <Text style={AppStylesheet.forgotPasswordText}>Forgot Password</Text>
       </Pressable>
     </View>
   );

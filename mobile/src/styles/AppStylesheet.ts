@@ -32,13 +32,13 @@ export const AppStylesheet = StyleSheet.create({
         fontWeight: "normal",
     },
 
-    ForgotPassword: {
+    forgotPassword: {
         width: 114,
         height: 18,
         marginTop: 20,
     },
     
-    ForgotPasswordText: {
+    forgotPasswordText: {
         fontStyle: "normal",
         fontWeight: "normal",
         fontSize: 15,    
@@ -69,17 +69,17 @@ export const AppStylesheet = StyleSheet.create({
         fontWeight: "700",
     },
 
-    STEMy_Mascot: {
+    stemyMascot: {
         width: 375,
         height: 375,
     },
 
-    ystemLogo: {
+    yStemLogo: {
         width: 327,
         height: 142,
     },   
     
-    Stemett: {
+    stemett: {
         width: 156,
         height: 369,
     },
