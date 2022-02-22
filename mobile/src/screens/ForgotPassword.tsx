@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, Image, TextInput, SafeAreaView } from "react-native";
 
 import img from "../../assets/forgotPasswordScreenImage.png";
@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import {AppStylesheet} from '../styles/AppStylesheet'
 
 const ForgotPassword = () => {
-  const [currentEmailText, changedUserEmailText] = React.useState("Example Padding");
+  const [currentEmailText, changedUserEmailText] = useState("Example Padding");
 
   return (
     <View style={AppStylesheet.container}>

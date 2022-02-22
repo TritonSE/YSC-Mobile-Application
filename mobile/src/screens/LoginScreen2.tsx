@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 // import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
+import React, {useState} from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
 import mascotImg from "../../assets/STEMy_Mascot.png";
@@ -9,8 +9,9 @@ import {AppStylesheet} from '../styles/AppStylesheet';
 
 const LoginScreen2 = () => {
   const navigation = useNavigation();
-  const [usernameText, changedUsernameText] = React.useState("Example Padding");
-  const [passwordText, changedPasswordText] = React.useState("Example Padding");
+  const [usernameText, changedUsernameText] = useState("Example Padding");
+  const [passwordText, changedPasswordText] = useState("Example Padding");
+
 
   return (
     <View style={AppStylesheet.container}>
