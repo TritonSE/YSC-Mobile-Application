@@ -27,9 +27,6 @@ const ForgotPassword = () => {
         </SafeAreaView>
       </View>
 
-      {/* <br>
-        </br> */}
-
       <Button text="Reset Password" />
     </View>
   );

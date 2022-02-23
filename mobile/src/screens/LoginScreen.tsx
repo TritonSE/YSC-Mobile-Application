@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-// import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
