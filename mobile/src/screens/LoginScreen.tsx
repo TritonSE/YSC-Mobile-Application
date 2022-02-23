@@ -47,7 +47,7 @@ const LoginScreen = () => {
 
       <Pressable
         style={AppStylesheet.forgotPassword}
-        onPress={() => navigation.navigate("forgot password screen")}
+        onPress={() => navigation.navigate("ForgotPassword")}
       >
         <Text style={AppStylesheet.forgotPasswordText}>Forgot Password</Text>
       </Pressable>
