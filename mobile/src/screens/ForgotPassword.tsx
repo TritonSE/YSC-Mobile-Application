@@ -3,7 +3,7 @@ import { Text, View, Image, TextInput, SafeAreaView } from "react-native";
 
 import img from "../../assets/forgotPasswordScreenImage.png";
 import Button from "../components/Button";
-import {AppStylesheet} from '../styles/AppStylesheet'
+import { AppStylesheet } from "../styles/AppStylesheet";
 
 const ForgotPassword = () => {
   const [currentEmailText, changedUserEmailText] = useState("Example Padding");
@@ -14,25 +14,25 @@ const ForgotPassword = () => {
         <Image style={AppStylesheet.forgotPasswordImage} source={img} />
       </View>
 
-      <View style = {AppStylesheet.input}>
-      <Text style={AppStylesheet.textInputHeader}>User Email</Text>
+      <View style={AppStylesheet.input}>
+        <Text style={AppStylesheet.textInputHeader}>User Email</Text>
 
-      {/* used same code from loginscreen.jsx screen */}
-      <SafeAreaView>
-        <TextInput
-          style={AppStylesheet.textInputField}
-          onChangeText={changedUserEmailText}
-          value={currentEmailText}
-        />
-      </SafeAreaView>
+        {/* used same code from loginscreen.jsx screen */}
+        <SafeAreaView>
+          <TextInput
+            style={AppStylesheet.textInputField}
+            onChangeText={changedUserEmailText}
+            value={currentEmailText}
+          />
+        </SafeAreaView>
       </View>
 
       {/* <br>
         </br> */}
 
-      <Button text="Reset Password"/>
+      <Button text="Reset Password" />
     </View>
   );
-}
+};
 
 export default ForgotPassword;

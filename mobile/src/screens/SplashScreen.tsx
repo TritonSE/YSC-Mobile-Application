@@ -3,10 +3,9 @@ import React from "react";
 import { View, Image } from "react-native";
 
 import logoImg from "../../assets/YStemLogo1.png";
-import {AppStylesheet} from '../styles/AppStylesheet'
+import { AppStylesheet } from "../styles/AppStylesheet";
 
-
-const SplashScreen = () =>{
+const SplashScreen = () => {
   const navigation = useNavigation();
 
   setTimeout(() => {
@@ -18,6 +17,6 @@ const SplashScreen = () =>{
       <Image style={AppStylesheet.yStemLogo} source={logoImg} />
     </View>
   );
-}
+};
 
 export default SplashScreen;

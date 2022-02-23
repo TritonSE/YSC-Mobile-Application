@@ -1,5 +1,5 @@
 export type RootStackParamList = {
-  "Splash": undefined;
-  "Login": undefined;
-  "ForgotPassword": undefined;
+  Splash: undefined;
+  Login: undefined;
+  ForgotPassword: undefined;
 };

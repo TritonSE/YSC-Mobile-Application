@@ -8,9 +8,8 @@ import SplashScreen from "./src/screens/SplashScreen";
 
 const Stack = createNativeStackNavigator();
 
-const App = () => {
-  return (
-    <NavigationContainer>
+const App = () => (
+  <NavigationContainer>
     <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -18,6 +17,5 @@ const App = () => {
     </Stack.Navigator>
   </NavigationContainer>
 );
-}
 
 export default App;
