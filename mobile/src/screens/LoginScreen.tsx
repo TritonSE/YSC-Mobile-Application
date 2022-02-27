@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
-import mascotImg from "../../assets/STEMy_Mascot.png";
+import mascotImg from "../../assets/mascot.png";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
@@ -14,7 +14,7 @@ const LoginScreen = () => {
   return (
     <View style={AppStylesheet.container}>
       <View>
-        <Image style={AppStylesheet.stemyMascot} source={mascotImg} />
+        <Image style={AppStylesheet.mascot} source={mascotImg} />
       </View>
 
       <View style={AppStylesheet.input}>

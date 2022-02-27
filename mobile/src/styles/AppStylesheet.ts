@@ -50,6 +50,11 @@ export const AppStylesheet = StyleSheet.create({
     padding: 10,
   },
 
+  mascot: {
+    width: 375,
+    height: 375,
+  },
+
   textInputField: {
     fontSize: 16,
     padding: 5,
@@ -68,11 +73,6 @@ export const AppStylesheet = StyleSheet.create({
     fontStyle: "normal",
     fontSize: 16,
     fontWeight: "700",
-  },
-
-  stemyMascot: {
-    width: 375,
-    height: 375,
   },
 
   yStemLogo: {

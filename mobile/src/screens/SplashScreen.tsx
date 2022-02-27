@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Image } from "react-native";
 
-import logoImg from "../../assets/YStemLogo1.png";
+import logoImg from "../../assets/YStemLogo.png";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const SplashScreen = () => {

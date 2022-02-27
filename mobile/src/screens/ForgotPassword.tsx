@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, Image, TextInput, SafeAreaView } from "react-native";
 
-import img from "../../assets/forgotPasswordScreenImage.png";
+import img from "../../assets/mascot_waving.png";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
@@ -17,7 +17,6 @@ const ForgotPassword = () => {
       <View style={AppStylesheet.input}>
         <Text style={AppStylesheet.textInputHeader}>User Email</Text>
 
-        {/* used same code from loginscreen.jsx screen */}
         <SafeAreaView>
           <TextInput
             style={AppStylesheet.textInputField}
