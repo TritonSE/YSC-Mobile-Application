@@ -8,8 +8,8 @@ import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [usernameText, changedUsernameText] = useState("Example Padding");
-  const [passwordText, changedPasswordText] = useState("Example Padding");
+  const [username, setUsername] = useState("Example Padding");
+  const [password, setPassword] = useState("Example Padding");
 
   return (
     <View style={AppStylesheet.container}>
@@ -23,8 +23,8 @@ const LoginScreen = () => {
         <SafeAreaView>
           <TextInput
             style={AppStylesheet.textInputField}
-            onChangeText={changedUsernameText}
-            value={usernameText}
+            onChangeText={setUsername}
+            value={username}
           />
         </SafeAreaView>
       </View>
@@ -35,8 +35,8 @@ const LoginScreen = () => {
         <SafeAreaView>
           <TextInput
             style={AppStylesheet.textInputField}
-            onChangeText={changedPasswordText}
-            value={passwordText}
+            onChangeText={setPassword}
+            value={password}
           />
         </SafeAreaView>
       </View>

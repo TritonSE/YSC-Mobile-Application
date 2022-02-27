@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const ForgotPassword = () => {
-  const [currentEmailText, changedUserEmailText] = useState("Example Padding");
+  const [email, setEmail] = useState("Example Padding");
 
   return (
     <View style={AppStylesheet.container}>
@@ -18,11 +18,7 @@ const ForgotPassword = () => {
         <Text style={AppStylesheet.textInputHeader}>User Email</Text>
 
         <SafeAreaView>
-          <TextInput
-            style={AppStylesheet.textInputField}
-            onChangeText={changedUserEmailText}
-            value={currentEmailText}
-          />
+          <TextInput style={AppStylesheet.textInputField} onChangeText={setEmail} value={email} />
         </SafeAreaView>
       </View>
 
