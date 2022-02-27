@@ -8,13 +8,6 @@ export const AppStylesheet = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  containerSplashScreen: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#D4DDDD",
-  },
-
   button: {
     backgroundColor: "#96C957",
     width: 327,
@@ -73,11 +66,6 @@ export const AppStylesheet = StyleSheet.create({
     fontStyle: "normal",
     fontSize: 16,
     fontWeight: "700",
-  },
-
-  yStemLogo: {
-    width: 327,
-    height: 142,
   },
 
   forgotPasswordImage: {
