@@ -63,6 +63,7 @@ function Board() {
             if (piece !== null) {
               return (
                 <Piece
+                  /* eslint-disable */
                   key={`${x}-${y}`}
                   id={`${piece.color}${piece.type}` as const}
                   startPosition={{ x, y }}

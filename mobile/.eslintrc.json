@@ -14,7 +14,6 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "react/style-prop-object": "off",
-    "react/no-array-index-key": "off"
+    "react/style-prop-object": "off"
   }
 }
