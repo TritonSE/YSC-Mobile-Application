@@ -5,9 +5,14 @@ import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-nat
 import mascotImg from "../../assets/mascot.png";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ForgotPassword from "./ForgotPassword";
+
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const Tab = createBottomTabNavigator();
+
   const [username, setUsername] = useState("Example Padding");
   const [password, setPassword] = useState("Example Padding");
 
@@ -49,6 +54,7 @@ const LoginScreen = () => {
       >
         <Text style={AppStylesheet.forgotPasswordText}>Forgot Password</Text>
       </Pressable>
+
     </View>
   );
 };
