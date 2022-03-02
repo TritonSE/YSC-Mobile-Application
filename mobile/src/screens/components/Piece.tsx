@@ -14,7 +14,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { Vector } from "react-native-redash";
 
-// import black piece image assets
 import bbPiece from "../../../assets/bb.png";
 import bkPiece from "../../../assets/bk.png";
 import bnPiece from "../../../assets/bn.png";

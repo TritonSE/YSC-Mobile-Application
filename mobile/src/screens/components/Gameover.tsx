@@ -52,7 +52,7 @@ const popUpStyles = StyleSheet.create({
 });
 
 export default function Gameover({ isGameOver, playerWhoWon }) {
-  // If white's turn, black has just went and game is over due to blackr
+  // If white's turn, black has just went and game is over due to black
   const gameOverMessages = {
     w: "Black has won",
     b: "White has won",
