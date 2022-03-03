@@ -1,3 +1,5 @@
+import type { Socket } from "socket.io";
+
 import type { RoomData, BoardState } from "./types";
 
 const http = require("http");
@@ -22,7 +24,7 @@ server.listen(PORT, () => {
 
 // triggered whenever a new socket connects to server
 // the new socket should send the username of the client through the auth object
-io.on("connection", (socket: any) => {
+io.on("connection", (socket: Socket) => {
   const username = socket.handshake.auth.username;
   let currRoom = "Room " + boards.size;
 
@@ -55,6 +57,6 @@ io.on("connection", (socket: any) => {
   require("./eventHandlers/drawHandler.ts")(socket, io, username, rooms, boards);
 });
 
-io.of("/").adapter.on("delete-room", (room: any) => {
+io.of("/").adapter.on("delete-room", (room: string) => {
   boards.delete(room);
 });

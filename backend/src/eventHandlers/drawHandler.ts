@@ -1,8 +1,10 @@
+import type { Socket, Server } from "socket.io";
+
 import type { RoomData, BoardState } from "../types";
 
 exports = function (
-  socket: any,
-  io: any,
+  socket: Socket,
+  io: Server,
   username: string,
   rooms: Map<string, RoomData>,
   boards: Map<string, BoardState>
