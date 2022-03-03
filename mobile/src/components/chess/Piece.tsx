@@ -14,18 +14,18 @@ import Animated, {
 } from "react-native-reanimated";
 import { Vector } from "react-native-redash";
 
-import bbPiece from "../../../assets/bb.png";
-import bkPiece from "../../../assets/bk.png";
-import bnPiece from "../../../assets/bn.png";
-import bpPiece from "../../../assets/bp.png";
-import bqPiece from "../../../assets/bq.png";
-import brPiece from "../../../assets/br.png";
-import wbPiece from "../../../assets/wb.png";
-import wkPiece from "../../../assets/wk.png";
-import wnPiece from "../../../assets/wn.png";
-import wpPiece from "../../../assets/wp.png";
-import wqPiece from "../../../assets/wq.png";
-import wrPiece from "../../../assets/wr.png";
+import bbPiece from "../../../assets/piece_images/bb.png";
+import bkPiece from "../../../assets/piece_images/bk.png";
+import bnPiece from "../../../assets/piece_images/bn.png";
+import bpPiece from "../../../assets/piece_images/bp.png";
+import bqPiece from "../../../assets/piece_images/bq.png";
+import brPiece from "../../../assets/piece_images/br.png";
+import wbPiece from "../../../assets/piece_images/wb.png";
+import wkPiece from "../../../assets/piece_images/wk.png";
+import wnPiece from "../../../assets/piece_images/wn.png";
+import wpPiece from "../../../assets/piece_images/wp.png";
+import wqPiece from "../../../assets/piece_images/wq.png";
+import wrPiece from "../../../assets/piece_images/wr.png";
 
 import { toTranslation, SIZE, toPosition } from "./Notation.ts";
 
@@ -62,7 +62,7 @@ interface PieceProps {
   enabled: boolean;
 }
 
-function Piece({ id, startPosition, chess, onTurn, enabled }: PieceProps) {
+const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
   const isGestureActive = useSharedValue(false);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -140,6 +140,6 @@ function Piece({ id, startPosition, chess, onTurn, enabled }: PieceProps) {
       </PanGestureHandler>
     </>
   );
-}
+};
 
 export default Piece;

@@ -49,25 +49,27 @@ function Square({ white, row, col }: SquareProps) {
 
 function Row({ white, row }: RowProps) {
   const offset = white ? 0 : 1;
-  /* eslint-disable */
   return (
     <View style={styles.container}>
+      {/* eslint-disable react/no-array-index-key */}
       {new Array(8).fill(0).map((_, i) => (
         <Square row={row} col={i} key={i} white={(i + offset) % 2 === 1} />
       ))}
+      {/* eslint-enable react/no-array-index-key */}
     </View>
-    /* eslint-disable */
   );
 }
 
-function Background() {
+const Background = () => {
   return (
     <View style={{ flex: 1 }}>
+      {/* eslint-disable react/no-array-index-key */}
       {new Array(8).fill(0).map((_, i) => (
         <Row key={i} white={i % 2 === 0} row={i} />
       ))}
+      {/* eslint-enable react/no-array-index-key */}
     </View>
   );
-}
+};
 
 export default Background;

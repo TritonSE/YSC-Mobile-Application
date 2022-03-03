@@ -5,7 +5,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
-import Board from "./components/Board.tsx";
+import Board from "../components/chess/Board.tsx";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,8 +22,8 @@ const Chessboard = gestureHandlerRootHOC(() => (
   </View>
 ));
 
-function Chess() {
+const Chess = () => {
   return <Chessboard />;
-}
+};
 
 export default Chess;

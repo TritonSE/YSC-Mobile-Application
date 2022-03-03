@@ -51,38 +51,41 @@ const popUpStyles = StyleSheet.create({
   },
 });
 
-export default function Gameover({ isGameOver, playerWhoWon }) {
+const Gameover = ({ isGameOver, playerWhoWon }) => {
   // If white's turn, black has just went and game is over due to black
   const gameOverMessages = {
     w: "Black has won",
     b: "White has won",
   };
+  const [modalVisible, setModalVisible] = useState(false);
   // When gameover, display a popup to notify the players
-  if (isGameOver) {
-    const [modalVisible, setModalVisible] = useState(true);
-    return (
-      <Modal
-        animationType="slide"
-        transparent
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={popUpStyles.centeredView}>
-          <View style={popUpStyles.modalView}>
-            <Text style={popUpStyles.modalText}>{gameOverMessages[playerWhoWon]}</Text>
-            <Pressable
-              style={[popUpStyles.exitButton, popUpStyles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={popUpStyles.textStyle}>Exit</Text>
-            </Pressable>
+  return (
+    <View>
+      {isGameOver && (
+        <Modal
+          animationType="slide"
+          transparent
+          visible={!modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={popUpStyles.centeredView}>
+            <View style={popUpStyles.modalView}>
+              <Text style={popUpStyles.modalText}>{gameOverMessages[playerWhoWon]}</Text>
+              <Pressable
+                style={[popUpStyles.exitButton, popUpStyles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={popUpStyles.textStyle}>Exit</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </Modal>
-    );
-  }
-  return null;
-}
+        </Modal>
+      )}
+    </View>
+  );
+};
+
+export default Gameover;

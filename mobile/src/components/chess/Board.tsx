@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Board() {
+const Board = () => {
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
     player: chess.turn(),
@@ -62,8 +62,8 @@ function Board() {
           row.map((piece, x) => {
             if (piece !== null) {
               return (
+                /* eslint-disable react/no-array-index-key */
                 <Piece
-                  /* eslint-disable */
                   key={`${x}-${y}`}
                   id={`${piece.color}${piece.type}` as const}
                   startPosition={{ x, y }}
@@ -71,6 +71,7 @@ function Board() {
                   onTurn={onTurn}
                   enabled={state.player === piece.color}
                 />
+                /* eslint-enable react/no-array-index-key */
               );
             }
             return null;
@@ -79,6 +80,6 @@ function Board() {
       </View>
     </View>
   );
-}
+};
 
 export default Board;
