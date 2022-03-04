@@ -22,8 +22,6 @@ const Chessboard = gestureHandlerRootHOC(() => (
   </View>
 ));
 
-const Chess = () => {
-  return <Chessboard />;
-};
+const Chess = () => <Chessboard />;
 
 export default Chess;

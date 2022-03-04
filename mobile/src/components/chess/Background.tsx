@@ -60,16 +60,14 @@ function Row({ white, row }: RowProps) {
   );
 }
 
-const Background = () => {
-  return (
-    <View style={{ flex: 1 }}>
-      {/* eslint-disable react/no-array-index-key */}
-      {new Array(8).fill(0).map((_, i) => (
-        <Row key={i} white={i % 2 === 0} row={i} />
-      ))}
-      {/* eslint-enable react/no-array-index-key */}
-    </View>
-  );
-};
+const Background = () => (
+  <View style={{ flex: 1 }}>
+    {/* eslint-disable react/no-array-index-key */}
+    {new Array(8).fill(0).map((_, i) => (
+      <Row key={i} white={i % 2 === 0} row={i} />
+    ))}
+    {/* eslint-enable react/no-array-index-key */}
+  </View>
+);
 
 export default Background;

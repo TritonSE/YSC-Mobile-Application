@@ -14,6 +14,15 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "react/style-prop-object": "off"
+    "react/style-prop-object": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
