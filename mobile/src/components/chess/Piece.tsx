@@ -27,7 +27,7 @@ import wpPiece from "../../../assets/piece_images/wp.png";
 import wqPiece from "../../../assets/piece_images/wq.png";
 import wrPiece from "../../../assets/piece_images/wr.png";
 
-import { toTranslation, SIZE, toPosition } from "./Notation.ts";
+import { toTranslation, SIZE, toPosition } from "./Notation";
 
 const styles = StyleSheet.create({
   piece: {

@@ -5,9 +5,9 @@ import { Chess } from "chess.js";
 import React, { useCallback, useRef, useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
 
-import Background from "./Background.tsx";
-import Gameover from "./Gameover.tsx";
-import Piece from "./Piece.tsx";
+import Background from "./Background";
+import Gameover from "./Gameover";
+import Piece from "./Piece";
 
 const { width } = Dimensions.get("window");
 
