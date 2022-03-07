@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "express": "^4.17.2",
-    "socket.io": "^4.4.1"
+    "socket.io": "^4.4.1",
+    "prettier": "^2.5.1",
+    "save-dev": "^0.0.1-security"
   }
 }
