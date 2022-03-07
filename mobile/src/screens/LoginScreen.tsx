@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
 import mascotImg from "../../assets/mascot.png";
-import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LoginScreen = () => {
@@ -41,7 +40,9 @@ const LoginScreen = () => {
         </SafeAreaView>
       </View>
 
-      <Button text="Login" />
+      <Pressable style={AppStylesheet.button} onPress={() => navigation.navigate("Chess")}>
+        <Text style={AppStylesheet.buttonText}>Login</Text>
+      </Pressable>
 
       <Pressable
         style={AppStylesheet.forgotPassword}
