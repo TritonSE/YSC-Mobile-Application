@@ -29,21 +29,23 @@ io.on("connection", (socket: Socket) => {
   let currRoom = "Room " + boards.size;
 
   // Check if user is already in a room
-  if (rooms.get(username) != null) {
+  const userRoomData = rooms.get(username);
+  if (userRoomData) {
     // If so, place socket back into that room
-    const newSocket: RoomData = { room: rooms.get(username)!.room, socket: socket.id };
+    const newSocket: RoomData = { room: userRoomData.room, socket: socket.id };
     rooms.set(username, newSocket);
   } else {
     let board: BoardState = { lock: 0, board: "", players: [username] };
 
     // socket only has default socket ID room => assign socket to a room
     if (socket.rooms.size == 1) {
-      if (io.sockets.adapter.rooms.get(currRoom) != null) {
+      if (io.sockets.adapter.rooms.get(currRoom)) {
         //Check if current room is full => create new room
         if (io.sockets.adapter.rooms.get(currRoom).size == 2) {
           currRoom = "Room " + (boards.size + 1);
         } else {
-          board = { ...board, players: [boards.get(currRoom)!.players[0], username] };
+          const currBoard = boards.get(currRoom);
+          if (currBoard) board = { ...board, players: [currBoard.players[0], username] };
         }
       }
       boards.set(currRoom, board);

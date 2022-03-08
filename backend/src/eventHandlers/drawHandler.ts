@@ -17,20 +17,32 @@ exports = function (
   // if client B wants to decline the draw, client B should emit "draw rejected"
   //  in this case, client A should handle "draw request rejected" with username of client B being sent
   socket.on("try draw", () => {
-    const room = rooms.get(username)!.room;
-    socket.to(room).emit("draw request", username);
+    const userRoomData = rooms.get(username);
+    if (userRoomData) {
+      const room = userRoomData.room;
+      socket.to(room).emit("draw request", username);
+    }
   });
 
   socket.on("draw accepted", () => {
-    const room = rooms.get(username)!.room;
-    io.in(room).emit("game drawn", username);
-    rooms.delete(boards.get(room)!.players[0]);
-    rooms.delete(boards.get(room)!.players[1]);
-    boards.delete(room);
+    const userRoomData = rooms.get(username);
+    if (userRoomData) {
+      const room = userRoomData.room;
+      io.in(room).emit("game drawn", username);
+      const roomBoardData = boards.get(room);
+      if (roomBoardData) {
+        rooms.delete(roomBoardData.players[0]);
+        rooms.delete(roomBoardData.players[1]);
+        boards.delete(room);
+      }
+    }
   });
 
   socket.on("draw rejected", () => {
-    const room = rooms.get(username)!.room;
-    socket.to(room).emit("draw request rejected", username);
+    const userRoomData = rooms.get(username);
+    if (userRoomData) {
+      const room = userRoomData.room;
+      socket.to(room).emit("draw request rejected", username);
+    }
   });
 };
