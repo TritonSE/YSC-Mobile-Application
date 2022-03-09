@@ -1,40 +1,44 @@
-import React, {createContext, useState} from 'react';
+import React, { createContext, useState } from "react";
+
+export type User = {
+  username: string;
+  firstName: string;
+  lastName: string;
+  role: any;
+  email: string;
+};
 
 type UserState = {
-  userState: {
-    username: string;
-    firstName: string;
-    lastName: string;
-    role: any;
-    email: string;
-  },
-  setUserState: React.Dispatch<React.SetStateAction<{
-    username: string;
-    firstName: string;
-    lastName: string;
-    role: any;
-    email: string;
-  }>>
-}
+  userState: User;
+  setUserState: React.Dispatch<
+    React.SetStateAction<{
+      username: string;
+      firstName: string;
+      lastName: string;
+      role: any;
+      email: string;
+    }>
+  >;
+};
 
-const initialState: UserState = 
-{
-    userState:
-    {
-        username: '',
-        firstName: '',
-        lastName: '',
-        role: '',
-        email: '',
-    },
-   setUserState: () => {}
-}
+export const initialUser: User = {
+  username: "",
+  firstName: "",
+  lastName: "",
+  role: "",
+  email: "",
+};
+
+const initialState: UserState = {
+  userState: initialUser,
+  setUserState: () => {},
+};
 
 export const UserContext = createContext<UserState>(initialState);
 
-export const UserProvider: React.FC = ({children}) => {
+export const UserProvider: React.FC = ({ children }) => {
   const [userState, setUserState] = useState(initialState.userState);
-    
+
   return (
     <UserContext.Provider
       value={{
@@ -45,4 +49,4 @@ export const UserProvider: React.FC = ({children}) => {
       {children}
     </UserContext.Provider>
   );
-}
+};

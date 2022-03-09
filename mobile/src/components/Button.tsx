@@ -6,7 +6,7 @@ import { AppStylesheet } from "../styles/AppStylesheet";
 type ButtonProps = {
   text: string;
   onPress?: any;
-}
+};
 
 const Button = (props: ButtonProps) => (
   <View>
