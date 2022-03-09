@@ -1,20 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, View, Image, Pressable, TextInput, SafeAreaView } from "react-native";
 
 import mascotImg from "../../assets/mascot.png";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ForgotPassword from "./ForgotPassword";
 
+import {AuthContext} from "../contexts/AuthContext";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const Tab = createBottomTabNavigator();
+  const { login } = useContext(AuthContext);
 
   const [username, setUsername] = useState("Example Padding");
   const [password, setPassword] = useState("Example Padding");
+
 
   return (
     <View style={AppStylesheet.container}>
@@ -46,7 +47,11 @@ const LoginScreen = () => {
         </SafeAreaView>
       </View>
 
-      <Button text="Login" />
+      <Button text="Login" onPress={() => {
+        console.log('login pressed');
+        login(username, password);
+        navigation.navigate("HomeScreen")
+      }}/>
 
       <Pressable
         style={AppStylesheet.forgotPassword}

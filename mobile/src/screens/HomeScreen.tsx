@@ -3,12 +3,12 @@ import { Text, View} from "react-native";
 
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ForgotPassword from "./ForgotPassword";
 
 const HomeScreen = () => 
 {
-    const Tab = createBottomTabNavigator();
+    // const Tab = createBottomTabNavigator();
 
     return(
         <View style = {AppStylesheet.container}>
@@ -19,11 +19,11 @@ const HomeScreen = () =>
 
             <Text>14 Players Online</Text>
 
-            <Tab.Navigator>
+            {/* <Tab.Navigator>
                 <Tab.Screen name = "Home" component = {ForgotPassword} />
                 <Tab.Screen name = "Lessons" component = {ForgotPassword} />
                 <Tab.Screen name = "Profile" component = {ForgotPassword} />
-            </Tab.Navigator>
+            </Tab.Navigator> */}
         
         </View>
     );
