@@ -13,10 +13,8 @@ import {
 
 import mascotImg from "../../assets/mascot.png";
 import Button from "../components/Button";
-import { AuthContext, AuthProvider } from "../contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
-
-import ForgotPassword from "./ForgotPassword";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -26,9 +24,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    console.log("login pressed");
     login(username, password);
-    // navigation.navigate("HomeScreen");
   };
 
   return (

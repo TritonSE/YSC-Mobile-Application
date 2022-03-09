@@ -4,8 +4,6 @@ import { Text, View } from "react-native";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
-import ForgotPassword from "./ForgotPassword";
-
 const HomeScreen = () => (
   <View style={AppStylesheet.container}>
     <Text style={AppStylesheet.headerHomeScreen}>Welcome, User</Text>

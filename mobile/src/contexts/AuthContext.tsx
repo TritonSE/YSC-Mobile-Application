@@ -27,35 +27,35 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const login = (username: string, password: string): void => {
     (async () => {
-        const params = {
-          username,
-          password,
-        };
-        const url = YSC_SERVER_URI + "auth/login?" + new URLSearchParams(params).toString();
-        const res = await fetch(url, {
-          method: "POST",
-        });
-        
-        if (res.ok) {
-          const tokenJson = await res.json();
-          const token = JSON.stringify(tokenJson);
-          // store token & user info
-          await SecureStore.setItemAsync("token", token);
-          const decoded: any = jwt_decode(token);
+      const params = {
+        username,
+        password,
+      };
+      const url = YSC_SERVER_URI + "auth/login?" + new URLSearchParams(params).toString();
+      const res = await fetch(url, {
+        method: "POST",
+      });
 
-          // store user info in User context
-          const newUserState: User = {
-            username: decoded.username,
-            firstName: decoded.firstName,
-            lastName: decoded.lastName,
-            role: decoded.role,
-            email: decoded.email,
-          };
-          setUserState(newUserState);
-          setIsLoggedIn(true);
-        } else {
-          console.error("Login request was unsuccessful.")
-        }
+      if (res.ok) {
+        const tokenJson = await res.json();
+        const token = JSON.stringify(tokenJson);
+        // store token & user info
+        await SecureStore.setItemAsync("token", token);
+        const decoded: any = jwt_decode(token);
+
+        // store user info in User context
+        const newUserState: User = {
+          username: decoded.username,
+          firstName: decoded.firstName,
+          lastName: decoded.lastName,
+          role: decoded.role,
+          email: decoded.email,
+        };
+        setUserState(newUserState);
+        setIsLoggedIn(true);
+      } else {
+        console.error("Login request was unsuccessful.");
+      }
     })();
   };
 

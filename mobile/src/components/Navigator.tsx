@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 const Navigator = () => {
   const { isLoggedIn } = useContext(AuthContext);
 
-  return(
+  return (
     <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -20,8 +20,8 @@ const Navigator = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         </>
       )}
-      </Stack.Navigator>
-    );
-}
+    </Stack.Navigator>
+  );
+};
 
 export default Navigator;

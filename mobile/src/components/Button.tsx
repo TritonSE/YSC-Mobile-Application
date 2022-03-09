@@ -8,10 +8,10 @@ type ButtonProps = {
   onPress?: any;
 };
 
-const Button = (props: ButtonProps) => (
+const Button = ({ text, onPress = undefined }: ButtonProps) => (
   <View>
-    <Pressable style={AppStylesheet.button} onPress={props.onPress}>
-      <Text style={AppStylesheet.buttonText}>{props.text}</Text>
+    <Pressable style={AppStylesheet.button} onPress={onPress}>
+      <Text style={AppStylesheet.buttonText}>{text}</Text>
     </Pressable>
   </View>
 );
