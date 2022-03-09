@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const { readFileSync } = require("fs");
 
 const generalRules = {
