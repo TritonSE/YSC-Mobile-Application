@@ -1,8 +1,9 @@
-import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { UserProvider } from "./src/contexts/UserContext";
-import { AuthProvider } from "./src/contexts/AuthContext";
+import React from "react";
+
 import Navigator from "./src/components/Navigator";
+import { AuthProvider } from "./src/contexts/AuthContext";
+import { UserProvider } from "./src/contexts/UserContext";
 
 const App = () => (
   <UserProvider>

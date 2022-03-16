@@ -4,8 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 
 import { User, initialUser, UserContext } from "./UserContext";
 
-// TODO: move into env file
-const YSC_SERVER_URI = "https://ystemandchess.com/middleware/";
+const YSC_SERVER_URI = process.env.YSC_SERVER_URI;
 
 type AuthState = {
   isLoggedIn: boolean;
@@ -22,7 +21,9 @@ const initialState: AuthState = {
 export const AuthContext = createContext<AuthState>(initialState);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  console.log(YSC_SERVER_URI);
   const { setUserState } = useContext(UserContext);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = (username: string, password: string): void => {
