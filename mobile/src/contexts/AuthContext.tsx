@@ -21,7 +21,6 @@ const initialState: AuthState = {
 export const AuthContext = createContext<AuthState>(initialState);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  console.log(YSC_SERVER_URI);
   const { setUserState } = useContext(UserContext);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
