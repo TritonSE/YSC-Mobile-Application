@@ -1,10 +1,9 @@
+import { YSC_SERVER_URI } from "@env";
 import * as SecureStore from "expo-secure-store";
 import jwt_decode from "jwt-decode";
 import React, { createContext, useContext, useState } from "react";
 
 import { User, initialUser, UserContext } from "./UserContext";
-
-const YSC_SERVER_URI = process.env.YSC_SERVER_URI;
 
 type AuthState = {
   isLoggedIn: boolean;
