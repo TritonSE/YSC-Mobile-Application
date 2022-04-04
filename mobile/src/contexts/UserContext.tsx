@@ -4,7 +4,7 @@ export type User = {
   username: string;
   firstName: string;
   lastName: string;
-  role: any;
+  role: string;
   email: string;
 };
 
@@ -15,7 +15,7 @@ type UserState = {
       username: string;
       firstName: string;
       lastName: string;
-      role: any;
+      role: string;
       email: string;
     }>
   >;
@@ -31,7 +31,9 @@ export const initialUser: User = {
 
 const initialState: UserState = {
   userState: initialUser,
-  setUserState: () => {},
+  setUserState: () => {
+    // initial function
+  },
 };
 
 export const UserContext = createContext<UserState>(initialState);

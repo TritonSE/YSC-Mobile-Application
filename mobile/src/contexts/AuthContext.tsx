@@ -13,8 +13,12 @@ type AuthState = {
 
 const initialState: AuthState = {
   isLoggedIn: false,
-  login: () => {},
-  validate: () => {},
+  login: () => {
+    // initial function
+  },
+  validate: () => {
+    // initial function
+  },
 };
 
 export const AuthContext = createContext<AuthState>(initialState);
