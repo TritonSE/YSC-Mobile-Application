@@ -40,15 +40,12 @@ export const UserContext = createContext<UserState>(initialState);
 
 export const UserProvider: React.FC = ({ children }) => {
   const [userState, setUserState] = useState(initialState.userState);
-
-  return (
-    <UserContext.Provider
-      value={{
-        userState,
-        setUserState,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+  const userContextValue = React.useMemo(
+    () => ({
+      userState,
+      setUserState,
+    }),
+    [userState, setUserState]
   );
+  return <UserContext.Provider value={userContextValue}>{children}</UserContext.Provider>;
 };

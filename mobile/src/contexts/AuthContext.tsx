@@ -28,69 +28,68 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const login = (username: string, password: string): void => {
-    (async () => {
-      const params = {
-        username,
-        password,
-      };
-      const url = YSC_SERVER_URI + "auth/login?" + new URLSearchParams(params).toString();
-      const res = await fetch(url, {
-        method: "POST",
-      });
-
-      if (res.ok) {
-        const tokenJson = await res.json();
-        const token = JSON.stringify(tokenJson);
-        // store token & user info
-        await SecureStore.setItemAsync("token", token);
-        const decoded: any = jwt_decode(token);
-
-        // store user info in User context
-        const newUserState: User = {
-          username: decoded.username,
-          firstName: decoded.firstName,
-          lastName: decoded.lastName,
-          role: decoded.role,
-          email: decoded.email,
+  const authContextValue = React.useMemo(
+    () => ({
+      login: async (username: string, password: string) => {
+        const params = {
+          username,
+          password,
         };
-        setUserState(newUserState);
-        setIsLoggedIn(true);
-      } else {
-        console.error("Login request was unsuccessful.");
-      }
-    })();
-  };
+        const url = YSC_SERVER_URI + "auth/login?" + new URLSearchParams(params).toString();
+        const res = await fetch(url, {
+          method: "POST",
+        });
 
-  const validate = (): void => {
-    (async () => {
-      const url = YSC_SERVER_URI + "auth/validate";
-      const tokenRes = await SecureStore.getItemAsync("token");
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${tokenRes}`,
-        },
-      });
+        if (res.ok) {
+          const tokenJson = await res.json();
+          const token = JSON.stringify(tokenJson);
+          // store token & user info
+          await SecureStore.setItemAsync("token", token);
+          const decoded: any = jwt_decode(token);
 
-      // token is invalid
-      if (res.status !== 200) {
-        // reset user state
-        setUserState(initialUser);
-        setIsLoggedIn(false);
+          // store user info in User context
+          const newUserState: User = {
+            username: decoded.username,
+            firstName: decoded.firstName,
+            lastName: decoded.lastName,
+            role: decoded.role,
+            email: decoded.email,
+          };
+          setUserState(newUserState);
+          setIsLoggedIn(true);
+        } else {
+          console.error("Login request was unsuccessful.");
+        }
+      },
+      validate: async () => {
+        const url = YSC_SERVER_URI + "auth/validate";
+        const tokenRes = await SecureStore.getItemAsync("token");
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${tokenRes}`,
+          },
+        });
 
-        console.error("Couldn't validate token.");
-      }
+        // token is invalid
+        if (res.status !== 200) {
+          // reset user state
+          setUserState(initialUser);
+          setIsLoggedIn(false);
 
-      // token is valid
-      if (res.status === 200) {
-        setIsLoggedIn(true);
-        console.log("Validated token");
-      }
-    })();
-  };
+          console.error("Couldn't validate token.");
+        }
 
-  return (
-    <AuthContext.Provider value={{ login, validate, isLoggedIn }}>{children}</AuthContext.Provider>
+        // token is valid
+        if (res.status === 200) {
+          setIsLoggedIn(true);
+          console.log("Validated token");
+        }
+      },
+      isLoggedIn,
+    }),
+    [isLoggedIn]
   );
+
+  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 };
