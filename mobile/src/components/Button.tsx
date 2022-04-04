@@ -8,12 +8,15 @@ type ButtonProps = {
   onPress?: any;
 };
 
-const Button = ({ text, onPress = undefined }: ButtonProps) => (
+const Button = ({ text, onPress }: ButtonProps) => (
   <View>
     <Pressable style={AppStylesheet.button} onPress={onPress}>
       <Text style={AppStylesheet.buttonText}>{text}</Text>
     </Pressable>
   </View>
 );
+Button.defaultProps = {
+  onPress: undefined,
+};
 
 export default Button;
