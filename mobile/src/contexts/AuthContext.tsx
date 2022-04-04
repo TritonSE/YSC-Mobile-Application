@@ -1,7 +1,7 @@
-import { YSC_SERVER_URI } from "@env";
 import * as SecureStore from "expo-secure-store";
 import jwt_decode from "jwt-decode";
 import React, { createContext, useContext, useState } from "react";
+import { YSC_SERVER_URI } from "react-native-dotenv";
 
 import { User, initialUser, UserContext } from "./UserContext";
 
