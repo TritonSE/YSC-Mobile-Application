@@ -3,10 +3,10 @@ import { Text, View, Pressable, GestureResponderEvent } from "react-native";
 
 import { AppStylesheet } from "../styles/AppStylesheet";
 
-type ButtonProps = {
+interface ButtonProps {
   text: string;
   onPress?: (event: GestureResponderEvent) => void;
-};
+}
 
 const Button = ({ text, onPress }: ButtonProps) => (
   <View>

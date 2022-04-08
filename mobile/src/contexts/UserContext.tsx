@@ -8,7 +8,7 @@ export type User = {
   email: string;
 };
 
-type UserState = {
+interface UserState {
   userState: User;
   setUserState: React.Dispatch<
     React.SetStateAction<{
@@ -19,7 +19,7 @@ type UserState = {
       email: string;
     }>
   >;
-};
+}
 
 export const initialUser: User = {
   username: "",

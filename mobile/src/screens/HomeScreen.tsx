@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View } from "react-native";
 
 import Button from "../components/Button";
+import { UserContext } from "../contexts/UserContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
-const HomeScreen = () => (
-  <View style={AppStylesheet.container}>
-    <Text style={AppStylesheet.headerHomeScreen}>Welcome, User</Text>
+const HomeScreen = () => {
+  const { userState } = useContext(UserContext);
 
-    <Button text="Play Game With A Mentor" />
-    <Button text="Play Game With A Student" />
-
-    <Text>14 Players Online</Text>
-  </View>
-);
+  return (
+    <View style={AppStylesheet.container}>
+      <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
+      <Button text="Play Game" />
+      <Text>14 Players Online</Text>
+    </View>
+  );
+};
 
 export default HomeScreen;

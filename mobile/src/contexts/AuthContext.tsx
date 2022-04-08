@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as SecureStore from "expo-secure-store";
 import jwt_decode from "jwt-decode";
 import React, { createContext, useContext, useState } from "react";
@@ -5,27 +6,28 @@ import { YSC_SERVER_URI } from "react-native-dotenv";
 
 import { User, initialUser, UserContext } from "./UserContext";
 
-type AuthState = {
+interface AuthState {
   isLoggedIn: boolean;
   login: (username: string, password: string) => void;
   validate: () => void;
-};
+}
+
+interface Payload extends User {
+  parentUsername: string;
+  exp: number;
+  iat: number;
+}
 
 const initialState: AuthState = {
   isLoggedIn: false,
-  login: () => {
-    // initial function
-  },
-  validate: () => {
-    // initial function
-  },
+  login: () => undefined,
+  validate: () => undefined,
 };
 
 export const AuthContext = createContext<AuthState>(initialState);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const authContextValue = React.useMemo(
@@ -45,7 +47,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           const token = JSON.stringify(tokenJson);
           // store token & user info
           await SecureStore.setItemAsync("token", token);
-          const decoded: any = jwt_decode(token);
+          const decoded: Payload = jwt_decode(token);
 
           // store user info in User context
           const newUserState: User = {
