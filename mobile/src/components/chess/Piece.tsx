@@ -110,13 +110,11 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
     transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
   }));
   return (
-    <>
-      <PanGestureHandler onGestureEvent={onGestureEvent} enabled={enabled}>
-        <Animated.View style={style}>
-          <Image source={PIECES[id]} style={styles.piece} />
-        </Animated.View>
-      </PanGestureHandler>
-    </>
+    <PanGestureHandler onGestureEvent={onGestureEvent} enabled={enabled}>
+      <Animated.View style={style}>
+        <Image source={PIECES[id]} style={styles.piece} />
+      </Animated.View>
+    </PanGestureHandler>
   );
 };
 

@@ -9,7 +9,7 @@ import Background from "./Background";
 import Gameover from "./Gameover";
 import Piece from "./Piece";
 
-const reverseString = (str) => str.split('').reverse().join('')
+const reverseString = (str) => str.split("").reverse().join("");
 const { width } = Dimensions.get("window");
 
 function useConst<T>(initialValue: T | (() => T)): T {
@@ -29,14 +29,21 @@ function useConst<T>(initialValue: T | (() => T)): T {
 }
 
 // Reverses the fen string to align with the perspective of the opposing player
-function reverseFenString (fen) {
-  const trailingText = fen.split("/").slice(-1)[0].split(' ').slice(1).join(' ');
-  const splitArray = fen.split("/").slice(0, -1).concat([fen.split("/").slice(-1)[0].split(' ')[0]])
+function reverseFenString(fen) {
+  const trailingText = fen.split("/").slice(-1)[0].split(" ").slice(1).join(" ");
+  const splitArray = fen
+    .split("/")
+    .slice(0, -1)
+    .concat([fen.split("/").slice(-1)[0].split(" ")[0]]);
   for (let i = 0; i < splitArray.length; i++) {
-      splitArray[i] = reverseString(splitArray[i].split()[0]);
-    }
-  return splitArray.reverse().slice(0, -1).concat(splitArray.slice(-1) + ' ' + trailingText).join('/')
-};
+    splitArray[i] = reverseString(splitArray[i].split()[0]);
+  }
+  return splitArray
+    .reverse()
+    .slice(0, -1)
+    .concat(splitArray.slice(-1) + " " + trailingText)
+    .join("/");
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -52,7 +59,7 @@ const Board = () => {
     board: chess.board(),
     fenString: "Game has not started",
     gameState: chess.game_over(),
-    reverseString: "Game has not started"
+    reverseString: "Game has not started",
   });
   // Updates game information after a turn
   const onTurn = useCallback(() => {
@@ -60,12 +67,15 @@ const Board = () => {
       player: chess.turn(),
       board: chess.board(),
       fenString: chess.fen(),
+      reverseString: reverseFenString(chess.fen()),
       gameState: chess.game_over(),
     });
   }, [chess, state.player]);
   return (
     <View>
       <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
+      <Text style={{ color: "black" }}>{state.fenString}</Text>
+      <Text style={{ color: "black" }}>{state.reverseString}</Text>
       <View style={styles.container}>
         <Background />
         {state.board.map((row, y) =>
