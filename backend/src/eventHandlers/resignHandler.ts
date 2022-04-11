@@ -1,14 +1,6 @@
-import type { Socket, Server } from "socket.io";
+import type { HandlerParams } from "../types";
 
-import type { RoomData, BoardState } from "../types";
-
-exports = function (
-  socket: Socket,
-  io: Server,
-  username: string,
-  rooms: Map<string, RoomData>,
-  boards: Map<string, BoardState>
-) {
+exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
   // CLIENT WORKFLOW FOR RESIGNATION
   // client A should emit "resign" if they attempt to resign
   // all resignations are successful and both clients should handle "game resigned" event with the username of client A being sent
