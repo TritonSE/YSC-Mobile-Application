@@ -72,4 +72,11 @@ export const AppStylesheet = StyleSheet.create({
     width: 234,
     height: 395,
   },
+
+  headerHomeScreen: {
+    top: 6,
+    left: 8,
+    fontSize: 32,
+    fontWeight: "700",
+  },
 });
