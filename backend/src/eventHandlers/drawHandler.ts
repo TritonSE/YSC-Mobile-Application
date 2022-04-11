@@ -1,14 +1,6 @@
-import type { Socket, Server } from "socket.io";
+import type { HandlerParams } from "../types";
 
-import type { RoomData, BoardState } from "../types";
-
-exports = function (
-  socket: Socket,
-  io: Server,
-  username: string,
-  rooms: Map<string, RoomData>,
-  boards: Map<string, BoardState>
-) {
+exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
   // CLIENT WORKFLOW FOR DRAWING
   // client A should emit "try draw" if they attempt to draw
   // client B should handle "draw request" event with the username of the client A being sent

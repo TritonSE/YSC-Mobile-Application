@@ -1,14 +1,22 @@
 import React from "react";
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, GestureResponderEvent } from "react-native";
 
 import { AppStylesheet } from "../styles/AppStylesheet";
 
-const Button = (prop: { text: string }) => (
+interface ButtonProps {
+  text: string;
+  onPress?: (event: GestureResponderEvent) => void;
+}
+
+const Button = ({ text, onPress }: ButtonProps) => (
   <View>
-    <Pressable style={AppStylesheet.button}>
-      <Text style={AppStylesheet.buttonText}>{prop.text}</Text>
+    <Pressable style={AppStylesheet.button} onPress={onPress}>
+      <Text style={AppStylesheet.buttonText}>{text}</Text>
     </Pressable>
   </View>
 );
+Button.defaultProps = {
+  onPress: undefined,
+};
 
 export default Button;
