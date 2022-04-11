@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useContext } from "react";
+import * as SecureStore from "expo-secure-store";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Text,
   View,
@@ -10,11 +11,17 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { SOCKET_URI } from "react-native-dotenv";
+import { io } from "socket.io-client";
 
 import mascotImg from "../../assets/mascot.png";
 import Button from "../components/Button";
 import { AuthContext } from "../contexts/AuthContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
+
+const socket = io(SOCKET_URI, {
+  transports: ["websocket"],
+});
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -23,8 +30,21 @@ const LoginScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const sendToken = async () => {
+    const token = await SecureStore.getItemAsync("token");
+    socket.emit("validate", token);
+    console.log("emitting");
+  };
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("user connected");
+    });
+  }, [socket]);
+
   const handleLogin = () => {
     login(username, password);
+    sendToken();
   };
 
   return (

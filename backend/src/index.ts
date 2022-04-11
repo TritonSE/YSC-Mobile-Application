@@ -1,6 +1,7 @@
 import type { Socket } from "socket.io";
 
 import type { RoomData, BoardState } from "./types";
+import { validateToken } from "./utils/auth";
 
 const http = require("http");
 
@@ -25,6 +26,13 @@ server.listen(PORT, () => {
 // triggered whenever a new socket connects to server
 // the new socket should send the username of the client through the auth object
 io.on("connection", (socket: Socket) => {
+  console.log("connected to server: ", socket.id);
+
+  socket.on("validate", (data) => {
+    const { token } = JSON.parse(data);
+    validateToken(token);
+  });
+
   const username = socket.handshake.auth.username;
   let currRoom = "Room " + boards.size;
 
@@ -54,9 +62,9 @@ io.on("connection", (socket: Socket) => {
     }
   }
 
-  require("./eventHandlers/moveHandler.ts")(socket, io, username, rooms, boards);
-  require("./eventHandlers/resignHandler.ts")(socket, io, username, rooms, boards);
-  require("./eventHandlers/drawHandler.ts")(socket, io, username, rooms, boards);
+  // require("./eventHandlers/moveHandler.ts")(socket, io, username, rooms, boards);
+  // require("./eventHandlers/resignHandler.ts")(socket, io, username, rooms, boards);
+  // require("./eventHandlers/drawHandler.ts")(socket, io, username, rooms, boards);
 });
 
 io.of("/").adapter.on("delete-room", (room: string) => {
