@@ -15,8 +15,10 @@ const Navigator = () => {
   return (
     <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="Chess" component={Chess} />
+        <>
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="Chess" component={Chess} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Login" component={LoginScreen} />

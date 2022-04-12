@@ -2,8 +2,9 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess } from "chess.js";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { socket } from "../../contexts/SocketContext";
 
 import Background from "./Background";
 import Gameover from "./Gameover";
@@ -42,6 +43,14 @@ const Board = () => {
     fenString: "Game has not started",
     gameState: chess.game_over(),
   });
+
+  useEffect(() => {
+    socket.on("updated board", (newBoard:String) => {
+      chess.load(newBoard);
+      onTurn();
+    })
+  }, [])
+
   // Updates game information after a turn
   const onTurn = useCallback(() => {
     setState({
