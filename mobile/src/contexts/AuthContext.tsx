@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState } from "react";
 import { YSC_SERVER_URI } from "react-native-dotenv";
 
 import { User, initialUser, UserContext } from "./UserContext";
+import { SocketContext } from "./SocketContext";
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -28,6 +29,7 @@ export const AuthContext = createContext<AuthState>(initialState);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
+  const socket = useContext(SocketContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const authContextValue = React.useMemo(
@@ -59,6 +61,8 @@ export const AuthProvider: React.FC = ({ children }) => {
           };
           setUserState(newUserState);
           setIsLoggedIn(true);
+          socket.connect();
+          socket.emit("successful login", decoded.username);
         } else {
           console.error("Login request was unsuccessful.");
         }
