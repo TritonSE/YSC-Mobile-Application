@@ -2,10 +2,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useContext } from "react";
 
 import { AuthContext } from "../contexts/AuthContext";
+import Chess from "../screens/Chess";
 import ForgotPassword from "../screens/ForgotPassword";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
-import Chess from "../screens/Chess";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +23,6 @@ const Navigator = () => {
         <>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          
         </>
       )}
     </Stack.Navigator>

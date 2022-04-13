@@ -4,6 +4,7 @@
 import { Chess } from "chess.js";
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
+
 import { socket } from "../../contexts/SocketContext";
 
 import Background from "./Background";
@@ -45,11 +46,10 @@ const Board = () => {
   });
 
   useEffect(() => {
-    socket.on("updated board", (newBoard:String) => {
+    socket.on("updated board", (newBoard: string) => {
       chess.load(newBoard);
-      onTurn();
-    })
-  }, [])
+    });
+  }, []);
 
   // Updates game information after a turn
   const onTurn = useCallback(() => {

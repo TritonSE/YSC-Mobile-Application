@@ -88,9 +88,9 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       if (move) {
         chess.move({ from, to });
         socket.emit("try chess move", chess.fen());
-        socket.on("updated board", (newBoard:String) => {
+        socket.on("updated board", (newBoard: string) => {
           onTurn();
-        })
+        });
       }
     },
     [chess, isGestureActive, offsetX, offsetY, onTurn, translateX, translateY]

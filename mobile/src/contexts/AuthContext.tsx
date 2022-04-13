@@ -4,8 +4,8 @@ import jwt_decode from "jwt-decode";
 import React, { createContext, useContext, useState } from "react";
 import { YSC_SERVER_URI } from "react-native-dotenv";
 
-import { User, initialUser, UserContext } from "./UserContext";
 import { SocketContext } from "./SocketContext";
+import { User, initialUser, UserContext } from "./UserContext";
 
 interface AuthState {
   isLoggedIn: boolean;
