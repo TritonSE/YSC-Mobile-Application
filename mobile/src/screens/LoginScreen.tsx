@@ -31,7 +31,7 @@ const sendToken = async () => {
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const { login } = useContext(AuthContext);
+  const { login, setIsLoggedIn } = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -41,14 +41,15 @@ const LoginScreen = () => {
       console.log("user connected");
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", (reason) => {
       console.log("user disconnected");
-      // TODO:
-      // what behavior? if invalid token, any frontend feedback? currently just leaves user on homescreen
-      // we could setIsLoggedIn(false) to redirect user back to login screen BUT need to take into account other cases
-      // what are other cases of socket disconnection? app crashing, etc.
-      // do we want these other cases to go back to login screen as well or restore session by reconnecting to socket?
-      // could utilize socket io disconnect reason https://socket.io/docs/v3/client-socket-instance/#disconnect
+      if (reason === "io server disconnect") {
+        // if disconnection was initiated by the server, need to reconnect manually
+        // TODO: if invalid token, any frontend feedback? in what cases would user have invalid token, is frontend feedback necessary?
+        // what are other cases of manual server disconnection? do we want same behavior below?
+
+        setIsLoggedIn(false); // redirect user to login screen if invalid token
+      }
     });
   }, [socket]);
 

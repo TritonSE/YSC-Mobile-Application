@@ -6,13 +6,13 @@ const https = require("https");
 
 function validateToken(token: string, socket: Socket) {
   // testing invalid token
-  // const invalidToken = "invalid";
+  const invalidToken = "invalid";
   const options = {
     hostname: YSC_SERVER,
     path: "/middleware/auth/validate",
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${invalidToken}`,
     },
   };
 
@@ -20,7 +20,7 @@ function validateToken(token: string, socket: Socket) {
     if (res.statusCode !== 200) {
       // disconnect from socket if invalid token
       console.log("Couldn't validate token.");
-      socket.disconnect();
+      socket.disconnect(true);
       console.log("connected in validateToken? ", socket.connected); //expect false
     } else console.log("Validated token"); // do nothing if valid token
   });
