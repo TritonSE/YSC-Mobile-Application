@@ -23,6 +23,12 @@ const socket = io(SOCKET_URI, {
   transports: ["websocket"],
 });
 
+const sendToken = async () => {
+  const token = await SecureStore.getItemAsync("token");
+  socket.emit("validate", token);
+  console.log("sending token from login screen...");
+};
+
 const LoginScreen = () => {
   const navigation = useNavigation();
   const { login } = useContext(AuthContext);
@@ -30,15 +36,16 @@ const LoginScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const sendToken = async () => {
-    const token = await SecureStore.getItemAsync("token");
-    socket.emit("validate", token);
-    console.log("emitting");
-  };
-
   useEffect(() => {
     socket.on("connect", () => {
       console.log("user connected");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+      // TODO:
+      // what behavior? if invalid token, any frontend feedback?
+      // what are other cases of socket disconnection? app crashing, etc.
     });
   }, [socket]);
 

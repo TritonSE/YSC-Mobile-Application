@@ -8,6 +8,7 @@ import { User, initialUser, UserContext } from "./UserContext";
 
 interface AuthState {
   isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   login: (username: string, password: string) => void;
   validate: () => void;
 }
@@ -20,6 +21,7 @@ interface Payload extends User {
 
 const initialState: AuthState = {
   isLoggedIn: false,
+  setIsLoggedIn: () => undefined,
   login: () => undefined,
   validate: () => undefined,
 };
@@ -28,7 +30,7 @@ export const AuthContext = createContext<AuthState>(initialState);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(initialState.isLoggedIn);
 
   const authContextValue = React.useMemo(
     () => ({
@@ -73,24 +75,20 @@ export const AuthProvider: React.FC = ({ children }) => {
           },
         });
 
-        // token is invalid
         if (res.status !== 200) {
-          // reset user state
+          // if token is invalid, log out and reset user state
           setUserState(initialUser);
           setIsLoggedIn(false);
-
           console.error("Couldn't validate token.");
-        }
-
-        // token is valid
-        if (res.status === 200) {
+        } else {
+          // token is valid
           setIsLoggedIn(true);
-          console.log("Validated token");
         }
       },
       isLoggedIn,
+      setIsLoggedIn,
     }),
-    [isLoggedIn]
+    [isLoggedIn, setIsLoggedIn]
   );
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

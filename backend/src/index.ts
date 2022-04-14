@@ -30,7 +30,12 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("validate", (data) => {
     const { token } = JSON.parse(data);
-    validateToken(token);
+    console.log("connected in socket.on validate? ", socket.connected); // expect true
+    validateToken(token, socket); // socket will disconnect in this method if invalid token
+  });
+
+  socket.on("disconnect", () => {
+    console.log("connected in socket.on disconnect? ", socket.connected); // expect false
   });
 
   const username = socket.handshake.auth.username;
