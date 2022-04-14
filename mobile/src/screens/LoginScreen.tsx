@@ -44,8 +44,11 @@ const LoginScreen = () => {
     socket.on("disconnect", () => {
       console.log("user disconnected");
       // TODO:
-      // what behavior? if invalid token, any frontend feedback?
+      // what behavior? if invalid token, any frontend feedback? currently just leaves user on homescreen
+      // we could setIsLoggedIn(false) to redirect user back to login screen BUT need to take into account other cases
       // what are other cases of socket disconnection? app crashing, etc.
+      // do we want these other cases to go back to login screen as well or restore session by reconnecting to socket?
+      // could utilize socket io disconnect reason https://socket.io/docs/v3/client-socket-instance/#disconnect
     });
   }, [socket]);
 

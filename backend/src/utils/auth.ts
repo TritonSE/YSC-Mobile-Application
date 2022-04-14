@@ -1,12 +1,14 @@
 import type { Socket } from "socket.io";
 
+import { YSC_SERVER } from "../constants";
+
 const https = require("https");
 
 function validateToken(token: string, socket: Socket) {
   // testing invalid token
-  // const invalidToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0dWRlbnQiLCJmaXJzdE5hbWUiOiJzdHVkZW50IiwibGFzdE5hbWUiOiJzdHVkZW50Iiwicm9sZSI6InN0dWRlbnQiLCJlbWFpbCI6InN0dWRlbnRAc3R1ZGVudC5uZXQiLCJpYXQiOjE2NDk4OTg1OTUsInBhcmVudFVzZXJuYW1lIjoicGFyZW50IiwiZXhwIjoxNjUwMjU4NTk1fQ.DrQuHQ1zVBYWNPTZm5876Rb_WUg9wcsVkIEwOFA96wW";
+  // const invalidToken = "invalid";
   const options = {
-    hostname: "ystemandchess.com",
+    hostname: YSC_SERVER,
     path: "/middleware/auth/validate",
     method: "POST",
     headers: {

@@ -1,5 +1,6 @@
 import type { Socket } from "socket.io";
 
+import { PORT } from "./constants";
 import type { RoomData, BoardState } from "./types";
 import { validateToken } from "./utils/auth";
 
@@ -11,7 +12,6 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-const PORT = process.env.PORT || 3000;
 
 // boards maps room to BoardState (BoardState contains all data in regards to the state of the game and is declared in types.d.ts)
 const boards = new Map<string, BoardState>();
