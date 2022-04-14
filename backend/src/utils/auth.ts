@@ -6,13 +6,13 @@ const https = require("https");
 
 function validateToken(token: string, socket: Socket) {
   // testing invalid token
-  const invalidToken = "invalid";
+  // const invalidToken = "invalid";
   const options = {
     hostname: YSC_SERVER,
     path: "/middleware/auth/validate",
     method: "POST",
     headers: {
-      Authorization: `Bearer ${invalidToken}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 
