@@ -1,18 +1,18 @@
 import type { Socket } from "socket.io";
 
-import { YSC_SERVER } from "../constants";
+import { YSC_HOST } from "../constants";
 
 const https = require("https");
 
 function validateToken(token: string, socket: Socket) {
   // testing invalid token
-  // const invalidToken = "invalid";
+  const invalidToken = "invalid";
   const options = {
-    hostname: YSC_SERVER,
+    hostname: YSC_HOST,
     path: "/middleware/auth/validate",
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${invalidToken}`,
     },
   };
 
