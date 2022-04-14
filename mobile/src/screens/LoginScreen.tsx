@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -36,22 +36,20 @@ const LoginScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("user connected");
-    });
+  socket.on("connect", () => {
+    console.log("user connected");
+  });
 
-    socket.on("disconnect", (reason) => {
-      console.log("user disconnected");
-      if (reason === "io server disconnect") {
-        // if disconnection was initiated by the server, need to reconnect manually
-        // TODO: if invalid token, any frontend feedback? in what cases would user have invalid token, is frontend feedback necessary?
-        // what are other cases of manual server disconnection? do we want same behavior below?
+  socket.on("disconnect", (reason) => {
+    console.log("user disconnected");
+    if (reason === "io server disconnect") {
+      // if disconnection was initiated by the server, need to reconnect manually
+      // TODO: if invalid token, any frontend feedback? in what cases would user have invalid token, is frontend feedback necessary?
+      // what are other cases of manual server disconnection? do we want same behavior below?
 
-        setIsLoggedIn(false); // redirect user to login screen if invalid token
-      }
-    });
-  }, [socket]);
+      setIsLoggedIn(false); // redirect user to login screen if invalid token
+    }
+  });
 
   const handleLogin = () => {
     login(username, password);
