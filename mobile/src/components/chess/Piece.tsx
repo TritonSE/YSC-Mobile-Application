@@ -88,9 +88,11 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       if (move) {
         chess.move({ from, to });
         socket.emit("try chess move", chess.fen());
+        /* eslint-disable no-unused-vars */
         socket.on("updated board", (newBoard: string) => {
           onTurn();
         });
+        /* eslint-enable no-unused-vars */
       }
     },
     [chess, isGestureActive, offsetX, offsetY, onTurn, translateX, translateY]
