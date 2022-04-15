@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3000;
 const boards = new Map<string, BoardState>();
 
 // rooms maps username to RoomData (RoomData contains connection information for users and is declared in types.d.ts)
-const rooms = new Map<string, RoomData>();
+const roomsMap = new Map<string, RoomData>();
 
 server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
@@ -25,7 +25,7 @@ server.listen(PORT, () => {
 // triggered whenever a new socket connects to server
 // the new socket should send the username of the client through the auth object
 io.on("connection", (socket: Socket) => {
-  require("./eventHandlers/loginHandler.ts")(socket, io, rooms, boards);
+  require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards });
 });
 
 io.of("/").adapter.on("delete-room", (room: string) => {

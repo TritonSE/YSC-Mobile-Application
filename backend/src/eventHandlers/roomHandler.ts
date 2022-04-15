@@ -1,15 +1,16 @@
 import type { HandlerParams, BoardState } from "../types";
 
-exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
+module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerParams) {
   socket.on("assign room", () => {
     let currRoom = "Room " + boards.size;
     let board: BoardState = { lock: 0, board: "", players: [username] };
 
     // socket only has default socket ID room => assign socket to a room
     if (socket.rooms.size == 1) {
-      if (io.sockets.adapter.rooms.get(currRoom)) {
+      const socketsRoom = io.sockets.adapter.rooms.get(currRoom);
+      if (socketsRoom) {
         //Check if current room is full => create new room
-        if (io.sockets.adapter.rooms.get(currRoom).size == 2) {
+        if (socketsRoom.size == 2) {
           currRoom = "Room " + (boards.size + 1);
         } else {
           const currBoard = boards.get(currRoom);
@@ -17,7 +18,7 @@ exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
         }
       }
       boards.set(currRoom, board);
-      rooms.set(username, { room: currRoom, socket: socket.id });
+      roomsMap.set(username, { room: currRoom, socket: socket.id });
       socket.join(currRoom);
     }
   });

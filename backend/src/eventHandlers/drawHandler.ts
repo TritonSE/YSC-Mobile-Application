@@ -1,6 +1,6 @@
 import type { HandlerParams } from "../types";
 
-exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
+module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerParams) {
   // CLIENT WORKFLOW FOR DRAWING
   // client A should emit "try draw" if they attempt to draw
   // client B should handle "draw request" event with the username of the client A being sent
@@ -9,7 +9,7 @@ exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
   // if client B wants to decline the draw, client B should emit "draw rejected"
   //  in this case, client A should handle "draw request rejected" with username of client B being sent
   socket.on("try draw", () => {
-    const userRoomData = rooms.get(username);
+    const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
       socket.to(room).emit("draw request", username);
@@ -17,21 +17,21 @@ exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
   });
 
   socket.on("draw accepted", () => {
-    const userRoomData = rooms.get(username);
+    const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
       io.in(room).emit("game drawn", username);
       const roomBoardData = boards.get(room);
       if (roomBoardData) {
-        rooms.delete(roomBoardData.players[0]);
-        rooms.delete(roomBoardData.players[1]);
+        roomsMap.delete(roomBoardData.players[0]);
+        roomsMap.delete(roomBoardData.players[1]);
         boards.delete(room);
       }
     }
   });
 
   socket.on("draw rejected", () => {
-    const userRoomData = rooms.get(username);
+    const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
       socket.to(room).emit("draw request rejected", username);
