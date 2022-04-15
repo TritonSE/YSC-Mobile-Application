@@ -28,7 +28,7 @@ import wqPiece from "../../../assets/piece_images/wq.png";
 import wrPiece from "../../../assets/piece_images/wr.png";
 
 import { toTranslation, SIZE, toPosition } from "./Notation";
-import { reverseFenString } from "./util";
+// import { reverseFenString } from "./util";
 
 const styles = StyleSheet.create({
   piece: {

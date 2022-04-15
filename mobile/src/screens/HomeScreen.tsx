@@ -13,7 +13,7 @@ const HomeScreen = () => {
   return (
     <View style={AppStylesheet.container}>
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
-      <Button text="Play Game" onPress={() => navigation.navigate("Chess")}/>
+      <Button text="Play Game" onPress={() => navigation.navigate("Chess")} />
       <Text>14 Players Online</Text>
     </View>
   );
