@@ -1,7 +1,7 @@
 import type { HandlerParams, BoardState } from "../types";
 
 module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerParams) {
-  socket.on("assign room", () => {
+  socket.on("assign to room", () => {
     let currRoom = "Room " + boards.size;
     let board: BoardState = { lock: 0, board: "", players: [username] };
 
@@ -20,6 +20,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
       boards.set(currRoom, board);
       roomsMap.set(username, { room: currRoom, socket: socket.id });
       socket.join(currRoom);
+      console.log("Socket " + socket.id + " joined " + currRoom);
     }
   });
 };
