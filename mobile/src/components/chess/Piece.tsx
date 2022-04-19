@@ -2,7 +2,7 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess, Position } from "chess.js";
-import React, { useCallback, useContext } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, Image } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -26,7 +26,6 @@ import wnPiece from "../../../assets/piece_images/wn.png";
 import wpPiece from "../../../assets/piece_images/wp.png";
 import wqPiece from "../../../assets/piece_images/wq.png";
 import wrPiece from "../../../assets/piece_images/wr.png";
-import { SocketContext } from "../../contexts/SocketContext";
 
 import { toTranslation, SIZE, toPosition } from "./Notation";
 
@@ -64,7 +63,6 @@ interface PieceProps {
 }
 
 const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
-  const socket = useContext(SocketContext);
   const isGestureActive = useSharedValue(false);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -87,12 +85,6 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       });
       if (move) {
         chess.move({ from, to });
-        socket.emit("try chess move", chess.fen());
-        /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
-        socket.on("updated board", (newBoard: string) => {
-          onTurn();
-        });
-        /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
       }
     },
     [chess, isGestureActive, offsetX, offsetY, onTurn, translateX, translateY]
