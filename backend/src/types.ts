@@ -11,19 +11,15 @@ type BoardState = {
   players: string[];
 };
 
-interface LoginHandlerParams {
+interface BaseHandlerParams {
   socket: Socket;
   io: Server;
   roomsMap: Map<string, RoomData>;
   boards: Map<string, BoardState>;
 }
 
-interface HandlerParams {
-  socket: Socket;
-  io: Server;
+interface HandlerParams extends BaseHandlerParams {
   username: string;
-  roomsMap: Map<string, RoomData>;
-  boards: Map<string, BoardState>;
 }
 
-export { RoomData, BoardState, HandlerParams, LoginHandlerParams };
+export { RoomData, BoardState, HandlerParams, BaseHandlerParams };

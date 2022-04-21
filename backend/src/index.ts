@@ -23,8 +23,8 @@ server.listen(PORT, () => {
 });
 
 // triggered whenever a new socket connects to server
-// the new socket should send the username of the client through the auth object
 io.on("connection", (socket: Socket) => {
+  console.log("socket coonnected");
   require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards });
 });
 

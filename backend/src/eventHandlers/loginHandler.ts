@@ -1,6 +1,6 @@
-import type { LoginHandlerParams, RoomData } from "../types";
+import type { BaseHandlerParams, RoomData } from "../types";
 
-module.exports = function ({ socket, io, roomsMap, boards }: LoginHandlerParams) {
+module.exports = function ({ socket, io, roomsMap, boards }: BaseHandlerParams) {
   socket.on("successful login", (username: string) => {
     // Check if user is already in a room
     const userRoomData = roomsMap.get(username);

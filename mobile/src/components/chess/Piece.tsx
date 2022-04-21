@@ -85,6 +85,7 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       });
       if (move) {
         chess.move({ from, to });
+        onTurn();
       }
     },
     [chess, isGestureActive, offsetX, offsetY, onTurn, translateX, translateY]

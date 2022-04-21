@@ -3,11 +3,11 @@ import React from "react";
 
 import Navigator from "./src/components/Navigator";
 import { AuthProvider } from "./src/contexts/AuthContext";
-import { SocketContext, socket } from "./src/contexts/SocketContext";
+import { SocketProvider } from "./src/contexts/SocketContext";
 import { UserProvider } from "./src/contexts/UserContext";
 
 const App = () => (
-  <SocketContext.Provider value={socket}>
+  <SocketProvider>
     <UserProvider>
       <AuthProvider>
         <NavigationContainer>
@@ -15,7 +15,7 @@ const App = () => (
         </NavigationContainer>
       </AuthProvider>
     </UserProvider>
-  </SocketContext.Provider>
+  </SocketProvider>
 );
 
 export default App;
