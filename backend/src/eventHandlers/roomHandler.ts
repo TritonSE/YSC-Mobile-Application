@@ -20,6 +20,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
       boards.set(currRoom, board);
       roomsMap.set(username, { room: currRoom, socket: socket.id });
       socket.join(currRoom);
+      socket.emit("successful assign");
     }
   });
 };
