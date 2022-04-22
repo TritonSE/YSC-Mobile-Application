@@ -8,6 +8,7 @@ import { View, StyleSheet, Dimensions, Text } from "react-native";
 import Background from "./Background";
 import Gameover from "./Gameover";
 import Piece from "./Piece";
+import { reverseFenString } from "./util";
 
 const { width } = Dimensions.get("window");
 
@@ -41,6 +42,7 @@ const Board = () => {
     board: chess.board(),
     fenString: "Game has not started",
     gameState: chess.game_over(),
+    reverseString: "Game has not started",
   });
 
   // Updates game information after a turn
@@ -49,7 +51,7 @@ const Board = () => {
       player: chess.turn(),
       board: chess.board(),
       fenString: chess.fen(),
-      // Tracks the game state every turn
+      reverseString: reverseFenString(chess.fen()),
       gameState: chess.game_over(),
     });
   }, [chess, state.player]);
@@ -58,6 +60,7 @@ const Board = () => {
     <View>
       <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
+      <Text style={{ color: "black" }}>{state.reverseString}</Text>
       <View style={styles.container}>
         <Background />
         {state.board.map((row, y) =>

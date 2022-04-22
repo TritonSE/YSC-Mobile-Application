@@ -8,9 +8,9 @@ import { UserContext } from "../contexts/UserContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const { userState } = useContext(UserContext);
   const socket = useContext(SocketContext);
-  const navigation = useNavigation();
 
   const connectToGame = () => {
     socket.emit("assign to room");
