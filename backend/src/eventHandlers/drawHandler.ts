@@ -9,6 +9,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
   // if client B wants to decline the draw, client B should emit "draw rejected"
   //  in this case, client A should handle "draw request rejected" with username of client B being sent
   socket.on("try draw", () => {
+    console.log("proposing draw received");
     const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
