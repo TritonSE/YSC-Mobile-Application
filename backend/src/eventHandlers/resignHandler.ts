@@ -9,7 +9,8 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
     const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
-      io.in(room).emit("game resigned", username);
+      // emits "game resigned" to the other player in the room
+      socket.in(room).emit("game resigned", username);
       const roomBoardData = boards.get(room);
       if (roomBoardData) {
         roomsMap.delete(roomBoardData.players[0]);

@@ -20,7 +20,8 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
     const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
-      io.in(room).emit("game drawn", username);
+      // emits "game drawn" to the socket that sent initial draw request
+      socket.in(room).emit("game drawn", username);
       const roomBoardData = boards.get(room);
       if (roomBoardData) {
         roomsMap.delete(roomBoardData.players[0]);
@@ -34,6 +35,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
     const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
+      // emits "draw request rejected" to the socket that sent initial draw request
       socket.to(room).emit("draw request rejected", username);
     }
   });
