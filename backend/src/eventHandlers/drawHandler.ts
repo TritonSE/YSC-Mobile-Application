@@ -21,7 +21,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
     if (userRoomData) {
       const room = userRoomData.room;
       // emits "game drawn" to the socket that sent initial draw request
-      socket.in(room).emit("game drawn", username);
+      socket.to(room).emit("game drawn", username);
       const roomBoardData = boards.get(room);
       if (roomBoardData) {
         roomsMap.delete(roomBoardData.players[0]);
