@@ -1,6 +1,8 @@
+import Constants from "expo-constants";
 import React from "react";
-import { SOCKET_URI } from "react-native-dotenv";
 import io from "socket.io-client";
+
+const SOCKET_URI = Constants.manifest?.extra?.SOCKET_URI;
 
 export const socket = io(SOCKET_URI, {
   autoConnect: false,
