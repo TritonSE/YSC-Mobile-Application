@@ -26,7 +26,7 @@ export default {
     favicon: "./assets/favicon.png",
   },
   extra: {
-    YSC_SERVER_URI: process.env.YSC_SERVER_URI || "https://ystemandchess.com/middleware/",
+    YSC_SERVER_URI: "https://ystemandchess.com/middleware/",
     SOCKET_URI: process.env.SOCKET_URI || "http://localhost:3000",
   },
 };
