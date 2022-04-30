@@ -8,7 +8,7 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 import Button from "../components/Button";
 import Board from "../components/chess/Board";
-import DrawPopup from "../components/popups/DrawPopup";
+import TwoButtonPopup from "../components/popups/popup_templates/TwoButtonPopup";
 import { SocketContext } from "../contexts/SocketContext";
 
 const styles = StyleSheet.create({
@@ -30,8 +30,8 @@ const Chessboard = gestureHandlerRootHOC(() => {
     console.log("proposing draw...");
   };
 
-  socket.on("draw request", (username: string) => {
-    console.log(username); // TODO: purpose of this? maybe display in popup
+  socket.on("draw request", () => {
+    console.log(socket.id, " received a draw");
     setOpenDraw(true);
   });
 
@@ -44,11 +44,26 @@ const Chessboard = gestureHandlerRootHOC(() => {
     setOpenDraw(false);
   });
 
+  const acceptDraw = () => {
+    socket.emit("draw accepted");
+  };
+
+  const rejectDraw = () => {
+    socket.emit("draw rejected");
+    setOpenDraw(false); // TODO: state here and chess screen?
+  };
+
   return (
     <View style={styles.container}>
       <Board />
       <Button text="Draw" onPress={proposeDraw} />
-      <DrawPopup activateIncorrectCredentialsPopup={openDraw} />
+      {openDraw && (
+        <TwoButtonPopup
+          labelText={"Your Opponent Would \n Like A Draw. Accept or Decline?"}
+          noFunc={rejectDraw}
+          yesFunc={acceptDraw}
+        />
+      )}
     </View>
   );
 });
