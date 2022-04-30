@@ -3,9 +3,9 @@ import { View } from "react-native";
 
 import TwoButtonPopup from "./popup_templates/TwoButtonPopup";
 
-const DrawPopup = ({ activateIncorrectCredentialsPopup }) => {
+const DrawPopup = ({ activateDrawPopup }) => {
   const [modalVisible, setModalVisible] = useState(true); // disable to false?
-  if (activateIncorrectCredentialsPopup) {
+  if (activateDrawPopup) {
     setModalVisible(true);
   }
   return (
