@@ -9,6 +9,7 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import Button from "../components/Button";
 import Board from "../components/chess/Board";
 import TwoButtonPopup from "../components/popups/popup_templates/TwoButtonPopup";
+import ResignPopup from "../components/popups/ResignPopup";
 import { SocketContext } from "../contexts/SocketContext";
 
 const styles = StyleSheet.create({
@@ -24,15 +25,26 @@ const Chessboard = gestureHandlerRootHOC(() => {
   const socket = useContext(SocketContext);
   const navigation = useNavigation();
   const [openDraw, setOpenDraw] = useState(false);
+  const [openResign, setOpenResign] = useState(false);
 
   const proposeDraw = () => {
     socket.emit("try draw");
     console.log("proposing draw...");
   };
 
+  const proposeResign = () => {
+    socket.emit("resign");
+    console.log("proposing resign...");
+  }
+
   socket.on("draw request", () => {
     console.log(socket.id, " received a draw");
     setOpenDraw(true);
+  });
+
+  socket.on("game resigned", () => {
+    console.log(socket.id, "opponent resigned");
+    setOpenResign(true);
   });
 
   socket.on("game drawn", () => {
@@ -62,6 +74,16 @@ const Chessboard = gestureHandlerRootHOC(() => {
           labelText={"Your Opponent Would \n Like A Draw. Accept or Decline?"}
           noFunc={rejectDraw}
           yesFunc={acceptDraw}
+        />
+      )}
+    </View>
+
+    <View style={styles.container}>
+      <Board />
+      <Button text="Resign" onPress={proposeResign} />
+      {openResign && (
+        <ResignPopup
+          activateResignPopup={true}
         />
       )}
     </View>
