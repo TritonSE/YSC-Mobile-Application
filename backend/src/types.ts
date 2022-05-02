@@ -18,8 +18,8 @@ interface BaseHandlerParams {
   boards: Map<string, BoardState>;
 }
 
-interface HandlerParams extends BaseHandlerParams {
+interface GameHandlerParams extends BaseHandlerParams {
   username: string;
 }
 
-export { RoomData, BoardState, HandlerParams, BaseHandlerParams };
+export { RoomData, BoardState, GameHandlerParams, BaseHandlerParams };
