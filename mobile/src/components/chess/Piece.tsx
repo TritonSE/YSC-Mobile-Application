@@ -92,8 +92,8 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
           if (turn) {
             chess.move({ from, to });
             socket.emit("send chess move", chess.fen());
-            onTurn();
           }
+          onTurn();
         });
       }
     },

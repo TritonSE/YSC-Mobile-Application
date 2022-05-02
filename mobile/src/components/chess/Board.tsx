@@ -62,6 +62,7 @@ const Board = () => {
   useEffect(() => {
     socket.on("updated board", (fen: string) => {
       chess.load(fen);
+      onTurn();
     });
   }, []);
 
