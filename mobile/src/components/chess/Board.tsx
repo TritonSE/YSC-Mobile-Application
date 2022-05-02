@@ -2,8 +2,10 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess } from "chess.js";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
+
+import { SocketContext } from "../../contexts/SocketContext";
 
 import Background from "./Background";
 import Gameover from "./Gameover";
@@ -36,6 +38,7 @@ const styles = StyleSheet.create({
 });
 
 const Board = () => {
+  const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
     player: chess.turn(),
@@ -55,6 +58,12 @@ const Board = () => {
       gameState: chess.game_over(),
     });
   }, [chess, state.player]);
+
+  useEffect(() => {
+    socket.on("updated board", (fen: string) => {
+      chess.load(fen);
+    });
+  }, []);
 
   return (
     <View>
