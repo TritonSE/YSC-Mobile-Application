@@ -87,14 +87,9 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
         isGestureActive.value = false;
       });
       if (move) {
-        socket.emit("check turn");
-        socket.once("your turn", (turn: boolean) => {
-          if (turn) {
-            chess.move({ from, to });
-            socket.emit("send chess move", chess.fen());
-          }
-          onTurn();
-        });
+        chess.move({ from, to });
+        socket.emit("send chess move", chess.fen());
+        onTurn();
       }
     },
     [chess, isGestureActive, offsetX, offsetY, onTurn, translateX, translateY]

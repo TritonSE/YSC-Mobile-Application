@@ -37,10 +37,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = () => {
+const Board = ({ color }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
+    myColor: color,
     player: chess.turn(),
     board: chess.board(),
     fenString: "Game has not started",
@@ -51,6 +52,7 @@ const Board = () => {
   // Updates game information after a turn
   const onTurn = useCallback(() => {
     setState({
+      myColor: color,
       player: chess.turn(),
       board: chess.board(),
       fenString: chess.fen(),
@@ -84,7 +86,7 @@ const Board = () => {
                   startPosition={{ x, y }}
                   chess={chess}
                   onTurn={onTurn}
-                  enabled={state.player === piece.color}
+                  enabled={state.player === piece.color && state.myColor === state.player}
                 />
                 /* eslint-enable react/no-array-index-key */
               );

@@ -20,7 +20,8 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
       boards.set(currRoom, board);
       roomsMap.set(username, { room: currRoom, socket: socket.id });
       socket.join(currRoom);
-      socket.emit("successful assign");
+      const color = board.lock ? "b" : "w";
+      socket.emit("successful assign", color);
     }
   });
 };
