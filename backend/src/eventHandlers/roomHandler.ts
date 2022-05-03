@@ -4,6 +4,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
   socket.on("assign to room", () => {
     let currRoom = boards.size == 0 ? "Room 1" : "Room " + boards.size;
     let board: BoardState = { lock: 0, board: "", players: [username] };
+    let color = "w";
 
     // socket only has default socket ID room => assign socket to a room
     if (socket.rooms.size == 1) {
@@ -14,13 +15,15 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
           currRoom = "Room " + (boards.size + 1);
         } else {
           const currBoard = boards.get(currRoom);
-          if (currBoard) board = { ...board, players: [currBoard.players[0], username] };
+          if (currBoard) {
+            board = { ...board, players: [currBoard.players[0], username] };
+            color = "b";
+          }
         }
       }
       boards.set(currRoom, board);
       roomsMap.set(username, { room: currRoom, socket: socket.id });
       socket.join(currRoom);
-      const color = board.lock ? "b" : "w";
       socket.emit("successful assign", color);
     }
   });
