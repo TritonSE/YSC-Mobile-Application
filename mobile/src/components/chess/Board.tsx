@@ -44,6 +44,7 @@ const Board = () => {
     gameState: chess.game_over(),
     reverseString: "Game has not started",
   });
+
   // Updates game information after a turn
   const onTurn = useCallback(() => {
     setState({
@@ -54,6 +55,7 @@ const Board = () => {
       gameState: chess.game_over(),
     });
   }, [chess, state.player]);
+
   return (
     <View>
       <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />

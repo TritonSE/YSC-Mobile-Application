@@ -1,12 +1,12 @@
-import type { HandlerParams, BoardState } from "../types";
+import type { GameHandlerParams, BoardState } from "../types";
 
-exports = function ({ socket, io, username, rooms, boards }: HandlerParams) {
+module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   // CLIENT WORKFLOW FOR ATTEMPTED MOVE
   // client A should emit "try chess move" and send the board state after the attempted move
   // if the move is successful, both clients should handle "updated board" event with the new board being sent
   // otherwise, client A should handle "error message" event with an error message being sent
   socket.on("try chess move", (newBoard: string) => {
-    const userRoomData = rooms.get(username);
+    const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
 
