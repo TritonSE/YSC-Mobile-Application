@@ -8,6 +8,7 @@ interface TwoButtonPopupProps {
   yesFunc: () => void;
 }
 
+// Pass in as props the button's label text, and what the button does when no and yes are pressed
 const TwoButtonPopup = ({ labelText, noFunc, yesFunc }: TwoButtonPopupProps) => (
   <Modal
     animationType="slide"

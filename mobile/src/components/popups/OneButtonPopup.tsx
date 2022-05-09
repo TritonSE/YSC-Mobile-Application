@@ -8,6 +8,7 @@ interface OneButtonPopupProps {
   buttonFunc: () => void;
 }
 
+// Pass in as props the button's label text, button text, and what the button does when pressed
 const OneButtonPopup = ({ labelText, buttonText, buttonFunc }: OneButtonPopupProps) => (
   <Modal
     animationType="slide"

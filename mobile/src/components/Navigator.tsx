@@ -13,7 +13,7 @@ const Navigator = () => {
   const { isLoggedIn } = useContext(AuthContext);
 
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Chess" screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
         <>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -21,6 +21,7 @@ const Navigator = () => {
         </>
       ) : (
         <>
+          <Stack.Screen name="Chess" component={Chess} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         </>
