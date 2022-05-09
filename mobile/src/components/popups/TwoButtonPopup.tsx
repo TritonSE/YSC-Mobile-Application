@@ -1,6 +1,6 @@
 import { Alert, Modal, Text, Pressable, View } from "react-native";
 
-import { AppStylesheet } from "../../../styles/AppStylesheet";
+import { AppStylesheet } from "../../styles/AppStylesheet";
 
 interface TwoButtonPopupProps {
   labelText: string;
