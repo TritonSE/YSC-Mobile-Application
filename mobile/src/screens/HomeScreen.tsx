@@ -14,7 +14,7 @@ const HomeScreen = () => {
 
   const connectToGame = () => {
     socket.emit("assign to room");
-    socket.on("successful assign", () => {
+    socket.once("successful assign", () => {
       navigation.navigate("Chess");
     });
   };

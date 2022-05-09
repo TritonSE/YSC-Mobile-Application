@@ -1,6 +1,6 @@
-import type { HandlerParams } from "../types";
+import type { GameHandlerParams } from "../types";
 
-module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerParams) {
+module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   // CLIENT WORKFLOW FOR DRAWING
   // client A should emit "try draw" if they attempt to draw
   // client B should handle "draw request" event with the username of the client A being sent
@@ -21,9 +21,11 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
     const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
-      io.in(room).emit("game drawn", username);
+      // emits "game drawn" to the socket that sent initial draw request
+      socket.to(room).emit("game drawn", username);
       const roomBoardData = boards.get(room);
       if (roomBoardData) {
+        io.socketsLeave(room);
         roomsMap.delete(roomBoardData.players[0]);
         roomsMap.delete(roomBoardData.players[1]);
         boards.delete(room);
@@ -35,6 +37,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: HandlerPa
     const userRoomData = roomsMap.get(username);
     if (userRoomData) {
       const room = userRoomData.room;
+      // emits "draw request rejected" to the socket that sent initial draw request
       socket.to(room).emit("draw request rejected", username);
     }
   });

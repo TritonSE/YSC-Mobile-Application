@@ -88,7 +88,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         // token is valid
         if (res.status === 200) {
+          const decodedValidation: Payload = jwt_decode(`${tokenRes}`);
           setIsLoggedIn(true);
+          socket.connect();
+          socket.emit("successful login", decodedValidation.username);
           console.log("Validated token");
         }
       },
