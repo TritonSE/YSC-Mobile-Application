@@ -40,7 +40,6 @@ export const AuthProvider: React.FC = ({ children }) => {
           username,
           password,
         };
-        console.log(YSC_SERVER_URI);
         const url = YSC_SERVER_URI + "auth/login?" + new URLSearchParams(params).toString();
         const res = await fetch(url, {
           method: "POST",
