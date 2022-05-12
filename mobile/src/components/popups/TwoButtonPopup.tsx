@@ -1,6 +1,7 @@
-import { Alert, Modal, Text, Pressable, View } from "react-native";
+import { Modal, Text, Pressable, View } from "react-native";
 
 import { AppStylesheet } from "../../styles/AppStylesheet";
+import { PopupStyleSheet } from "../../styles/PopupStylesheet";
 
 interface TwoButtonPopupProps {
   labelText: string;
@@ -10,24 +11,18 @@ interface TwoButtonPopupProps {
 
 // Pass in as props the button's label text, and what the button does when no and yes are pressed
 const TwoButtonPopup = ({ labelText, noFunc, yesFunc }: TwoButtonPopupProps) => (
-  <Modal
-    animationType="slide"
-    transparent
-    onRequestClose={() => {
-      Alert.alert("Modal has been closed.");
-    }}
-  >
-    <View style={AppStylesheet.centeredView}>
-      <View style={AppStylesheet.modalView}>
-        <Text style={AppStylesheet.modalText}>{labelText}</Text>
-        <View style={AppStylesheet.buttonContainer}>
+  <Modal animationType="slide" transparent>
+    <View style={PopupStyleSheet.centeredView}>
+      <View style={PopupStyleSheet.modalView}>
+        <Text style={PopupStyleSheet.modalText}>{labelText}</Text>
+        <View style={PopupStyleSheet.buttonContainer}>
           <Pressable
-            style={[AppStylesheet.modalButton, { backgroundColor: "#dbedf9" }]}
+            style={[PopupStyleSheet.modalButton, { backgroundColor: "#dbedf9" }]}
             onPress={noFunc}
           >
             <Text style={AppStylesheet.buttonText}>No</Text>
           </Pressable>
-          <Pressable style={AppStylesheet.modalButton} onPress={yesFunc}>
+          <Pressable style={PopupStyleSheet.modalButton} onPress={yesFunc}>
             <Text style={AppStylesheet.buttonText}>Yes</Text>
           </Pressable>
         </View>

@@ -1,6 +1,7 @@
-import { Alert, Modal, Text, Pressable, View } from "react-native";
+import { Modal, Text, Pressable, View } from "react-native";
 
 import { AppStylesheet } from "../../styles/AppStylesheet";
+import { PopupStyleSheet } from "../../styles/PopupStylesheet";
 
 interface OneButtonPopupProps {
   labelText: string;
@@ -10,27 +11,21 @@ interface OneButtonPopupProps {
 
 // Pass in as props the button's label text, button text, and what the button does when pressed
 const OneButtonPopup = ({ labelText, buttonText, buttonFunc }: OneButtonPopupProps) => (
-  <Modal
-    animationType="slide"
-    transparent
-    onRequestClose={() => {
-      Alert.alert("Modal has been closed.");
-    }}
-  >
-    <View style={AppStylesheet.centeredView}>
-      <View style={AppStylesheet.modalView}>
-        <Text style={AppStylesheet.modalText}>{labelText}</Text>
-        <View style={AppStylesheet.buttonContainer}>
+  <Modal animationType="slide" transparent>
+    <View style={PopupStyleSheet.centeredView}>
+      <View style={PopupStyleSheet.modalView}>
+        <Text style={PopupStyleSheet.modalText}>{labelText}</Text>
+        <View style={PopupStyleSheet.buttonContainer}>
           {buttonText.length > 10 ? (
             <Pressable
-              style={[AppStylesheet.modalButton, { width: 150, marginTop: 40 }]}
+              style={[PopupStyleSheet.modalButton, { width: 150, marginTop: 40 }]}
               onPress={buttonFunc}
             >
               <Text style={AppStylesheet.buttonText}>{buttonText}</Text>
             </Pressable>
           ) : (
             <Pressable
-              style={[AppStylesheet.modalButton, { width: 100, marginTop: 40 }]}
+              style={[PopupStyleSheet.modalButton, { width: 100, marginTop: 40 }]}
               onPress={buttonFunc}
             >
               <Text style={AppStylesheet.buttonText}>{buttonText}</Text>
