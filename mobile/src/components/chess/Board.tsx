@@ -2,8 +2,10 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess } from "chess.js";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
+
+import { SocketContext } from "../../contexts/SocketContext";
 
 import Background from "./Background";
 import Gameover from "./Gameover";
@@ -35,9 +37,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = () => {
+const Board = ({ color }) => {
+  const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
+    myColor: color,
     player: chess.turn(),
     board: chess.board(),
     fenString: "Game has not started",
@@ -48,6 +52,7 @@ const Board = () => {
   // Updates game information after a turn
   const onTurn = useCallback(() => {
     setState({
+      myColor: color,
       player: chess.turn(),
       board: chess.board(),
       fenString: chess.fen(),
@@ -55,6 +60,13 @@ const Board = () => {
       gameState: chess.game_over(),
     });
   }, [chess, state.player]);
+
+  useEffect(() => {
+    socket.on("updated board", (fen: string) => {
+      chess.load(fen);
+      onTurn();
+    });
+  }, []);
 
   return (
     <View>
@@ -74,7 +86,7 @@ const Board = () => {
                   startPosition={{ x, y }}
                   chess={chess}
                   onTurn={onTurn}
-                  enabled={state.player === piece.color}
+                  enabled={state.player === piece.color && state.myColor === state.player}
                 />
                 /* eslint-enable react/no-array-index-key */
               );
