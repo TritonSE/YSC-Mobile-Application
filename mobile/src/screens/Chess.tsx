@@ -1,36 +1,32 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 import Button from "../components/Button";
 import Board from "../components/chess/Board";
-import OneButtonPopup from "../components/popups/popup_templates/OneButtonPopup";
-import TwoButtonPopup from "../components/popups/popup_templates/TwoButtonPopup";
+import OneButtonPopup from "../components/popups/OneButtonPopup";
+import TwoButtonPopup from "../components/popups/TwoButtonPopup";
 import { SocketContext } from "../contexts/SocketContext";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "grey",
-  },
-});
+import { AppStylesheet as styles } from "../styles/AppStylesheet";
 
 // Enable gestures to work for Android
 const Chessboard = gestureHandlerRootHOC(() => {
   const socket = useContext(SocketContext);
   const navigation = useNavigation();
+  const route = useRoute();
+  const [grayButton, setGrayButton] = useState(false);
+  // states for popups rendering
   const [openDraw, setOpenDraw] = useState(false);
   const [openDrawRejected, setOpenDrawRejected] = useState(false);
   const [openDrawAccepted, setOpenDrawAccepted] = useState(false);
 
   const proposeDraw = () => {
     socket.emit("try draw");
-    console.log("proposing draw...");
+    setGrayButton(true);
   };
 
   const acceptDraw = () => {
@@ -41,29 +37,41 @@ const Chessboard = gestureHandlerRootHOC(() => {
 
   const rejectDraw = () => {
     socket.emit("draw rejected");
-    setOpenDraw(false); // TODO: state here and chess screen?
+    setOpenDraw(false);
   };
 
   useEffect(() => {
     socket.on("draw request", () => {
-      console.log(socket.id, " received a draw");
       setOpenDraw(true);
     });
 
     socket.on("game drawn", () => {
       setOpenDrawAccepted(true);
+      setGrayButton(false);
     });
 
     socket.on("draw request rejected", () => {
       setOpenDrawRejected(true);
-      // setOpenDraw(false);
+      setGrayButton(false);
     });
+
+    // reset states when component unmounts
+    return () => {
+      setGrayButton(false);
+      setOpenDraw(false);
+      setOpenDrawRejected(false);
+      setOpenDrawAccepted(false);
+    };
   }, []);
 
   return (
     <View style={styles.container}>
-      <Board />
-      <Button text="Draw" onPress={proposeDraw} style={{ width: 90 }} />
+      <Board color={route.params.color} />
+      <Button
+        text="Draw"
+        onPress={grayButton ? undefined : proposeDraw}
+        style={grayButton ? styles.grayButton : { width: 90 }}
+      />
       {openDraw && (
         <TwoButtonPopup
           labelText={"Your Opponent Would \n Like A Draw. Accept or Decline?"}
@@ -74,7 +82,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
       {openDrawAccepted && (
         <OneButtonPopup
           labelText="Draw Request Accepted"
-          buttonText="Return To Home"
+          buttonText="Return Home"
           buttonFunc={() => navigation.navigate("HomeScreen")}
         />
       )}
