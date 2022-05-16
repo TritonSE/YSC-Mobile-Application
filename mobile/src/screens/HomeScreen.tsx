@@ -12,18 +12,16 @@ const HomeScreen = () => {
   const { userState } = useContext(UserContext);
   const socket = useContext(SocketContext);
 
-  const connectToGame = () => {
+  const moveToLoading = () => {
     socket.emit("assign to room");
-    socket.once("successful assign", (color: string) => {
-      navigation.navigate("Chess", { color });
-    });
+    navigation.navigate("LoadingScreen");
   };
 
   return (
     <View style={AppStylesheet.container}>
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
-      <Button text="Play Game" onPress={connectToGame} />
-      <Text>14 Players Online</Text>
+      <Button text="&#9658; Play Game" onPress={moveToLoading} />
+      <Text style={{ fontSize: 18, marginTop: 5 }}>14 Players Online</Text>
     </View>
   );
 };

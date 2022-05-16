@@ -5,8 +5,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import Chess from "../screens/Chess";
 import ForgotPassword from "../screens/ForgotPassword";
 import HomeScreen from "../screens/HomeScreen";
-import LoginScreen from "../screens/LoginScreen";
 import LoadingScreen from "../screens/LoadingScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +18,7 @@ const Navigator = () => {
       {isLoggedIn ? (
         <>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name = "LoadingScreen" component={LoadingScreen}/>
+          <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
           <Stack.Screen name="Chess" component={Chess} />
         </>
       ) : (

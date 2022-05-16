@@ -25,6 +25,10 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
       roomsMap.set(username, { room: currRoom, socket: socket.id });
       socket.join(currRoom);
       socket.emit("successful assign", color);
+
+      if (board.players.length == 2) {
+        io.to(currRoom).emit("game ready");
+      }
     }
   });
 };
