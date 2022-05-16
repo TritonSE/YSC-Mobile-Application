@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const { userState } = useContext(UserContext);
   const socket = useContext(SocketContext);
 
-  const connectToGame = () => {
+  const moveToLoadingScreen = () => {
     socket.emit("assign to room");
     navigation.navigate("LoadingScreen");
   };
@@ -20,7 +20,7 @@ const HomeScreen = () => {
   return (
     <View style={AppStylesheet.container}>
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
-      <Button text="Play Game" onPress={connectToGame} />
+      <Button text="Play Game" onPress={moveToLoadingScreen} />
       <Text>14 Players Online</Text>
     </View>
   );

@@ -20,7 +20,7 @@ const LoadingScreen = () => {
 
     const connectToGame = () => {
       socket.once("successful assign", () => {
-        navigation.navigate("Loadin");
+        navigation.navigate("Chess");
       });
     };
 
@@ -28,7 +28,7 @@ const LoadingScreen = () => {
         <View style={AppStylesheet.container}>
           <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
           <Image style={AppStylesheet.mascot} source={stemettImage} />
-          <Button text="Waiting for Opponent..." onPress={navigation.navigate("Chess")}/>  
+          <Button text="Waiting for Opponent..." onPress={connectToGame}/>  
           {/* need to change the button so that it's opaque, and when we have the connection it goes to chess page */}
           <Text>14 Players Online</Text>
           <Button text = "Stop Searching"/>
