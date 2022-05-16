@@ -22,7 +22,7 @@ const ForgotPassword = () => {
         </SafeAreaView>
       </View>
 
-      <Button text="Reset Password" onPress={}/>
+      <Button text="Reset Password"/>
     </View>
   );
 };

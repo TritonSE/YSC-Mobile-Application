@@ -24,6 +24,7 @@ server.listen(PORT, () => {
 
 // triggered whenever a new socket connects to server
 io.on("connection", (socket: Socket) => {
+  console.log("connecting");
   require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards });
 });
 

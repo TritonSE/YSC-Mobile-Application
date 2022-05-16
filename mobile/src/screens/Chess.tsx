@@ -8,8 +8,8 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 import Button from "../components/Button";
 import Board from "../components/chess/Board";
+import OneButtonPopup from "../components/popups/popup_templates/OneButtonPopup";
 import TwoButtonPopup from "../components/popups/popup_templates/TwoButtonPopup";
-import ResignPopup from "../components/popups/ResignPopup";
 import { SocketContext } from "../contexts/SocketContext";
 
 const styles = StyleSheet.create({
@@ -76,14 +76,12 @@ const Chessboard = gestureHandlerRootHOC(() => {
           yesFunc={acceptDraw}
         />
       )}
-    </View>
-
-    <View style={styles.container}>
-      <Board />
       <Button text="Resign" onPress={proposeResign} />
       {openResign && (
-        <ResignPopup
-          activateResignPopup={true}
+        <OneButtonPopup
+          labelText={'Your Opponent Had Resigned, You Win!'}
+          buttonText={'Back to Homescreen'}
+          buttonFunc={navigation.navigate("HomeScreen")}
         />
       )}
     </View>
