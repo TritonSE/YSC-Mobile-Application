@@ -6,7 +6,7 @@ import { AppStylesheet } from "../styles/AppStylesheet";
 interface ButtonProps {
   text: string;
   onPress?: (event: GestureResponderEvent) => void;
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Button = ({ text, onPress, style }: ButtonProps) => (
@@ -18,6 +18,7 @@ const Button = ({ text, onPress, style }: ButtonProps) => (
 );
 Button.defaultProps = {
   onPress: undefined,
+  style: undefined,
 };
 
 export default Button;
