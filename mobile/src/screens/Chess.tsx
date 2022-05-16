@@ -69,7 +69,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
       <Board color={route.params.color} />
       <Button
         text="Draw"
-        onPress={proposeDraw}
+        onPress={grayButton ? undefined : proposeDraw}
         style={grayButton ? styles.grayButton : { width: 90 }}
       />
       {openDraw && (
