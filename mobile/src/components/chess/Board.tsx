@@ -59,6 +59,9 @@ const Board = ({ color }) => {
       reverseString: reverseFenString(chess.fen()),
       gameState: chess.game_over(),
     });
+    if (chess.game_over()) {
+      socket.emit("game over");
+    }
   }, [chess, state.player]);
 
   useEffect(() => {

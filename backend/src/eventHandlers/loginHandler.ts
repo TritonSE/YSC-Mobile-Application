@@ -12,6 +12,7 @@ module.exports = function ({ socket, io, roomsMap, boards }: BaseHandlerParams) 
     require("./roomHandler.ts")({ socket, io, username, roomsMap, boards });
     require("./moveHandler.ts")({ socket, io, username, roomsMap, boards });
     require("./resignHandler.ts")({ socket, io, username, roomsMap, boards });
+    require("./gameOverHandler.ts")({ socket, io, username, roomsMap, boards });
     require("./drawHandler.ts")({ socket, io, username, roomsMap, boards });
   });
 };
