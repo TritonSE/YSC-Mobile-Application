@@ -7,7 +7,6 @@ export const AppStylesheet = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "white",
   },
-
   button: {
     backgroundColor: "#96C957",
     width: 327,
@@ -17,20 +16,21 @@ export const AppStylesheet = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20,
   },
-
+  grayButton: {
+    width: 90,
+    backgroundColor: "#8E8E8E",
+  },
   buttonText: {
     position: "absolute",
     fontSize: 18,
     fontStyle: "normal",
     fontWeight: "normal",
   },
-
   forgotPassword: {
     width: 114,
     height: 18,
     marginTop: 20,
   },
-
   forgotPasswordText: {
     fontStyle: "normal",
     fontWeight: "normal",
@@ -38,16 +38,13 @@ export const AppStylesheet = StyleSheet.create({
     textAlign: "left",
     textDecorationLine: "underline",
   },
-
   input: {
     padding: 10,
   },
-
   mascot: {
     width: 375,
     height: 375,
   },
-
   textInputField: {
     fontSize: 16,
     padding: 5,
@@ -60,50 +57,42 @@ export const AppStylesheet = StyleSheet.create({
     borderColor: "#000000",
     alignContent: "center",
   },
-
   textInputHeader: {
     color: "#000000",
     fontStyle: "normal",
     fontSize: 16,
     fontWeight: "700",
   },
-
   forgotPasswordImage: {
     width: 234,
     height: 395,
   },
-
   headerHomeScreen: {
     top: 6,
     left: 8,
     fontSize: 32,
     fontWeight: "700",
   },
-
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-
   modalView: {
     backgroundColor: "white",
     width: 337,
     height: 171,
   },
-
   modalText: {
     marginTop: 26,
     fontSize: 18,
     textAlign: "center",
   },
-
   buttonContainer: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
   },
-
   modalButton: {
     backgroundColor: "#96C957",
     borderRadius: 3,

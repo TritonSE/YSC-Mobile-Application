@@ -1,74 +1,95 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
-import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useContext, useEffect, useState } from "react";
+import { View } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 import Button from "../components/Button";
 import Board from "../components/chess/Board";
-import OneButtonPopup from "../components/popups/popup_templates/OneButtonPopup";
-import TwoButtonPopup from "../components/popups/popup_templates/TwoButtonPopup";
+import OneButtonPopup from "../components/popups/OneButtonPopup";
+import TwoButtonPopup from "../components/popups/TwoButtonPopup";
 import { SocketContext } from "../contexts/SocketContext";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "grey",
-  },
-});
+import { AppStylesheet as styles } from "../styles/AppStylesheet";
 
 // Enable gestures to work for Android
 const Chessboard = gestureHandlerRootHOC(() => {
   const socket = useContext(SocketContext);
   const navigation = useNavigation();
+  const route = useRoute();
+  const [grayButton, setGrayButton] = useState(false);
+  // states for popups rendering
   const [openDraw, setOpenDraw] = useState(false);
   const [openResign, setOpenResign] = useState(false);
+  const [openResignReceived, setOpenResignReceived] = useState(false);
+  const [openDrawRejected, setOpenDrawRejected] = useState(false);
+  const [openDrawAccepted, setOpenDrawAccepted] = useState(false);
 
   const proposeDraw = () => {
     socket.emit("try draw");
-    console.log("proposing draw...");
+    setGrayButton(true);
   };
 
   const proposeResign = () => {
     socket.emit("resign");
     console.log("proposing resign...");
-  }
-
-  socket.on("draw request", () => {
-    console.log(socket.id, " received a draw");
-    setOpenDraw(true);
-  });
-
-  socket.on("game resigned", () => {
-    console.log(socket.id, "opponent resigned");
     setOpenResign(true);
-  });
-
-  socket.on("game drawn", () => {
-    navigation.navigate("HomeScreen");
-  });
-
-  socket.on("draw request rejected", () => {
-    // TODO: popup?
-    setOpenDraw(false);
-  });
+  }
 
   const acceptDraw = () => {
     socket.emit("draw accepted");
+    setOpenDraw(false);
+    navigation.navigate("HomeScreen");
   };
 
   const rejectDraw = () => {
     socket.emit("draw rejected");
-    setOpenDraw(false); // TODO: state here and chess screen?
+    setOpenDraw(false);
   };
+
+  useEffect(() => {
+    socket.on("draw request", () => {
+      setOpenDraw(true);
+    });
+
+    socket.on("game drawn", () => {
+      setOpenDrawAccepted(true);
+      setGrayButton(false);
+    });
+
+    socket.on("draw request rejected", () => {
+      setOpenDrawRejected(true);
+      setGrayButton(false);
+    });
+
+    socket.on("game resigned", () => {
+      console.log(socket.id, "opponent resigned");
+      setOpenResignReceived(true);
+    });
+
+    // reset states when component unmounts
+    return () => {
+      setGrayButton(false);
+      setOpenDraw(false);
+      setOpenDrawRejected(false);
+      setOpenDrawAccepted(false);
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Board />
-      <Button text="Draw" onPress={proposeDraw} />
+      <Board color={route.params.color} />
+      <Button
+        text="Draw"
+        onPress={grayButton ? undefined : proposeDraw}
+        style={grayButton ? styles.grayButton : { width: 90 }}
+      />
+      <Button
+        text="Draw"
+        onPress={proposeResign}
+        style={styles.grayButton}
+      />
       {openDraw && (
         <TwoButtonPopup
           labelText={"Your Opponent Would \n Like A Draw. Accept or Decline?"}
@@ -76,12 +97,32 @@ const Chessboard = gestureHandlerRootHOC(() => {
           yesFunc={acceptDraw}
         />
       )}
-      <Button text="Resign" onPress={proposeResign} />
+      {openDrawAccepted && (
+        <OneButtonPopup
+          labelText="Draw Request Accepted"
+          buttonText="Return Home"
+          buttonFunc={() => navigation.navigate("HomeScreen")}
+        />
+      )}
+      {openDrawRejected && (
+        <OneButtonPopup
+          labelText="Draw Request Declined"
+          buttonText="Continue Game"
+          buttonFunc={() => setOpenDrawRejected(false)}
+        />
+      )}
       {openResign && (
         <OneButtonPopup
-          labelText={'Your Opponent Had Resigned, You Win!'}
-          buttonText={'Back to Homescreen'}
-          buttonFunc={navigation.navigate("HomeScreen")}
+          labelText="Resigned"
+          buttonText="Return Home"
+          buttonFunc={() => navigation.navigate("HomeScreen")}
+        />
+      )}
+      {openResignReceived && (
+        <OneButtonPopup
+          labelText="Your Opponent Has Resigned"
+          buttonText="Return Home"
+          buttonFunc={() => navigation.navigate("HomeScreen")}
         />
       )}
     </View>

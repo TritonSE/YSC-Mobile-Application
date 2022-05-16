@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
+import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
 import jwt_decode from "jwt-decode";
 import React, { createContext, useContext, useState } from "react";
-import { YSC_SERVER_URI } from "react-native-dotenv";
 
 import { SocketContext } from "./SocketContext";
 import { User, initialUser, UserContext } from "./UserContext";
@@ -31,6 +31,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
   const socket = useContext(SocketContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const YSC_SERVER_URI = Constants.manifest?.extra?.YSC_SERVER_URI;
 
   const authContextValue = React.useMemo(
     () => ({
@@ -88,7 +89,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         // token is valid
         if (res.status === 200) {
+          const decodedValidation: Payload = jwt_decode(`${tokenRes}`);
           setIsLoggedIn(true);
+          socket.connect();
+          socket.emit("successful login", decodedValidation.username);
           console.log("Validated token");
         }
       },

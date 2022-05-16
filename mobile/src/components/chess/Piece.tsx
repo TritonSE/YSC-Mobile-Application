@@ -2,7 +2,7 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess, Position } from "chess.js";
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { StyleSheet, Image } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -26,6 +26,7 @@ import wnPiece from "../../../assets/piece_images/wn.png";
 import wpPiece from "../../../assets/piece_images/wp.png";
 import wqPiece from "../../../assets/piece_images/wq.png";
 import wrPiece from "../../../assets/piece_images/wr.png";
+import { SocketContext } from "../../contexts/SocketContext";
 
 import { toTranslation, SIZE, toPosition } from "./Notation";
 // import { reverseFenString } from "./util";
@@ -69,6 +70,7 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
   const offsetY = useSharedValue(0);
   const translateX = useSharedValue(startPosition.x * SIZE);
   const translateY = useSharedValue(startPosition.y * SIZE);
+  const socket = useContext(SocketContext);
   const movePiece = useCallback(
     (to: Position) => {
       // Uses chess.js library to check for moves that are valid and enables
@@ -86,6 +88,7 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       });
       if (move) {
         chess.move({ from, to });
+        socket.emit("send chess move", chess.fen());
         onTurn();
       }
     },
