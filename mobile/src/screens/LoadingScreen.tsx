@@ -18,6 +18,7 @@ const LoadingScreen = () => {
           <Image style={AppStylesheet.mascot} source={stemettImage} />
           <Button text="Waiting for Opponent"/>
           <Text>14 Players Online</Text>
+          <Button text = "Stop Searching"/>
         </View>
       );
 
