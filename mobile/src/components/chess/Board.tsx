@@ -69,7 +69,7 @@ const Board = ({ color }) => {
   }, []);
 
   return (
-    <View>
+    <>
       <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
@@ -95,7 +95,7 @@ const Board = ({ color }) => {
           })
         )}
       </View>
-    </View>
+    </>
   );
 };
 
