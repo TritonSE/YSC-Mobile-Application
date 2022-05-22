@@ -105,7 +105,6 @@ export const AppStylesheet = StyleSheet.create({
     marginTop: 20,
   },
   stemmettImage: {
-    height: 392.18,
-    width: 161,
+    height: "55%",
   },
 });

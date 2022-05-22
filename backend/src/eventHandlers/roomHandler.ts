@@ -31,4 +31,17 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
       }
     }
   });
+
+  socket.on("quit searching", () => {
+    const userRoomData = roomsMap.get(username);
+    if (userRoomData) {
+      const room = userRoomData.room;
+      const roomBoardData = boards.get(room);
+      if (roomBoardData) {
+        io.socketsLeave(room);
+        roomsMap.delete(roomBoardData.players[0]);
+        boards.delete(room);
+      }
+    }
+  });
 };

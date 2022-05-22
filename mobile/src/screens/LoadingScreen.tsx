@@ -17,13 +17,15 @@ const LoadingScreen = () => {
   let playerColor = "";
 
   const quitSearch = () => {
-    navigation.navigate("HomeScreen");
     setStopPopup(false);
+    navigation.navigate("HomeScreen");
+    socket.emit("quit searching");
   };
 
   socket.once("successful assign", (color: string) => {
     playerColor = color;
   });
+
   socket.once("game ready", () => {
     navigation.navigate("Chess", { color: playerColor });
   });
@@ -34,11 +36,13 @@ const LoadingScreen = () => {
       <Image style={AppStylesheet.stemmettImage} source={stemettImage} />
       <Button text="Waiting for Opponent..." style={{ opacity: 0.5 }} />
       <Text style={{ fontSize: 18, marginTop: 5 }}>14 Players Online</Text>
-      <Button
-        text="Stop Searching"
-        onPress={() => setStopPopup(true)}
-        style={{ backgroundColor: "#DBEDF9", width: 164 }}
-      />
+      <View style={{ position: "absolute", right: "4%", bottom: "4%" }}>
+        <Button
+          text="Stop Searching"
+          onPress={() => setStopPopup(true)}
+          style={{ backgroundColor: "#DBEDF9", width: 164 }}
+        />
+      </View>
       {stopPopup && (
         <TwoButtonPopup
           labelText={"Are You Sure \n You'd Like To Quit?"}
