@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
 import jwt_decode from "jwt-decode";
@@ -26,6 +27,58 @@ const initialState: AuthState = {
 };
 
 export const AuthContext = createContext<AuthState>(initialState);
+
+// const [state, dispatch] = React.useReducer(
+//   (prevState, action) => {
+//     switch (action.type) {
+//       case 'RESTORE_TOKEN':
+//         return {
+//           ...prevState,
+//           userToken: action.token,
+//           isLoading: false,
+//         };
+//       case 'SIGN_IN':
+//         return {
+//           ...prevState,
+//           isSignout: false,
+//           userToken: action.token,
+//         };
+//       case 'SIGN_OUT':
+//         return {
+//           ...prevState,
+//           isSignout: true,
+//           userToken: null,
+//         };
+//     }
+//   },
+//   {
+//     isLoading: true,
+//     isSignout: false,
+//     userToken: null,
+//   }
+// );
+
+React.useEffect(() => {
+  const navigation = useNavigation();
+  // Fetch the token from storage then navigate to our appropriate place
+  const validateToken = async () => {
+    let userToken;
+
+    try {
+      userToken = await SecureStore.getItemAsync('token'); // get token
+    } catch (err) {
+      // Restoring token failed
+      navigation.navigate('LoginScreen');
+    }
+
+    // validate token if it exists to check for expiry
+    // validate();
+    
+    // if token is valid & not expired, navigate to home screen?
+  };
+
+  validateToken();
+}, []);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
