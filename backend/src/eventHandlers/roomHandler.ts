@@ -3,7 +3,7 @@ import type { GameHandlerParams, BoardState } from "../types";
 module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   socket.on("assign to room", () => {
     let currRoom = boards.size == 0 ? "Room 1" : "Room " + boards.size;
-    let board: BoardState = { lock: 0, board: "", players: [username] };
+    let board: BoardState = { lock: 0, board: "", players: [username], rematchAccept: [] };
     let color = "w";
 
     // socket only has default socket ID room => assign socket to a room
