@@ -75,7 +75,7 @@ const Board = ({ color }) => {
 
   return (
     <View>
-      <Gameover isGameOver={state.gameState} playerWhoLost={state.player} />
+      <Gameover isGameOver={state.gameState} didLose={state.player === state.myColor} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
       <View style={styles.container}>

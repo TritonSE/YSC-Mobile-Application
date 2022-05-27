@@ -1,6 +1,43 @@
 import { StyleSheet } from "react-native";
 
 export const PopupStyleSheet = StyleSheet.create({
+  containerView: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 337,
+    height: 425,
+    borderWidth: 5,
+    backgroundColor: "white",
+    borderColor: "#96C957",
+  },
+  imageContainerView: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  confettiView: {
+    height: 337,
+    width: 327,
+  },
+  balloonView: {
+    height: 326,
+    width: 327,
+    alignItems: "center",
+  },
+  mascotView: {
+    width: 140,
+    height: 236,
+    marginTop: 90,
+    justifyContent: "center"
+  },
+  gameOverText: {
+    position: "absolute",
+    backgroundColor: "white",
+    flex: 1,
+    fontSize: 24,
+    marginTop: 62,
+    fontStyle: "normal",
+    fontWeight: "700",
+  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
