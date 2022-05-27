@@ -15,19 +15,18 @@ export const PopupStyleSheet = StyleSheet.create({
     alignItems: "center",
   },
   confettiView: {
-    height: 337,
     width: 327,
+    height: 337,
   },
   balloonView: {
-    height: 326,
     width: 327,
+    height: 326,
     alignItems: "center",
   },
   mascotView: {
     width: 140,
-    height: 236,
     marginTop: 90,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   gameOverText: {
     position: "absolute",

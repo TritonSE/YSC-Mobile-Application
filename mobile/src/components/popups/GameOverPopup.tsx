@@ -1,4 +1,4 @@
-import { Modal, Text, Pressable, View, ImageBackground, PointPropType } from "react-native";
+import { Modal, Text, Pressable, View, ImageBackground } from "react-native";
 
 import balloons from "../../../assets/balloon_background.png";
 import confetti from "../../../assets/balloon_confetti.png";
@@ -19,19 +19,19 @@ const GameOverPopup = ({ labelText, mascot, noFunc, yesFunc }: GameOverPopupProp
         <View style={PopupStyleSheet.imageContainerView}>
           <ImageBackground source={confetti} style={PopupStyleSheet.confettiView}>
             <ImageBackground source={balloons} style={PopupStyleSheet.balloonView}>
-              <ImageBackground source={mascot} style={PopupStyleSheet.mascotView}/>
+              <ImageBackground source={mascot} style={PopupStyleSheet.mascotView} />
               <Text style={PopupStyleSheet.gameOverText}>{labelText}</Text>
             </ImageBackground>
           </ImageBackground>
         </View>
         <View style={PopupStyleSheet.buttonContainer}>
-          <Pressable
-            style={PopupStyleSheet.modalButton}
-            onPress={noFunc}
-          >
+          <Pressable style={PopupStyleSheet.modalButton} onPress={noFunc}>
             <Text style={AppStylesheet.buttonText}>Rematch</Text>
           </Pressable>
-          <Pressable style={[PopupStyleSheet.modalButton, {backgroundColor: "#dbedf9" }]} onPress={yesFunc}>
+          <Pressable
+            style={[PopupStyleSheet.modalButton, { backgroundColor: "#dbedf9" }]}
+            onPress={yesFunc}
+          >
             <Text style={AppStylesheet.buttonText}>Return Home</Text>
           </Pressable>
         </View>
