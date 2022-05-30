@@ -22,7 +22,7 @@ const Gameover = ({isDraw}) => {
   // When draw, display a popup to notify the players
   return (
     <View>
-      {isGameOver && (
+      {isDraw && (
         <GameOverPopup
           labelText={drawMessage}
           mascot={mascot}
