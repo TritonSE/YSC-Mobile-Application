@@ -10,6 +10,7 @@ import { SocketContext } from "../../contexts/SocketContext";
 
 import Background from "./Background";
 import Gameover from "./Gameover";
+import Draw from "./Draw"
 import Piece from "./Piece";
 import { reverseFenString } from "./util";
 
@@ -49,6 +50,10 @@ const Board = ({ color }) => {
     fenString: "Game has not started",
     gameState: chess.game_over(),
     reverseString: "Game has not started",
+    drawState: chess.in_draw(),
+    staleMateState: chess.in_stalemate(),
+    threeFoldRepetitionState: chess.in_threefold_repetition(),
+    insufficientMaterialState: chess.insufficient_material(),
   });
 
   // Updates game information after a turn
@@ -60,6 +65,10 @@ const Board = ({ color }) => {
       fenString: chess.fen(),
       reverseString: reverseFenString(chess.fen()),
       gameState: chess.game_over(),
+      drawState: chess.in_draw(),
+      staleMateState: chess.in_stalemate(),
+      threeFoldRepetitionState: chess.in_threefold_repetition(),
+      insufficientMaterialState: chess.insufficient_material(),
     });
   }, [chess, state.player]);
 
@@ -75,6 +84,7 @@ const Board = ({ color }) => {
 
   return (
     <View>
+      <Draw isDraw={state.drawState || state.staleMateState || state.threeFoldRepetitionState || state.insufficientMaterialState}/>
       <Gameover isGameOver={state.gameState} didLose={state.player === state.myColor} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
