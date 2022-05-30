@@ -13,11 +13,15 @@ const LoadingScreen = () => {
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
   const { userState } = useContext(UserContext);
+  // const [goBack, setGoBack] = useState(false);
   const [stopPopup, setStopPopup] = useState(false);
   let playerColor = "";
 
   const quitSearch = () => {
     setStopPopup(false);
+    // console.log("inquit search goback", goBack)
+    // setGoBack(true);
+
     navigation.navigate("HomeScreen");
     socket.emit("quit searching");
   };
@@ -34,13 +38,16 @@ const LoadingScreen = () => {
 
   // useEffect(() => {
   //   navigation.addListener('beforeRemove', (e) => {
-  //     // e.preventDefault();
+  //     e.preventDefault();
 
-  //     console.log("here")
+  //     console.log("In effect here")
   //     // setStopPopup(true);
-  //     // if (stoped searched ) {
-  //     //   navigation.dispatch(e.data.action)
-  //     // }
+  //     console.log(goBack);
+  //     if (goBack) {
+  //       console.log("in if statement")
+  //       setGoBack(false);
+  //       navigation.dispatch(e.data.action)
+  //     }
   //   })
   // }, [navigation])
 

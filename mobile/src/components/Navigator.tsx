@@ -8,7 +8,15 @@ import HomeScreen from "../screens/HomeScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  Login: undefined;
+  ForgotPassword: undefined;
+  HomeScreen: undefined;
+  LoadingScreen: undefined;
+  Chess: { color: string };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigator = () => {
   const { isLoggedIn } = useContext(AuthContext);
