@@ -21,7 +21,6 @@ export const AppStylesheet = StyleSheet.create({
     backgroundColor: "#8E8E8E",
   },
   buttonText: {
-    position: "absolute",
     fontSize: 18,
     fontStyle: "normal",
     fontWeight: "normal",

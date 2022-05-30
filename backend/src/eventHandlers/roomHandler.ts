@@ -32,6 +32,10 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
     }
   });
 
+  // CLIENT WORKFLOW FOR QUIT SEARCHING
+  // client emits "quit searching" when they click on the quit searching button when waiting for a match
+  // client goes back to play game screen after they quit searching
+  // server will handle client leaving and deleting the room from the board
   socket.on("quit searching", () => {
     const userRoomData = roomsMap.get(username);
     if (userRoomData) {

@@ -18,8 +18,12 @@ const Navigator = () => {
       {isLoggedIn ? (
         <>
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
-          <Stack.Screen name="Chess" component={Chess} />
+          <Stack.Screen
+            name="LoadingScreen"
+            component={LoadingScreen}
+            options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen name="Chess" component={Chess} options={{ gestureEnabled: false }} />
         </>
       ) : (
         <>

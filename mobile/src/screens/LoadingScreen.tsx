@@ -22,6 +22,7 @@ const LoadingScreen = () => {
     socket.emit("quit searching");
   };
 
+  // useEffect(() => {
   socket.once("successful assign", (color: string) => {
     playerColor = color;
   });
@@ -29,6 +30,19 @@ const LoadingScreen = () => {
   socket.once("game ready", () => {
     navigation.navigate("Chess", { color: playerColor });
   });
+  // }, [])
+
+  // useEffect(() => {
+  //   navigation.addListener('beforeRemove', (e) => {
+  //     // e.preventDefault();
+
+  //     console.log("here")
+  //     // setStopPopup(true);
+  //     // if (stoped searched ) {
+  //     //   navigation.dispatch(e.data.action)
+  //     // }
+  //   })
+  // }, [navigation])
 
   return (
     <View style={AppStylesheet.container}>
