@@ -1,14 +1,12 @@
 import type { Socket } from "socket.io";
 
-import { YSC_HOST } from "../constants";
-
 const https = require("https");
 
 function validateToken(token: string, socket: Socket) {
   // testing invalid token
   // const invalidToken = "invalid";
   const options = {
-    hostname: YSC_HOST,
+    hostname: "ystemandchess.com",
     path: "/middleware/auth/validate",
     method: "POST",
     headers: {
