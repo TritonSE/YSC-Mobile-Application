@@ -91,6 +91,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         if (res.status === 200) {
           const decodedValidation: Payload = jwt_decode(`${tokenRes}`);
           setIsLoggedIn(true);
+          socket.emit("authenicate connection", tokenRes);
           socket.connect();
           socket.emit("successful login", decodedValidation.username);
           console.log("Validated token");
