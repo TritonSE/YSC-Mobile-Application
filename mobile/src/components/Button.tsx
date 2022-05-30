@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactFragment } from "react";
+import React, { ReactFragment } from "react";
 import { Text, View, Pressable, GestureResponderEvent, StyleProp, ViewStyle } from "react-native";
 
 import { AppStylesheet } from "../styles/AppStylesheet";
@@ -21,7 +21,7 @@ const Button = ({ text, image, onPress, style }: ButtonProps) => (
 Button.defaultProps = {
   onPress: undefined,
   style: undefined,
-  image: undefined
+  image: undefined,
 };
 
 export default Button;

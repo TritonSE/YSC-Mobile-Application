@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Text, View, Image } from "react-native";
 
 import stemettImage from "../../assets/Stemett.png";
@@ -22,15 +22,15 @@ const LoadingScreen = () => {
     socket.emit("quit searching");
   };
 
-  // useEffect(() => {
-  socket.once("successful assign", (color: string) => {
-    playerColor = color;
-  });
+  useEffect(() => {
+    socket.once("successful assign", (color: string) => {
+      playerColor = color;
+    });
 
-  socket.once("game ready", () => {
-    navigation.navigate("Chess", { color: playerColor });
-  });
-  // }, [])
+    socket.once("game ready", () => {
+      navigation.navigate("Chess", { color: playerColor });
+    });
+  }, []);
 
   // useEffect(() => {
   //   navigation.addListener('beforeRemove', (e) => {
