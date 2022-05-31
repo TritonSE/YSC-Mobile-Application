@@ -35,6 +35,28 @@ const styles = StyleSheet.create({
     width,
     height: width,
   },
+  turnContainer: {
+    alignSelf: "flex-start",
+    flexDirection: "row",
+  },
+  isTurn: {
+    width: 16,
+    height: 16,
+    marginLeft: 4,
+    borderRadius: 8,
+    backgroundColor: "green",
+  },
+  isNotTurn: {
+    width: 16,
+    height: 16,
+    marginLeft: 4,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "grey",
+  },
+  text: {
+    marginLeft: 5,
+  },
 });
 
 const Board = ({ color }) => {
@@ -73,6 +95,10 @@ const Board = ({ color }) => {
       <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
+      <View style={[styles.turnContainer, { marginBottom: 12 }]}>
+        <View style={state.player === "b" ? styles.isTurn : styles.isNotTurn} />
+        <Text style={styles.text}>User</Text>
+      </View>
       <View style={styles.container}>
         <Background />
         {state.board.map((row, y) =>
@@ -94,6 +120,10 @@ const Board = ({ color }) => {
             return null;
           })
         )}
+      </View>
+      <View style={[styles.turnContainer, { marginTop: 12 }]}>
+        <View style={state.player === "w" ? styles.isTurn : styles.isNotTurn} />
+        <Text style={styles.text}>User</Text>
       </View>
     </>
   );
