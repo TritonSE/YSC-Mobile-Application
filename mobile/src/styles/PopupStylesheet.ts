@@ -25,6 +25,7 @@ export const PopupStyleSheet = StyleSheet.create({
   },
   mascotView: {
     width: 140,
+    height: 236,
     marginTop: 90,
     justifyContent: "center",
   },
