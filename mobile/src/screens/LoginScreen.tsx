@@ -14,11 +14,15 @@ import {
 import mascotImg from "../../assets/mascot.png";
 import Button from "../components/Button";
 import { AuthContext } from "../contexts/AuthContext";
+import { SocketContext } from "../contexts/SocketContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const { login } = useContext(AuthContext);
+  const { login, setIsLoggedIn } = useContext(AuthContext);
+
+  // testing
+  const socket = useContext(SocketContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +30,19 @@ const LoginScreen = () => {
   const handleLogin = () => {
     login(username, password);
   };
+
+  // testing purposes only
+  socket.on("connect", () => {
+    console.log("user connected");
+  });
+
+  socket.on("disconnect", (reason) => {
+    console.log("user disconnected");
+    if (reason === "io server disconnect") {
+      // if disconnection was initiated by the server, need to reconnect manually
+      setIsLoggedIn(false); // redirect user to login screen if invalid token
+    }
+  });
 
   return (
     <KeyboardAvoidingView

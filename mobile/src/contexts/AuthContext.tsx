@@ -9,6 +9,7 @@ import { User, initialUser, UserContext } from "./UserContext";
 
 interface AuthState {
   isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   login: (username: string, password: string) => void;
   validate: () => void;
 }
@@ -21,6 +22,7 @@ interface Payload extends User {
 
 const initialState: AuthState = {
   isLoggedIn: false,
+  setIsLoggedIn: () => undefined,
   login: () => undefined,
   validate: () => undefined,
 };
@@ -30,7 +32,7 @@ export const AuthContext = createContext<AuthState>(initialState);
 export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
   const socket = useContext(SocketContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(initialState.isLoggedIn);
   const YSC_SERVER_URI = Constants.manifest?.extra?.YSC_SERVER_URI;
 
   const authContextValue = React.useMemo(
@@ -62,6 +64,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           };
           setUserState(newUserState);
           setIsLoggedIn(true);
+          socket.emit("authenicate connection", token);
           socket.connect();
           socket.emit("successful login", decoded.username);
         } else {
@@ -83,7 +86,6 @@ export const AuthProvider: React.FC = ({ children }) => {
           // reset user state
           setUserState(initialUser);
           setIsLoggedIn(false);
-
           console.error("Couldn't validate token.");
         }
 
@@ -91,15 +93,15 @@ export const AuthProvider: React.FC = ({ children }) => {
         if (res.status === 200) {
           const decodedValidation: Payload = jwt_decode(`${tokenRes}`);
           setIsLoggedIn(true);
-          socket.emit("authenicate connection", tokenRes);
           socket.connect();
           socket.emit("successful login", decodedValidation.username);
           console.log("Validated token");
         }
       },
       isLoggedIn,
+      setIsLoggedIn,
     }),
-    [isLoggedIn]
+    [isLoggedIn, setIsLoggedIn]
   );
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
