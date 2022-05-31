@@ -37,29 +37,33 @@ const styles = StyleSheet.create({
   },
   turnContainer: {
     alignSelf: "flex-start",
+    alignItems: "center",
     flexDirection: "row",
   },
-  isTurn: {
-    width: 16,
-    height: 16,
+  greenCircle: {
+    width: 15,
+    height: 15,
     marginLeft: 4,
     borderRadius: 8,
-    backgroundColor: "green",
+    backgroundColor: "#96C957",
   },
-  isNotTurn: {
-    width: 16,
-    height: 16,
+  emptyCircle: {
+    width: 15,
+    height: 15,
     marginLeft: 4,
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: "grey",
+    borderColor: "#C4C4C4",
   },
   text: {
     marginLeft: 5,
+    fontSize: 18,
+    fontStyle: "normal",
+    fontWeight: "normal",
   },
 });
 
-const Board = ({ color }) => {
+const Board = ({ color, players }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
@@ -96,8 +100,8 @@ const Board = ({ color }) => {
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
       <View style={[styles.turnContainer, { marginBottom: 12 }]}>
-        <View style={state.player === "b" ? styles.isTurn : styles.isNotTurn} />
-        <Text style={styles.text}>User</Text>
+        <View style={state.player === "b" ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{players[1]}</Text>
       </View>
       <View style={styles.container}>
         <Background />
@@ -122,8 +126,8 @@ const Board = ({ color }) => {
         )}
       </View>
       <View style={[styles.turnContainer, { marginTop: 12 }]}>
-        <View style={state.player === "w" ? styles.isTurn : styles.isNotTurn} />
-        <Text style={styles.text}>User</Text>
+        <View style={state.player === "w" ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{players[0]}</Text>
       </View>
     </>
   );
