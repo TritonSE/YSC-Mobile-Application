@@ -43,6 +43,10 @@ export const PopupStyleSheet = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  enumView: {
+    flex: 1,
+    alignItems: "center",
+  },
 
   modalView: {
     backgroundColor: "white",

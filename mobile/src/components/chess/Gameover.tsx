@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { SocketContext } from "../../contexts/SocketContext";
 import GameOverPopup from "../popups/GameOverPopup";
 
-const Gameover = ({ isGameOver, didLose }) => {
+const Gameover = ({ isGameOver, outcomeVar }) => {
   const socket = useContext(SocketContext);
 
   const quitGame = () => {
@@ -18,7 +18,9 @@ const Gameover = ({ isGameOver, didLose }) => {
   // When gameover, display a popup to notify the players
   return (
     <View>
-      {isGameOver && <GameOverPopup didLose={didLose} noFunc={quitGame} yesFunc={rematchGame} />}
+      {isGameOver && (
+        <GameOverPopup outcomeVar={outcomeVar} noFunc={quitGame} yesFunc={rematchGame} />
+      )}
     </View>
   );
 };
