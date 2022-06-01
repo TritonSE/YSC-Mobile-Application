@@ -30,7 +30,7 @@ export const AuthContext = createContext<AuthState>(initialState);
 export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
   const socket = useContext(SocketContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(initialState.isLoggedIn);
   const YSC_SERVER_URI = Constants.manifest?.extra?.YSC_SERVER_URI;
 
   const authContextValue = React.useMemo(
@@ -63,6 +63,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           setUserState(newUserState);
           setIsLoggedIn(true);
           socket.connect();
+          socket.emit("authenticate connection", token);
           socket.emit("successful login", decoded.username);
         } else {
           console.error("Login request was unsuccessful.");
@@ -83,8 +84,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           // reset user state
           setUserState(initialUser);
           setIsLoggedIn(false);
-
-          console.error("Couldn't validate token.");
+          console.log("Couldn't validate token.");
         }
 
         // token is valid
@@ -93,7 +93,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           setIsLoggedIn(true);
           socket.connect();
           socket.emit("successful login", decodedValidation.username);
-          console.log("Validated token");
+          console.log("Validated token.");
         }
       },
       isLoggedIn,

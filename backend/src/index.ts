@@ -1,6 +1,7 @@
 import type { Socket } from "socket.io";
 
 import type { RoomData, BoardState } from "./types";
+import validateToken from "./utils/auth";
 
 const http = require("http");
 
@@ -24,6 +25,11 @@ server.listen(PORT, () => {
 
 // triggered whenever a new socket connects to server
 io.on("connection", (socket: Socket) => {
+  socket.on("authenticate connection", (data) => {
+    const { token } = JSON.parse(data);
+    validateToken(token, socket); // socket will disconnect in this method if invalid token
+  });
+
   require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards });
 });
 
