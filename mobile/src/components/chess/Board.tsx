@@ -74,10 +74,10 @@ const Board = ({ color }) => {
   }, []);
 
   const getPlayerOutcome = () => {
-    if (state.player === state.myColor) {
-      return "loss";
+    if (chess.in_checkmate()) {
+      return state.player === state.myColor ? "loss" : "win";
     }
-    return "win";
+    return "draw";
   };
 
   return (

@@ -13,57 +13,45 @@ interface GameOverPopupProps {
   yesFunc: () => void;
 }
 
-const ImageObj = {
-  win: <Image source={winMascot} style={PopupStyleSheet.mascotView} />,
-  loss: <Image source={loseMascot} style={PopupStyleSheet.mascotView} />,
-
-  // To be implemented later
-  draw: <View />,
-};
-
-const TextObj = {
-  win: <Text style={PopupStyleSheet.gameOverText}>Great Work, You Win!</Text>,
-  loss: <Text style={PopupStyleSheet.gameOverText}>Good Effort, Try Again!</Text>,
-
-  // To be implemented later
-  draw: <View />,
-};
-
-function ImageOption({ state }: any) {
-  return (
-    <View style={PopupStyleSheet.enumView}>
-      {ImageObj[state]}
-      {TextObj[state]}
-    </View>
-  );
-}
-
 // Pass in as props the button's label text, and what the button does when no and yes are pressed
-const GameOverPopup = ({ outcomeVar, noFunc, yesFunc }: GameOverPopupProps) => (
-  <Modal animationType="slide" transparent>
-    <View style={PopupStyleSheet.centeredView}>
-      <View style={PopupStyleSheet.containerView}>
-        <View style={PopupStyleSheet.imageContainerView}>
-          <ImageBackground source={confetti} style={PopupStyleSheet.confettiView}>
-            <ImageBackground source={balloons} style={PopupStyleSheet.balloonView}>
-              <ImageOption state={outcomeVar} />
+const GameOverPopup = ({ outcomeVar, noFunc, yesFunc }: GameOverPopupProps) => {
+  const gameOverMessages = {
+    win: "Great Work, You Win!",
+    loss: "Good Effort, Try Again!",
+    draw: "", // to be implemented
+  };
+  const mascots = {
+    win: winMascot,
+    loss: loseMascot,
+    draw: "", // to be implemented
+  };
+  return (
+    <Modal animationType="slide" transparent>
+      <View style={PopupStyleSheet.centeredView}>
+        <View style={PopupStyleSheet.containerView}>
+          <View style={PopupStyleSheet.imageContainerView}>
+            <ImageBackground source={confetti} style={PopupStyleSheet.confettiView}>
+              <ImageBackground source={balloons} style={PopupStyleSheet.balloonView}>
+                <Image source={mascots[outcomeVar]} style={PopupStyleSheet.mascotView} />,
+                <Text style={PopupStyleSheet.gameOverText}>{gameOverMessages[outcomeVar]}</Text>,
+              </ImageBackground>
             </ImageBackground>
-          </ImageBackground>
-        </View>
-        <View style={PopupStyleSheet.buttonContainer}>
-          <Pressable style={PopupStyleSheet.modalButton} onPress={noFunc}>
-            <Text style={AppStylesheet.buttonText}>Rematch</Text>
-          </Pressable>
-          <Pressable
-            style={[PopupStyleSheet.modalButton, { backgroundColor: "#dbedf9" }]}
-            onPress={yesFunc}
-          >
-            <Text style={AppStylesheet.buttonText}>Return Home</Text>
-          </Pressable>
+          </View>
+          <View style={PopupStyleSheet.buttonContainer}>
+            <Pressable style={PopupStyleSheet.modalButton} onPress={noFunc}>
+              <Text style={AppStylesheet.buttonText}>Rematch</Text>
+            </Pressable>
+            <Pressable
+              style={[PopupStyleSheet.modalButton, { backgroundColor: "#dbedf9" }]}
+              onPress={yesFunc}
+            >
+              <Text style={AppStylesheet.buttonText}>Return Home</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-    </View>
-  </Modal>
-);
+    </Modal>
+  );
+};
 
 export default GameOverPopup;
