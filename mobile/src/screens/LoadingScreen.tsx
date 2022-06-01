@@ -27,12 +27,9 @@ const LoadingScreen = () => {
   };
 
   useEffect(() => {
-    socket.once("successful assign", (color: string) => {
-      playerColor = color;
-    });
-
-    socket.once("game ready", () => {
-      navigation.navigate("Chess", { color: playerColor });
+    socket.once("successful assign", (color: string, players: string[]) => {
+      console.log("color in successful assign frontend: ", color);
+      navigation.navigate("Chess", { color });
     });
   }, []);
 

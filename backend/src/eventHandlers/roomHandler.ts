@@ -2,49 +2,40 @@ import type { GameHandlerParams, BoardState } from "../types";
 
 module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   socket.on("assign to room", () => {
-    let currRoom = boards.size == 0 ? "Room 1" : "Room " + boards.size;
+    let roomID = boards.size == 0 ? "Room 1" : "Room " + boards.size;
+    // default board state with only one player
     let board: BoardState = { lock: 0, board: "", players: [username] };
-    let color = "w";
 
-    // socket only has default socket ID room => assign socket to a room
+    // sockets always have at least 1 room (for private messaging)
+    // so if there is exactly one, then it is not in a chess game room yet
     if (socket.rooms.size == 1) {
-      const socketsRoom = io.sockets.adapter.rooms.get(currRoom);
+      const socketsRoom = io.sockets.adapter.rooms.get(roomID);
       if (socketsRoom) {
-        //Check if current room is full => create new room
+        // check if current room is full => create new room
         if (socketsRoom.size == 2) {
-          currRoom = "Room " + (boards.size + 1);
+          roomID = "Room " + (boards.size + 1);
         } else {
-          const currBoard = boards.get(currRoom);
+          // otherwise we check if the room already has a board
+          const currBoard = boards.get(roomID);
           if (currBoard) {
+            // adds second player to board state
             board = { ...board, players: [currBoard.players[0], username] };
-            color = "b";
           }
         }
       }
-      boards.set(currRoom, board);
-      roomsMap.set(username, { room: currRoom, socket: socket.id });
-      socket.join(currRoom);
-      socket.emit("successful assign", color);
+      // sets board states, room data, and places socket in room
+      boards.set(roomID, board);
+      roomsMap.set(username, { room: roomID, socket: socket.id });
+      socket.join(roomID);
 
+      // emit colors and player list after both players are assigned
       if (board.players.length == 2) {
-        io.to(currRoom).emit("game ready");
-      }
-    }
-  });
-
-  // CLIENT WORKFLOW FOR QUIT SEARCHING
-  // client emits "quit searching" when they click on the quit searching button when waiting for a match
-  // client goes back to play game screen after they quit searching
-  // server will handle client leaving and deleting the room from the board
-  socket.on("quit searching", () => {
-    const userRoomData = roomsMap.get(username);
-    if (userRoomData) {
-      const room = userRoomData.room;
-      const roomBoardData = boards.get(room);
-      if (roomBoardData) {
-        io.socketsLeave(room);
-        roomsMap.delete(roomBoardData.players[0]);
-        boards.delete(room);
+        const white_socket = roomsMap.get(board.players[0]);
+        const black_socket = roomsMap.get(board.players[1]);
+        if (white_socket && black_socket) {
+          io.to(white_socket.socket).emit("successful assign", "w", board.players);
+          io.to(black_socket.socket).emit("successful assign", "b", board.players);
+        }
       }
     }
   });
