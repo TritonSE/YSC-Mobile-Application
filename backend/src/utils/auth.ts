@@ -19,7 +19,7 @@ function validateToken(token: string, socket: Socket) {
       // disconnect from socket if invalid token
       console.log("Couldn't validate token.");
       socket.disconnect(true);
-      console.log("connected in validateToken? ", socket.connected); //expect false
+      console.log("connected in validateToken? (expect false) ", socket.connected); //expect false
     } else console.log("Validated token"); // do nothing if valid token
   });
   req.end();

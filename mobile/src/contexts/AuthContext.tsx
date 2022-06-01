@@ -9,7 +9,6 @@ import { User, initialUser, UserContext } from "./UserContext";
 
 interface AuthState {
   isLoggedIn: boolean;
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   login: (username: string, password: string) => void;
   validate: () => void;
 }
@@ -22,7 +21,6 @@ interface Payload extends User {
 
 const initialState: AuthState = {
   isLoggedIn: false,
-  setIsLoggedIn: () => undefined,
   login: () => undefined,
   validate: () => undefined,
 };
@@ -64,7 +62,6 @@ export const AuthProvider: React.FC = ({ children }) => {
           };
           setUserState(newUserState);
           setIsLoggedIn(true);
-          socket.emit("authenicate connection", token);
           socket.connect();
           socket.emit("successful login", decoded.username);
         } else {
@@ -86,7 +83,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           // reset user state
           setUserState(initialUser);
           setIsLoggedIn(false);
-          console.error("Couldn't validate token.");
+          console.log("Couldn't validate token.");
         }
 
         // token is valid
@@ -95,13 +92,12 @@ export const AuthProvider: React.FC = ({ children }) => {
           setIsLoggedIn(true);
           socket.connect();
           socket.emit("successful login", decodedValidation.username);
-          console.log("Validated token");
+          console.log("Validated token.");
         }
       },
       isLoggedIn,
-      setIsLoggedIn,
     }),
-    [isLoggedIn, setIsLoggedIn]
+    [isLoggedIn]
   );
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

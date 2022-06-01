@@ -19,7 +19,7 @@ import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const { login, setIsLoggedIn } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   // testing
   const socket = useContext(SocketContext);
@@ -36,12 +36,8 @@ const LoginScreen = () => {
     console.log("user connected");
   });
 
-  socket.on("disconnect", (reason) => {
+  socket.on("disconnect", () => {
     console.log("user disconnected");
-    if (reason === "io server disconnect") {
-      // if disconnection was initiated by the server, need to reconnect manually
-      setIsLoggedIn(false); // redirect user to login screen if invalid token
-    }
   });
 
   return (
