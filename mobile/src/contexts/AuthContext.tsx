@@ -63,6 +63,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           setUserState(newUserState);
           setIsLoggedIn(true);
           socket.connect();
+          socket.emit("authenticate connection", token);
           socket.emit("successful login", decoded.username);
         } else {
           console.error("Login request was unsuccessful.");

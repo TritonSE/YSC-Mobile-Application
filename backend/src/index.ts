@@ -24,9 +24,11 @@ server.listen(PORT, () => {
 });
 
 // triggered whenever a new socket connects to server
-io.on("connection", (socket: Socket, token: string) => {
-  console.log("connected to server: ", socket.id);
-  validateToken(token, socket); // socket will disconnect in this method if invalid token
+io.on("connection", (socket: Socket) => {
+  socket.on("authenticate connection", (data) => {
+    const { token } = JSON.parse(data);
+    validateToken(token, socket); // socket will disconnect in this method if invalid token
+  });
 
   require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards });
 });
