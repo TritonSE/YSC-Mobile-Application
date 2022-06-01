@@ -41,6 +41,12 @@ const Chessboard = gestureHandlerRootHOC(() => {
   };
 
   useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      e.preventDefault();
+    });
+  }, [navigation]);
+
+  useEffect(() => {
     socket.on("draw request", () => {
       setOpenDraw(true);
     });
