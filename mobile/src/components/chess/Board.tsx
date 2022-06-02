@@ -107,7 +107,7 @@ const Board = ({ color }) => {
           })
         )}
       </View>
-    </View>
+    </>
   );
 };
 
