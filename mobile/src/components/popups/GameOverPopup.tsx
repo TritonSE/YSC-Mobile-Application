@@ -32,8 +32,8 @@ const GameOverPopup = ({ outcomeVar, noFunc, yesFunc }: GameOverPopupProps) => {
           <View style={PopupStyleSheet.imageContainerView}>
             <ImageBackground source={confetti} style={PopupStyleSheet.confettiView}>
               <ImageBackground source={balloons} style={PopupStyleSheet.balloonView}>
-                <Image source={mascots[outcomeVar]} style={PopupStyleSheet.mascotView} />,
-                <Text style={PopupStyleSheet.gameOverText}>{gameOverMessages[outcomeVar]}</Text>,
+                <Image source={mascots[outcomeVar]} style={PopupStyleSheet.mascotView} />
+                <Text style={PopupStyleSheet.gameOverText}>{gameOverMessages[outcomeVar]}</Text>
               </ImageBackground>
             </ImageBackground>
           </View>
