@@ -16,6 +16,7 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
           lock: nextLock,
           board: newBoard,
           players: roomBoardData.players,
+          rematchAccept: roomBoardData.rematchAccept,
         };
         boards.set(room, newBoardState);
         socket.to(room).emit("updated board", newBoard);

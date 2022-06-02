@@ -1,6 +1,7 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
+import { useNavigation } from "@react-navigation/native";
 import { Chess } from "chess.js";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
 });
 
 const Board = ({ color }) => {
+  const navigation = useNavigation();
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
   const [state, setState] = useState({
@@ -66,11 +68,21 @@ const Board = ({ color }) => {
       chess.load(fen);
       onTurn();
     });
+    socket.on("game over", () => {
+      navigation.navigate("HomeScreen");
+    });
   }, []);
 
+  const getPlayerOutcome = () => {
+    if (chess.in_checkmate()) {
+      return state.player === state.myColor ? "loss" : "win";
+    }
+    return "draw";
+  };
+
   return (
-    <>
-      <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
+    <View>
+      <Gameover isGameOver={state.gameState} outcomeVar={getPlayerOutcome()} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
       <View style={styles.container}>
@@ -95,7 +107,7 @@ const Board = ({ color }) => {
           })
         )}
       </View>
-    </>
+    </View>
   );
 };
 
