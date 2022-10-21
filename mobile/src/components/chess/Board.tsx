@@ -73,10 +73,7 @@ const Board = ({ color }: BoardProps) => {
       onTurn();
     });
 
-    // reset state when component unmounts
-    return () => {
-      setState(initChessState);
-    };
+    return () => socket.off("updated board");
   }, []);
 
   return (
