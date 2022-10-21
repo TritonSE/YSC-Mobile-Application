@@ -1,6 +1,6 @@
 import type { GameHandlerParams, BoardState } from "../types";
 
-module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
+module.exports = function ({ socket, username, roomsMap, boards }: GameHandlerParams) {
   // CLIENT WORKFLOW FOR MOVE:
   //    socket A will emit "send chess move" with updated chess fenstring
   //    socket B will listen to "updated board" and load new chess object

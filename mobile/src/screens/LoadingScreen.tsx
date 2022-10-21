@@ -13,40 +13,20 @@ const LoadingScreen = () => {
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
   const { userState } = useContext(UserContext);
-  // const [goBack, setGoBack] = useState(false);
   const [stopPopup, setStopPopup] = useState(false);
-  let playerColor = "";
 
   const quitSearch = () => {
     setStopPopup(false);
-    // console.log("inquit search goback", goBack)
-    // setGoBack(true);
 
     navigation.navigate("HomeScreen");
     socket.emit("quit searching");
   };
 
   useEffect(() => {
-    socket.once("successful assign", (color: string, players: string[]) => {
-      console.log("color in successful assign frontend: ", color);
+    socket.once("successful assign", (color: string) => {
       navigation.navigate("Chess", { color });
     });
   }, []);
-
-  // useEffect(() => {
-  //   navigation.addListener('beforeRemove', (e) => {
-  //     e.preventDefault();
-
-  //     console.log("In effect here")
-  //     // setStopPopup(true);
-  //     console.log(goBack);
-  //     if (goBack) {
-  //       console.log("in if statement")
-  //       setGoBack(false);
-  //       navigation.dispatch(e.data.action)
-  //     }
-  //   })
-  // }, [navigation])
 
   return (
     <View style={AppStylesheet.container}>
