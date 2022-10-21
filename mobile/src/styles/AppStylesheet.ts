@@ -25,6 +25,7 @@ export const AppStylesheet = StyleSheet.create({
     fontSize: 18,
     fontStyle: "normal",
     fontWeight: "normal",
+    textAlign: "center",
   },
   forgotPassword: {
     width: 114,

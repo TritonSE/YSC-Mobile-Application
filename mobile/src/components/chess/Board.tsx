@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color }) => {
+const Board = ({ color, draw }) => {
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
@@ -82,7 +82,7 @@ const Board = ({ color }) => {
 
   return (
     <View>
-      <Gameover isGameOver={state.gameState} outcomeVar={getPlayerOutcome()} />
+      <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
       <View style={styles.container}>

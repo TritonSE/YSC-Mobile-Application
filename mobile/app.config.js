@@ -27,6 +27,6 @@ export default {
   },
   extra: {
     YSC_SERVER_URI: "https://ystemandchess.com/middleware/",
-    SOCKET_URI: process.env.SOCKET_URI || "http://localhost:3000",
+    SOCKET_URI: process.env.SOCKET_URI || "http://192.168.1.75:3000",
   },
 };

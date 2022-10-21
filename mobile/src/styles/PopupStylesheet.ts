@@ -23,18 +23,21 @@ export const PopupStyleSheet = StyleSheet.create({
     height: 326,
     alignItems: "center",
   },
+  imageRow: {
+    display: "flex",
+    flexDirection: "row",
+  },
   mascotView: {
-    width: 140,
+    width: 115,
     height: 236,
-    marginTop: 90,
+    marginTop: 100,
     justifyContent: "center",
   },
   gameOverText: {
     position: "absolute",
-    backgroundColor: "white",
     flex: 1,
     fontSize: 24,
-    marginTop: 62,
+    marginTop: 64,
     fontStyle: "normal",
     fontWeight: "700",
   },
@@ -42,6 +45,12 @@ export const PopupStyleSheet = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  centeredViewDim: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.25)",
   },
   modalView: {
     backgroundColor: "white",
