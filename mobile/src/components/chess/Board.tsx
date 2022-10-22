@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color, players }) => {
+const Board = ({ color, players, draw }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
 
@@ -98,36 +98,45 @@ const Board = ({ color, players }) => {
     return () => socket.off("updated board");
   }, []);
 
+  const getPlayerOutcome = () => {
+    if (chess.in_checkmate()) {
+      return state.player === state.myColor ? "loss" : "win";
+    }
+    return "draw";
+  };
+
   return (
     <>
-      <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
-      <Text style={{ color: "black" }}>{state.fenString}</Text>
-      <Text style={{ color: "black" }}>{state.reverseString}</Text>
-      <View style={[styles.turnContainer, { marginBottom: 12 }]}>
-        <View style={state.player === "b" ? styles.greenCircle : styles.emptyCircle} />
-        <Text style={styles.text}>{players[1]}</Text>
-      </View>
-      <View style={styles.container}>
-        <Background />
-        {state.board.map((row, y) =>
-          row.map((piece, x) => {
-            if (piece !== null) {
-              return (
-                /* eslint-disable react/no-array-index-key */
-                <Piece
-                  key={`${x}-${y}`}
-                  id={`${piece.color}${piece.type}` as const}
-                  startPosition={{ x, y }}
-                  chess={chess}
-                  onTurn={onTurn}
-                  enabled={state.player === piece.color && state.myColor === state.player}
-                />
-                /* eslint-enable react/no-array-index-key */
-              );
-            }
-            return null;
-          })
-        )}
+      <View>
+        <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
+        <Text style={{ color: "black" }}>{state.fenString}</Text>
+        <Text style={{ color: "black" }}>{state.reverseString}</Text>
+        <View style={[styles.turnContainer, { marginBottom: 12 }]}>
+          <View style={state.player === "b" ? styles.greenCircle : styles.emptyCircle} />
+          <Text style={styles.text}>{players[1]}</Text>
+        </View>
+        <View style={styles.container}>
+          <Background />
+          {state.board.map((row, y) =>
+            row.map((piece, x) => {
+              if (piece !== null) {
+                return (
+                  /* eslint-disable react/no-array-index-key */
+                  <Piece
+                    key={`${x}-${y}`}
+                    id={`${piece.color}${piece.type}` as const}
+                    startPosition={{ x, y }}
+                    chess={chess}
+                    onTurn={onTurn}
+                    enabled={state.player === piece.color && state.myColor === state.player}
+                  />
+                  /* eslint-enable react/no-array-index-key */
+                );
+              }
+              return null;
+            })
+          )}
+        </View>
       </View>
       <View style={[styles.turnContainer, { marginTop: 12 }]}>
         <View style={state.player === "w" ? styles.greenCircle : styles.emptyCircle} />

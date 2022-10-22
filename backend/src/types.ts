@@ -9,6 +9,7 @@ type BoardState = {
   lock: number;
   board: string;
   players: string[];
+  rematchAccept: string[];
 };
 
 interface BaseHandlerParams {

@@ -3,8 +3,7 @@ import type { GameHandlerParams, BoardState } from "../types";
 module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   socket.on("assign to room", () => {
     let roomID = boards.size == 0 ? "Room 1" : "Room " + boards.size;
-    // default board state with only one player
-    let board: BoardState = { lock: 0, board: "", players: [username] };
+    let board: BoardState = { lock: 0, board: "", players: [username], rematchAccept: [] };
 
     // sockets always have at least 1 room (for private messaging)
     // so if there is exactly one, then it is not in a chess game room yet
