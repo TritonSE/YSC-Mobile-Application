@@ -14,6 +14,10 @@ import { reverseFenString } from "./util";
 
 const { width } = Dimensions.get("window");
 
+interface BoardProps {
+  color: string;
+}
+
 function useConst<T>(initialValue: T | (() => T)): T {
   const ref = useRef<{ value: T }>();
   if (ref.current === undefined) {
@@ -37,17 +41,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color }) => {
+const Board = ({ color }: BoardProps) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
-  const [state, setState] = useState({
+
+  const initChessState = {
     myColor: color,
     player: chess.turn(),
     board: chess.board(),
     fenString: "Game has not started",
     gameState: chess.game_over(),
     reverseString: "Game has not started",
-  });
+  };
+  const [state, setState] = useState(initChessState);
 
   // Updates game information after a turn
   const onTurn = useCallback(() => {
@@ -66,6 +72,8 @@ const Board = ({ color }) => {
       chess.load(fen);
       onTurn();
     });
+
+    return () => socket.off("updated board");
   }, []);
 
   return (

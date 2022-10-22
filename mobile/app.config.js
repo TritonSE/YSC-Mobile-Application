@@ -1,3 +1,7 @@
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
 export default {
   name: "ysc-mobile",
   slug: "ysc-mobile",
