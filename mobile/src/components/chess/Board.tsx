@@ -1,7 +1,6 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
-import { useNavigation } from "@react-navigation/native";
 import { Chess } from "chess.js";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
@@ -36,20 +35,47 @@ const styles = StyleSheet.create({
     width,
     height: width,
   },
+  turnContainer: {
+    alignSelf: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  greenCircle: {
+    width: 15,
+    height: 15,
+    marginLeft: 4,
+    borderRadius: 8,
+    backgroundColor: "#96C957",
+  },
+  emptyCircle: {
+    width: 15,
+    height: 15,
+    marginLeft: 4,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "#C4C4C4",
+  },
+  text: {
+    marginLeft: 5,
+    fontSize: 18,
+    fontStyle: "normal",
+    fontWeight: "normal",
+  },
 });
 
-const Board = ({ color, draw }) => {
-  const navigation = useNavigation();
+const Board = ({ color, players, draw }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
-  const [state, setState] = useState({
+
+  const initChessState = {
     myColor: color,
     player: chess.turn(),
     board: chess.board(),
     fenString: "Game has not started",
     gameState: chess.game_over(),
     reverseString: "Game has not started",
-  });
+  };
+  const [state, setState] = useState(initChessState);
 
   // Updates game information after a turn
   const onTurn = useCallback(() => {
@@ -68,9 +94,8 @@ const Board = ({ color, draw }) => {
       chess.load(fen);
       onTurn();
     });
-    socket.on("game over", () => {
-      navigation.navigate("HomeScreen");
-    });
+
+    return () => socket.off("updated board");
   }, []);
 
   const getPlayerOutcome = () => {
@@ -81,33 +106,43 @@ const Board = ({ color, draw }) => {
   };
 
   return (
-    <View>
-      <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
-      <Text style={{ color: "black" }}>{state.fenString}</Text>
-      <Text style={{ color: "black" }}>{state.reverseString}</Text>
-      <View style={styles.container}>
-        <Background />
-        {state.board.map((row, y) =>
-          row.map((piece, x) => {
-            if (piece !== null) {
-              return (
-                /* eslint-disable react/no-array-index-key */
-                <Piece
-                  key={`${x}-${y}`}
-                  id={`${piece.color}${piece.type}` as const}
-                  startPosition={{ x, y }}
-                  chess={chess}
-                  onTurn={onTurn}
-                  enabled={state.player === piece.color && state.myColor === state.player}
-                />
-                /* eslint-enable react/no-array-index-key */
-              );
-            }
-            return null;
-          })
-        )}
+    <>
+      <View>
+        <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
+        <Text style={{ color: "black" }}>{state.fenString}</Text>
+        <Text style={{ color: "black" }}>{state.reverseString}</Text>
+        <View style={[styles.turnContainer, { marginBottom: 12 }]}>
+          <View style={state.player === "b" ? styles.greenCircle : styles.emptyCircle} />
+          <Text style={styles.text}>{players[1]}</Text>
+        </View>
+        <View style={styles.container}>
+          <Background />
+          {state.board.map((row, y) =>
+            row.map((piece, x) => {
+              if (piece !== null) {
+                return (
+                  /* eslint-disable react/no-array-index-key */
+                  <Piece
+                    key={`${x}-${y}`}
+                    id={`${piece.color}${piece.type}` as const}
+                    startPosition={{ x, y }}
+                    chess={chess}
+                    onTurn={onTurn}
+                    enabled={state.player === piece.color && state.myColor === state.player}
+                  />
+                  /* eslint-enable react/no-array-index-key */
+                );
+              }
+              return null;
+            })
+          )}
+        </View>
       </View>
-    </View>
+      <View style={[styles.turnContainer, { marginTop: 12 }]}>
+        <View style={state.player === "w" ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{players[0]}</Text>
+      </View>
+    </>
   );
 };
 

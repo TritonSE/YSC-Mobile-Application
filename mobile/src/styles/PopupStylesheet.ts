@@ -46,12 +46,6 @@ export const PopupStyleSheet = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  centeredViewDim: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.25)",
-  },
   modalView: {
     backgroundColor: "white",
     width: 337,

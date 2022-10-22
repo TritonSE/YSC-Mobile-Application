@@ -21,7 +21,6 @@ export const AppStylesheet = StyleSheet.create({
     backgroundColor: "#8E8E8E",
   },
   buttonText: {
-    position: "absolute",
     fontSize: 18,
     fontStyle: "normal",
     fontWeight: "normal",
@@ -69,7 +68,8 @@ export const AppStylesheet = StyleSheet.create({
     height: 395,
   },
   headerHomeScreen: {
-    top: 6,
+    position: "absolute",
+    top: "5%",
     left: 8,
     fontSize: 32,
     fontWeight: "700",
@@ -103,5 +103,8 @@ export const AppStylesheet = StyleSheet.create({
     width: 89,
     height: 52,
     marginTop: 20,
+  },
+  stemmettImage: {
+    height: "55%",
   },
 });

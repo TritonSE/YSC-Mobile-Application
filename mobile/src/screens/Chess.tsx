@@ -63,7 +63,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
 
   return (
     <View style={styles.container}>
-      <Board color={route.params.color} draw={isDrawn} />
+      <Board color={route.params.color} players={route.params.players} draw={isDrawn} />
       <Button
         text="Draw"
         onPress={grayButton ? undefined : proposeDraw}
