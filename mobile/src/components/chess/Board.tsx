@@ -14,10 +14,6 @@ import { reverseFenString } from "./util";
 
 const { width } = Dimensions.get("window");
 
-interface BoardProps {
-  color: string;
-}
-
 function useConst<T>(initialValue: T | (() => T)): T {
   const ref = useRef<{ value: T }>();
   if (ref.current === undefined) {
@@ -39,9 +35,35 @@ const styles = StyleSheet.create({
     width,
     height: width,
   },
+  turnContainer: {
+    alignSelf: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  greenCircle: {
+    width: 15,
+    height: 15,
+    marginLeft: 4,
+    borderRadius: 8,
+    backgroundColor: "#96C957",
+  },
+  emptyCircle: {
+    width: 15,
+    height: 15,
+    marginLeft: 4,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "#C4C4C4",
+  },
+  text: {
+    marginLeft: 5,
+    fontSize: 18,
+    fontStyle: "normal",
+    fontWeight: "normal",
+  },
 });
 
-const Board = ({ color }: BoardProps) => {
+const Board = ({ color, players }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
 
@@ -81,6 +103,10 @@ const Board = ({ color }: BoardProps) => {
       <Gameover isGameOver={state.gameState} playerWhoWon={state.player} />
       <Text style={{ color: "black" }}>{state.fenString}</Text>
       <Text style={{ color: "black" }}>{state.reverseString}</Text>
+      <View style={[styles.turnContainer, { marginBottom: 12 }]}>
+        <View style={state.player === "b" ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{players[1]}</Text>
+      </View>
       <View style={styles.container}>
         <Background />
         {state.board.map((row, y) =>
@@ -102,6 +128,10 @@ const Board = ({ color }: BoardProps) => {
             return null;
           })
         )}
+      </View>
+      <View style={[styles.turnContainer, { marginTop: 12 }]}>
+        <View style={state.player === "w" ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{players[0]}</Text>
       </View>
     </>
   );

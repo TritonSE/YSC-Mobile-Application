@@ -13,7 +13,7 @@ type RootStackParamList = {
   ForgotPassword: undefined;
   HomeScreen: undefined;
   LoadingScreen: undefined;
-  Chess: { color: string };
+  Chess: { color: string; players: string[] };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
