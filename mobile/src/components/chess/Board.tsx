@@ -66,14 +66,16 @@ const styles = StyleSheet.create({
 const Board = ({ color, players }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
-  const [state, setState] = useState({
+
+  const initChessState = {
     myColor: color,
     player: chess.turn(),
     board: chess.board(),
     fenString: "Game has not started",
     gameState: chess.game_over(),
     reverseString: "Game has not started",
-  });
+  };
+  const [state, setState] = useState(initChessState);
 
   // Updates game information after a turn
   const onTurn = useCallback(() => {
@@ -92,6 +94,8 @@ const Board = ({ color, players }) => {
       chess.load(fen);
       onTurn();
     });
+
+    return () => socket.off("updated board");
   }, []);
 
   return (

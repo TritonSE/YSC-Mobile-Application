@@ -41,6 +41,12 @@ const Chessboard = gestureHandlerRootHOC(() => {
   };
 
   useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      e.preventDefault();
+    });
+  }, [navigation]);
+
+  useEffect(() => {
     socket.on("draw request", () => {
       setOpenDraw(true);
     });
@@ -55,12 +61,10 @@ const Chessboard = gestureHandlerRootHOC(() => {
       setGrayButton(false);
     });
 
-    // reset states when component unmounts
     return () => {
-      setGrayButton(false);
-      setOpenDraw(false);
-      setOpenDrawRejected(false);
-      setOpenDrawAccepted(false);
+      socket.off("draw request");
+      socket.off("game drawn");
+      socket.off("draw request rejected");
     };
   }, []);
 
