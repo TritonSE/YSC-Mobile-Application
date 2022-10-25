@@ -1,3 +1,4 @@
+import type { Response } from "express";
 import type { Socket } from "socket.io";
 
 const https = require("https");
@@ -14,7 +15,7 @@ function validateToken(token: string, socket: Socket) {
     },
   };
 
-  const req = https.request(options, (res: any) => {
+  const req = https.request(options, (res: Response) => {
     if (res.statusCode !== 200) {
       // disconnect from socket if invalid token
       socket.disconnect(true);
