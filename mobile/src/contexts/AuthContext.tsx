@@ -2,7 +2,7 @@
 import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
 import jwt_decode from "jwt-decode";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 import { SocketContext } from "./SocketContext";
 import { User, initialUser, UserContext } from "./UserContext";
@@ -30,7 +30,7 @@ export const AuthContext = createContext<AuthState>(initialState);
 export const AuthProvider: React.FC = ({ children }) => {
   const { setUserState } = useContext(UserContext);
   const socket = useContext(SocketContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(initialState.isLoggedIn);
   const YSC_SERVER_URI = Constants.manifest?.extra?.YSC_SERVER_URI;
 
   const authContextValue = React.useMemo(
@@ -63,6 +63,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           setUserState(newUserState);
           setIsLoggedIn(true);
           socket.connect();
+          socket.emit("authenticate connection", token);
           socket.emit("successful login", decoded.username);
         } else {
           console.error("Login request was unsuccessful.");
@@ -70,36 +71,58 @@ export const AuthProvider: React.FC = ({ children }) => {
       },
       validate: async () => {
         const url = YSC_SERVER_URI + "auth/validate";
-        const tokenRes = await SecureStore.getItemAsync("token");
-        const res = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${tokenRes}`,
-          },
-        });
+        let token;
+        let fail = false;
+        try {
+          const tokenRes = await SecureStore.getItemAsync("token");
+          token = JSON.parse(tokenRes).token;
+
+          const res = await fetch(url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          fail = res.status !== 200;
+        } catch (e) {
+          fail = true;
+        }
 
         // token is invalid
-        if (res.status !== 200) {
+        if (fail) {
           // reset user state
           setUserState(initialUser);
           setIsLoggedIn(false);
-
-          console.error("Couldn't validate token.");
-        }
-
-        // token is valid
-        if (res.status === 200) {
-          const decodedValidation: Payload = jwt_decode(`${tokenRes}`);
+        } else {
+          const decodedValidation: Payload = jwt_decode(`${token}`);
+          setUserState(decodedValidation);
           setIsLoggedIn(true);
           socket.connect();
           socket.emit("successful login", decodedValidation.username);
-          console.log("Validated token");
         }
       },
       isLoggedIn,
     }),
     [isLoggedIn]
   );
+
+  useEffect(() => {
+    const validateTokenOnLoad = async () => {
+      try {
+        await SecureStore.getItemAsync("token"); // retrieve token
+      } catch (err) {
+        // Restoring token failed
+        setIsLoggedIn(false);
+        return;
+      }
+
+      // validate token if it exists to check for expiry
+      // function sets isLoggedIn which sends user to login or home screen
+      authContextValue.validate();
+    };
+
+    validateTokenOnLoad();
+  }, []);
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 };

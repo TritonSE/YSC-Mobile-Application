@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.14",
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
@@ -29,8 +30,8 @@
   },
   "dependencies": {
     "express": "^4.17.2",
-    "socket.io": "^4.4.1",
     "prettier": "^2.5.1",
-    "save-dev": "^0.0.1-security"
+    "save-dev": "^0.0.1-security",
+    "socket.io": "^4.4.1"
   }
 }

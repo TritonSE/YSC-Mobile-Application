@@ -31,9 +31,7 @@ export const initialUser: User = {
 
 const initialState: UserState = {
   userState: initialUser,
-  setUserState: () => {
-    // initial function
-  },
+  setUserState: () => undefined,
 };
 
 export const UserContext = createContext<UserState>(initialState);
