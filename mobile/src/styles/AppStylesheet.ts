@@ -107,4 +107,7 @@ export const AppStylesheet = StyleSheet.create({
   stemmettImage: {
     height: "55%",
   },
+  starImage: {
+    height: "50%"
+  },
 });
