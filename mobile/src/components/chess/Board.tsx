@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color, players, draw }) => {
+const Board = ({ color, players, draw, disconnect }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
 
@@ -72,8 +72,9 @@ const Board = ({ color, players, draw }) => {
     player: chess.turn(),
     board: chess.board(),
     fenString: "Game has not started",
-    gameState: chess.game_over(),
     reverseString: "Game has not started",
+    gameState: chess.game_over(),
+    check: false,
   };
   const [state, setState] = useState(initChessState);
 
@@ -86,6 +87,7 @@ const Board = ({ color, players, draw }) => {
       fenString: chess.fen(),
       reverseString: reverseFenString(chess.fen()),
       gameState: chess.game_over(),
+      check: chess.in_check() ? chess.turn() : false,
     });
   }, [chess, state.player]);
 
@@ -98,17 +100,10 @@ const Board = ({ color, players, draw }) => {
     return () => socket.off("updated board");
   }, []);
 
-  const getPlayerOutcome = () => {
-    if (chess.in_checkmate()) {
-      return state.player === state.myColor ? "loss" : "win";
-    }
-    return "draw";
-  };
-
   return (
     <>
       <View>
-        <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
+        <Gameover chess={chess} state={state} draw={draw} disconnect={disconnect} />
         <View style={[styles.turnContainer, { marginBottom: 12 }]}>
           <View style={state.player !== state.myColor ? styles.greenCircle : styles.emptyCircle} />
           <Text style={styles.text}>{players[state.myColor === "w" ? 1 : 0]}</Text>
@@ -124,8 +119,9 @@ const Board = ({ color, players, draw }) => {
                     key={`${x}-${y}`}
                     id={`${piece.color}${piece.type}` as const}
                     startPosition={{ x, y }}
-                    /* flip={state.myColor === 'b'} */
+                    flip={state.myColor === "b"}
                     chess={chess}
+                    check={state.check}
                     onTurn={onTurn}
                     enabled={state.player === piece.color && state.myColor === state.player}
                   />

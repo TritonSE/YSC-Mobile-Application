@@ -1,7 +1,7 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
@@ -16,12 +16,14 @@ import { AppStylesheet as styles } from "../styles/AppStylesheet";
 // Enable gestures to work for Android
 const Chessboard = gestureHandlerRootHOC(() => {
   const socket = useContext(SocketContext);
+  const navigation = useNavigation();
   const route = useRoute();
   const [grayButton, setGrayButton] = useState(false);
   // states for popups rendering
   const [openDraw, setOpenDraw] = useState(false);
   const [openDrawRejected, setOpenDrawRejected] = useState(false);
   const [isDrawn, setIsDrawn] = useState(false);
+  const [isDisconnected, setIsDisconnected] = useState(false);
 
   const proposeDraw = () => {
     socket.emit("try draw");
@@ -54,16 +56,26 @@ const Chessboard = gestureHandlerRootHOC(() => {
       setGrayButton(false);
     });
 
+    socket.on("opponent disconnect", () => {
+      setIsDisconnected(true);
+    });
+
     return () => {
       socket.off("draw request");
       socket.off("game drawn");
       socket.off("draw request rejected");
+      socket.off("opponent disconnect");
     };
   }, []);
 
   return (
     <View style={styles.container}>
-      <Board color={route.params.color} players={route.params.players} draw={isDrawn} />
+      <Board
+        color={route.params.color}
+        players={route.params.players}
+        draw={isDrawn}
+        disconnect={isDisconnected}
+      />
       <Button
         text="Draw"
         onPress={grayButton ? undefined : proposeDraw}
@@ -71,7 +83,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
       />
       {openDraw && (
         <TwoButtonPopup
-          labelText={"Your Opponent Would \n Like A Draw. Accept or Decline?"}
+          labelText={"Your Opponent Would \n Like A Draw. Accept It?"}
           noFunc={rejectDraw}
           yesFunc={acceptDraw}
         />
@@ -81,6 +93,14 @@ const Chessboard = gestureHandlerRootHOC(() => {
           labelText="Draw Request Declined"
           buttonText="Continue Game"
           buttonFunc={() => setOpenDrawRejected(false)}
+        />
+      )}
+      {isDisconnected && (
+        <OneButtonPopup
+          labelText="Opponent Disconnected."
+          buttonText="Return Home"
+          buttonFunc={() => navigation.navigate("HomeScreen")}
+          popupStyle={{ backgroundColor: "rgba(0, 0, 0, 0.25)" }}
         />
       )}
     </View>

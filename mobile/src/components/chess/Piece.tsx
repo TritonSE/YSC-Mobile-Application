@@ -60,11 +60,12 @@ interface PieceProps {
   id: PlayerPiece;
   startPosition: Vector;
   chess: Chess;
+  check: boolean;
   onTurn: () => void;
   enabled: boolean;
 }
 
-const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
+const Piece = ({ id, startPosition, flip, chess, check, onTurn, enabled }: PieceProps) => {
   const isGestureActive = useSharedValue(false);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -89,6 +90,8 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       if (move) {
         chess.move({ from, to });
         socket.emit("send chess move", chess.fen());
+        // Hack to ensure visual state updates (e.g. check)
+        chess.load(chess.fen());
         onTurn();
       }
     },
@@ -108,11 +111,22 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       runOnJS(movePiece)(toPosition({ x: translateX.value, y: translateY.value }));
     },
   });
+
+  const hasGlow = id === `${check}k`;
   const style = useAnimatedStyle(() => ({
     position: "absolute",
     zIndex: isGestureActive.value ? 100 : 10,
-    transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
+    transform: [
+      { translateX: translateX.value },
+      // { translateY: flip ? (7 * SIZE) - translateY.value : translateY.value }
+      { translateY: flip ? translateY.value : translateY.value },
+    ],
+    shadowColor: hasGlow ? "#ff3f3f" : "#171717",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: hasGlow ? 1 : 0.2,
+    shadowRadius: hasGlow ? 6 : 3,
   }));
+
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent} enabled={enabled}>
       <Animated.View style={style}>

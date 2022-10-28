@@ -40,6 +40,7 @@ export const PopupStyleSheet = StyleSheet.create({
     marginTop: 64,
     fontStyle: "normal",
     fontWeight: "700",
+    textAlign: "center",
   },
   centeredView: {
     flex: 1,
