@@ -33,7 +33,7 @@ const LoadingScreen = () => {
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
       <Image style={AppStylesheet.stemmettImage} source={stemettImage} />
       <Button text="Waiting for Opponent..." style={{ opacity: 0.5 }} />
-      <Text style={{ fontSize: 18, marginTop: 5 }}>14 Players Online</Text>
+      <Text style={{ fontSize: 18, marginTop: 16 }}>14 Players Online</Text>
       <View style={{ position: "absolute", right: "4%", bottom: "4%" }}>
         <Button
           text="Stop Searching"

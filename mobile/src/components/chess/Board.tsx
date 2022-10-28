@@ -109,11 +109,9 @@ const Board = ({ color, players, draw }) => {
     <>
       <View>
         <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
-        <Text style={{ color: "black" }}>{state.fenString}</Text>
-        <Text style={{ color: "black" }}>{state.reverseString}</Text>
         <View style={[styles.turnContainer, { marginBottom: 12 }]}>
-          <View style={state.player === "b" ? styles.greenCircle : styles.emptyCircle} />
-          <Text style={styles.text}>{players[1]}</Text>
+          <View style={state.player !== state.myColor ? styles.greenCircle : styles.emptyCircle} />
+          <Text style={styles.text}>{players[state.myColor === "w" ? 1 : 0]}</Text>
         </View>
         <View style={styles.container}>
           <Background />
@@ -126,6 +124,7 @@ const Board = ({ color, players, draw }) => {
                     key={`${x}-${y}`}
                     id={`${piece.color}${piece.type}` as const}
                     startPosition={{ x, y }}
+                    /* flip={state.myColor === 'b'} */
                     chess={chess}
                     onTurn={onTurn}
                     enabled={state.player === piece.color && state.myColor === state.player}
@@ -139,8 +138,8 @@ const Board = ({ color, players, draw }) => {
         </View>
       </View>
       <View style={[styles.turnContainer, { marginTop: 12 }]}>
-        <View style={state.player === "w" ? styles.greenCircle : styles.emptyCircle} />
-        <Text style={styles.text}>{players[0]}</Text>
+        <View style={state.player === state.myColor ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{players[state.myColor === "w" ? 0 : 1]}</Text>
       </View>
     </>
   );

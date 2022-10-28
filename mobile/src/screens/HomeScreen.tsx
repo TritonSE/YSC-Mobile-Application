@@ -27,7 +27,7 @@ const HomeScreen = () => {
         onPress={moveToLoading}
         style={{ flexDirection: "row", alignItems: "center" }}
       />
-      <Text style={{ fontSize: 18, marginTop: 5 }}>14 Players Online</Text>
+      <Text style={{ fontSize: 18, marginTop: 16 }}>14 Players Online</Text>
     </View>
   );
 };

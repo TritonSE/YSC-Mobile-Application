@@ -1,4 +1,5 @@
 import type { GameHandlerParams, BoardState } from "../types";
+import endGame from "../utils/endGame";
 
 module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   socket.on("assign to room", () => {
@@ -26,6 +27,9 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
       boards.set(roomID, board);
       roomsMap.set(username, { room: roomID, socket: socket.id });
       socket.join(roomID);
+      socket.on("disconnect", () => {
+        endGame(io, roomID, roomsMap, boards, "opponent disconnect");
+      });
 
       // emit colors and player list after both players are assigned
       if (board.players.length == 2) {
