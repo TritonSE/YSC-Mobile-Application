@@ -74,6 +74,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
         color={route.params.color}
         players={route.params.players}
         draw={isDrawn}
+        setDraw={setIsDrawn}
         disconnect={isDisconnected}
       />
       <Button

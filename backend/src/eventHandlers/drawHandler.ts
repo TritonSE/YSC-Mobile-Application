@@ -1,5 +1,4 @@
 import type { GameHandlerParams } from "../types";
-import endGame from "../utils/endGame";
 
 module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   // CLIENT WORKFLOW FOR DRAWING
@@ -18,7 +17,10 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
   });
 
   socket.on("draw accepted", () => {
-    endGame(io, roomsMap.get(username)?.room, roomsMap, boards, "game drawn", username);
+    const roomObj = roomsMap.get(username);
+    if (roomObj) {
+      io.in(roomObj.room).emit("game drawn", username);
+    }
   });
 
   socket.on("draw rejected", () => {

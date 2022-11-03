@@ -9,15 +9,14 @@ const Gameover = ({ chess, state, draw, disconnect }) => {
   useEffect(() => {
     if (disconnect) {
       setGameOver("disconnect");
-    }
-    if (chess.in_checkmate()) {
+    } else if (chess.in_checkmate()) {
       setGameOver(state.player === state.myColor ? "loss" : "win");
-    }
-    if (chess.in_stalemate()) {
+    } else if (chess.in_stalemate()) {
       setGameOver("stalemate");
-    }
-    if (draw || chess.in_draw()) {
+    } else if (draw || chess.in_draw()) {
       setGameOver("draw");
+    } else {
+      setGameOver(false);
     }
   }, [state, draw, disconnect]);
 

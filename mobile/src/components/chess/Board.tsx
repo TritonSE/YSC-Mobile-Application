@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color, players, draw, disconnect }) => {
+const Board = ({ color, players, draw, setDraw, disconnect }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
 
@@ -95,6 +95,7 @@ const Board = ({ color, players, draw, disconnect }) => {
     socket.on("updated board", (fen: string) => {
       chess.load(fen);
       onTurn();
+      setDraw(false);
     });
 
     return () => socket.off("updated board");
