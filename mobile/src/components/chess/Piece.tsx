@@ -105,7 +105,7 @@ const Piece = ({ id, startPosition, flip, chess, check, onTurn, enabled }: Piece
     },
     onActive: ({ translationX, translationY }) => {
       translateX.value = offsetX.value + translationX;
-      translateY.value = offsetY.value + translationY;
+      translateY.value = offsetY.value + translationY * (flip ? -1 : 1);
     },
     onEnd: () => {
       runOnJS(movePiece)(toPosition({ x: translateX.value, y: translateY.value }));
@@ -118,8 +118,7 @@ const Piece = ({ id, startPosition, flip, chess, check, onTurn, enabled }: Piece
     zIndex: isGestureActive.value ? 100 : 10,
     transform: [
       { translateX: translateX.value },
-      // { translateY: flip ? (7 * SIZE) - translateY.value : translateY.value }
-      { translateY: flip ? translateY.value : translateY.value },
+      { translateY: flip ? 7 * SIZE - translateY.value : translateY.value },
     ],
     shadowColor: hasGlow ? "#ff3f3f" : "#171717",
     shadowOffset: { width: 0, height: 0 },
