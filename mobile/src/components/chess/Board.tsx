@@ -79,6 +79,8 @@ const Board = ({ color, players, draw, setDraw, disconnect }) => {
   const [state, setState] = useState(initChessState);
 
   // Updates game information after a turn
+  const [moves, setMoves] = useState([]);
+  const [focused, setFocused] = useState();
   const onTurn = useCallback(() => {
     setState({
       myColor: color,
@@ -89,6 +91,7 @@ const Board = ({ color, players, draw, setDraw, disconnect }) => {
       gameState: chess.game_over(),
       check: chess.in_check() ? chess.turn() : false,
     });
+    setMoves([]);
   }, [chess, state.player]);
 
   useEffect(() => {
@@ -110,7 +113,7 @@ const Board = ({ color, players, draw, setDraw, disconnect }) => {
           <Text style={styles.text}>{players[state.myColor === "w" ? 1 : 0]}</Text>
         </View>
         <View style={styles.container}>
-          <Background />
+          <Background chess={chess} flip={state.myColor === "b"} moves={moves} onTurn={onTurn} />
           {state.board.map((row, y) =>
             row.map((piece, x) => {
               if (piece !== null) {
@@ -124,6 +127,26 @@ const Board = ({ color, players, draw, setDraw, disconnect }) => {
                     chess={chess}
                     check={state.check}
                     onTurn={onTurn}
+                    onTap={() => {
+                      if (state.player !== state.myColor) return;
+
+                      const rank = String.fromCharCode(97 + x);
+                      const file = "" + (8 - y);
+                      const square = rank + file;
+                      if (piece.color === state.myColor) {
+                        setMoves(chess.moves({ square, verbose: true }));
+                        setFocused(square);
+                      } else if (focused) {
+                        chess.move({
+                          from: focused,
+                          to: square,
+                        });
+                        socket.emit("send chess move", chess.fen());
+                        chess.load(chess.fen());
+                        onTurn();
+                        setFocused();
+                      }
+                    }}
                     enabled={state.player === piece.color && state.myColor === state.player}
                   />
                   /* eslint-enable react/no-array-index-key */

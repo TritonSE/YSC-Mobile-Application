@@ -1,6 +1,6 @@
 import type { GameHandlerParams } from "../types";
 
-module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
+module.exports = function ({ socket, io, username, roomsMap }: GameHandlerParams) {
   // CLIENT WORKFLOW FOR DRAWING
   // client A should emit "try draw" if they attempt to draw
   // client B should handle "draw request" event with the username of the client A being sent

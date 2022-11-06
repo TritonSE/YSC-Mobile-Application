@@ -28,6 +28,16 @@ const HomeScreen = () => {
         style={{ flexDirection: "row", alignItems: "center" }}
       />
       <Text style={{ fontSize: 18, marginTop: 16 }}>14 Players Online</Text>
+      {/*
+      <Button
+        text="reconnect"
+        onPress={() => {
+          socket.disconnect();
+          socket.connect();
+          socket.emit("successful login", userState.username);
+        }}
+      />
+      */}
     </View>
   );
 };
