@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color, players, draw, setDraw, disconnect }) => {
+const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
 
@@ -107,7 +107,7 @@ const Board = ({ color, players, draw, setDraw, disconnect }) => {
   return (
     <>
       <View>
-        <Gameover chess={chess} state={state} draw={draw} disconnect={disconnect} />
+        <Gameover chess={chess} state={state} draw={draw} disconnect={disconnect} resign={resign} />
         <View style={[styles.turnContainer, { marginBottom: 12 }]}>
           <View style={state.player !== state.myColor ? styles.greenCircle : styles.emptyCircle} />
           <Text style={styles.text}>{players[state.myColor === "w" ? 1 : 0]}</Text>

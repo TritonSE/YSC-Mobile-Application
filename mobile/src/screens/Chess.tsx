@@ -1,7 +1,7 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
@@ -24,6 +24,8 @@ const Chessboard = gestureHandlerRootHOC(() => {
   const [openDrawRejected, setOpenDrawRejected] = useState(false);
   const [isDrawn, setIsDrawn] = useState(false);
   const [isDisconnected, setIsDisconnected] = useState(false);
+  const [openResign, setOpenResign] = useState(false);
+  const [isResigned, setIsResigned] = useState(false);
 
   const proposeDraw = () => {
     socket.emit("try draw");
@@ -39,6 +41,20 @@ const Chessboard = gestureHandlerRootHOC(() => {
   const rejectDraw = () => {
     socket.emit("draw rejected");
     setOpenDraw(false);
+  };
+
+  const initiateResign = () => {
+    setOpenResign(true);
+  };
+
+  const rejectResign = () => {
+    setOpenResign(false);
+  };
+
+  const acceptResign = () => {
+    socket.emit("resign");
+    setOpenResign(false);
+    navigation.navigate("HomeScreen");
   };
 
   useEffect(() => {
@@ -60,11 +76,16 @@ const Chessboard = gestureHandlerRootHOC(() => {
       setIsDisconnected(true);
     });
 
+    socket.on("game resigned", () => {
+      setIsResigned(true);
+    });
+
     return () => {
       socket.off("draw request");
       socket.off("game drawn");
       socket.off("draw request rejected");
       socket.off("opponent disconnect");
+      socket.off("game resigned");
     };
   }, []);
 
@@ -76,12 +97,20 @@ const Chessboard = gestureHandlerRootHOC(() => {
         draw={isDrawn}
         setDraw={setIsDrawn}
         disconnect={isDisconnected}
+        resign={isResigned}
       />
-      <Button
-        text="Draw"
-        onPress={grayButton ? undefined : proposeDraw}
-        style={grayButton ? styles.grayButton : { width: 90 }}
-      />
+      <View style={{ flexDirection: "row" }}>
+        <Button
+          text="Tie"
+          onPress={grayButton ? undefined : proposeDraw}
+          style={grayButton ? styles.grayButton : { width: 90 }}
+        />
+        <Button
+          text="Quit"
+          onPress={initiateResign}
+          style={{ backgroundColor: "#dbedf9", width: 90, marginLeft: 20 }}
+        />
+      </View>
       {openDraw && (
         <TwoButtonPopup
           labelText={"Your Opponent Would \n Like A Draw. Accept It?"}
@@ -96,12 +125,11 @@ const Chessboard = gestureHandlerRootHOC(() => {
           buttonFunc={() => setOpenDrawRejected(false)}
         />
       )}
-      {isDisconnected && (
-        <OneButtonPopup
-          labelText="Opponent Disconnected."
-          buttonText="Return Home"
-          buttonFunc={() => navigation.navigate("HomeScreen")}
-          popupStyle={{ backgroundColor: "rgba(0, 0, 0, 0.25)" }}
+      {openResign && (
+        <TwoButtonPopup
+          labelText={"Are You Sure \n You'd Like To Quit?"}
+          noFunc={rejectResign}
+          yesFunc={acceptResign}
         />
       )}
     </View>

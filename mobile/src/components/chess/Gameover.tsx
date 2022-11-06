@@ -3,12 +3,14 @@ import { View } from "react-native";
 
 import GameOverPopup from "../popups/GameOverPopup";
 
-const Gameover = ({ chess, state, draw, disconnect }) => {
+const Gameover = ({ chess, state, draw, disconnect, resign }) => {
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     if (disconnect) {
       setGameOver("disconnect");
+    } else if (resign) {
+      setGameOver("resign");
     } else if (chess.in_checkmate()) {
       setGameOver(state.player === state.myColor ? "loss" : "win");
     } else if (chess.in_stalemate()) {
@@ -18,7 +20,7 @@ const Gameover = ({ chess, state, draw, disconnect }) => {
     } else {
       setGameOver(false);
     }
-  }, [state, draw, disconnect]);
+  }, [state, draw, disconnect, resign]);
 
   // When gameover, display a popup to notify the players
   return <View>{gameOver && <GameOverPopup outcome={gameOver} />}</View>;

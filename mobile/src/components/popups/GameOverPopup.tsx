@@ -21,6 +21,7 @@ const GameOverPopup = ({ outcome }) => {
     draw: "It's a Draw!",
     disconnect: "Oops, Your Opponent Disconnected!",
     stalemate: "Stalemate, It's a Draw!",
+    resign: "Your Opponent Resigned, You Win!",
   };
   const mascots = {
     win: [winMascot],
@@ -28,6 +29,7 @@ const GameOverPopup = ({ outcome }) => {
     draw: [drawMascot1, loseMascot],
     disconnect: [winMascot],
     stalemate: [drawMascot1, loseMascot],
+    resign: [winMascot],
   };
   const backgrounds = {
     win: balloons,
@@ -35,6 +37,7 @@ const GameOverPopup = ({ outcome }) => {
     draw: stars,
     disconnect: balloons,
     stalemate: stars,
+    resign: balloons,
   };
   const [wantRematch, setWantRematch] = useState(false);
 
