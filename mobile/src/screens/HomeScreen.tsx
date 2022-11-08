@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, View, Image } from "react-native";
 
 import PlayIcon from "../../assets/play-icon.png";
@@ -12,11 +12,33 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const { userState } = useContext(UserContext);
   const socket = useContext(SocketContext);
+  const [playerCount, SetPlayerCount] = useState(0);
+  let timer: NodeJS.Timeout;
+  
 
   const moveToLoading = () => {
     socket.emit("assign to room");
     navigation.navigate("LoadingScreen");
   };
+  
+  useEffect(() => {
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+      timer = setInterval(() => {
+        socket.emit("request player count")
+      }, 1000);
+
+      socket.on("send player count", (numPlayers: number) => {
+      SetPlayerCount(numPlayers);
+    });
+    })
+
+    const unsubscribeBlur = navigation.addListener('blur', () => {
+      clearInterval(timer);
+      socket.off("send player count");
+    })
+
+    return [unsubscribeBlur,unsubscribeFocus]
+  }, []);
 
   return (
     <View style={AppStylesheet.container}>
@@ -27,7 +49,7 @@ const HomeScreen = () => {
         onPress={moveToLoading}
         style={{ flexDirection: "row", alignItems: "center" }}
       />
-      <Text style={{ fontSize: 18, marginTop: 5 }}>14 Players Online</Text>
+      <Text style={{ fontSize: 18, marginTop: 5 }}>{playerCount} Players Online</Text>
     </View>
   );
 };

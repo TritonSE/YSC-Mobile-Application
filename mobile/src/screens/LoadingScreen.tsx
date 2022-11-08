@@ -14,6 +14,8 @@ const LoadingScreen = () => {
   const socket = useContext(SocketContext);
   const { userState } = useContext(UserContext);
   const [stopPopup, setStopPopup] = useState(false);
+  const [playerCount, SetPlayerCount] = useState(0);
+  let timer: NodeJS.Timeout;
 
   const quitSearch = () => {
     setStopPopup(false);
@@ -26,6 +28,24 @@ const LoadingScreen = () => {
     socket.once("successful assign", (color: string, players: string[]) => {
       navigation.navigate("Chess", { color, players });
     });
+
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+      timer = setInterval(() => {
+        socket.emit("request player count")
+      }, 1000)
+
+      socket.on("send player count", (numPlayers: number) => {
+        SetPlayerCount(numPlayers);
+      });
+    })
+
+    const unsubscribeBlur = navigation.addListener('blur', () => {
+      clearInterval(timer);
+      socket.off("send player count");
+    })
+    
+
+    return [unsubscribeBlur,unsubscribeFocus]
   }, []);
 
   return (
@@ -33,7 +53,7 @@ const LoadingScreen = () => {
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
       <Image style={AppStylesheet.stemmettImage} source={stemettImage} />
       <Button text="Waiting for Opponent..." style={{ opacity: 0.5 }} />
-      <Text style={{ fontSize: 18, marginTop: 5 }}>14 Players Online</Text>
+      <Text style={{ fontSize: 18, marginTop: 5 }}>{playerCount} Players Online</Text>
       <View style={{ position: "absolute", right: "4%", bottom: "4%" }}>
         <Button
           text="Stop Searching"
