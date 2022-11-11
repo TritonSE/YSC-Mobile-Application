@@ -8,9 +8,10 @@ import ForgotPassword from "../screens/ForgotPassword";
 import HomeScreen from "../screens/HomeScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LessonsPageScreen from "../screens/LessonsPageScreen";
+import LessonsBottomNavigation from "../../assets/LessonsBottomNavigation.png";
+import ChessBottomNavigation from "../../assets/ChessBottomNav.png";
 
 type RootStackParamList = {
   Login: undefined;
@@ -52,8 +53,10 @@ function MainScreen() {
 
   return (
     <Tab.Navigator screenOptions={screenOptions}>
-      <Tab.Screen name="Home" component={HomeScreenStack} />
-      <Tab.Screen name="Lessons" component={LessonsPageScreenStack} />
+      <Tab.Screen name="Home" component={HomeScreenStack}  
+        options={{ tabBarIcon: () => (<Image source={ChessBottomNavigation} />) }} />
+      <Tab.Screen name="Lessons" component={LessonsPageScreenStack}
+      options={{ tabBarIcon: () => (<Image source={LessonsBottomNavigation} />) }} />
     </Tab.Navigator>
   )
 }
