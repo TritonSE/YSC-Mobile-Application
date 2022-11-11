@@ -107,4 +107,8 @@ export const AppStylesheet = StyleSheet.create({
   stemmettImage: {
     height: "55%",
   },
+  studentSelectionContainer: {
+      flex: 1,
+      padding: 20,
+  }
 });

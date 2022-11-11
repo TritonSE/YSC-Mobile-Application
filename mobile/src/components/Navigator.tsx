@@ -7,6 +7,7 @@ import ForgotPassword from "../screens/ForgotPassword";
 import HomeScreen from "../screens/HomeScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
+import StudentSelectionScreen from "../screens/StudentSelectionScreen";
 
 type RootStackParamList = {
   Login: undefined;
