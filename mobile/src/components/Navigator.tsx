@@ -25,6 +25,8 @@ type RootStackParamList = {
 const screenOptions = {
   headerShown: false,
   gestureEnabled: false,
+  tabBarActiveBackgroundColor: '#96C957',
+  tabBarInactiveBackgroundColor: '#EDEDED'
 };
 
 function HomeScreenStack() {
@@ -53,7 +55,7 @@ function MainScreen() {
   const Tab = createBottomTabNavigator();
 
   return (
-    <Tab.Navigator screenOptions={screenOptions}>
+    <Tab.Navigator screenOptions={screenOptions} >
       <Tab.Screen name="Home" component={HomeScreenStack}  
         options={{ tabBarIcon: () => (<Image source={ChessBottomNavigation} />) }} />
       <Tab.Screen name="Lessons" component={LessonsPageScreenStack}
