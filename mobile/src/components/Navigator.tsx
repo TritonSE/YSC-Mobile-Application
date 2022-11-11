@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useEffect } from "react";
 
 import { AuthContext } from "../contexts/AuthContext";
 import Chess from "../screens/Chess";
@@ -19,54 +20,78 @@ type RootStackParamList = {
   Chess: { color: string; players: string[] };
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const screenOptions = {
+  headerShown: false,
+  gestureEnabled: false,
+};
 
-const HomeStack = createNativeStackNavigator();
+function HomeScreenStack() {
+  const HomeStack = createNativeStackNavigator();
 
-function HomeScreenStack()
-{
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Navigator screenOptions={screenOptions}>
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
       <HomeStack.Screen name="LoadingScreen" component={LoadingScreen} />
       <HomeStack.Screen name="Chess" component={Chess} />
     </HomeStack.Navigator>
   );
 }
 
-const LessonsStack = createNativeStackNavigator();
-function LessonsPageScreenStack()
-{
+function LessonsPageScreenStack() {
+  const LessonsStack = createNativeStackNavigator();
+
   return (
-    <LessonsStack.Navigator>
-      <LessonsStack.Screen name="Lessons" component={LessonsPageScreen} />
+    <LessonsStack.Navigator screenOptions={screenOptions}>
+      <LessonsStack.Screen name="LessonsScreen" component={LessonsPageScreen} />
     </LessonsStack.Navigator>
   );
+}
+
+function MainScreen() {
+  const Tab = createBottomTabNavigator();
+
+  return (
+    <Tab.Navigator screenOptions={screenOptions}>
+      <Tab.Screen name="Home" component={HomeScreenStack} />
+      <Tab.Screen name="Lessons" component={LessonsPageScreenStack} />
+    </Tab.Navigator>
+  )
 }
 
 
 const Navigator = () => {
   const { isLoggedIn } = useContext(AuthContext);
+  const navigation = useNavigation();
 
-  const Tab = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate("Main");
+    }
+  }, [isLoggedIn]);
 
   return (
-    <NavigationContainer>
-    <Tab.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-      {isLoggedIn ? (
-          <>
-          <Tab.Screen name="Home" component={HomeScreenStack} />
-          <Tab.Screen name="Lessons" component={LessonsPageScreenStack} />
-          </>
-        ) : (
-          <>
-          <Stack.Screen name="Login" component={LoginScreen} /> 
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          </>
-        )}
-    </Tab.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName="Login" screenOptions={screenOptions}>
+      <Stack.Screen name="Login" component={LoginScreen} /> 
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="Main" component={MainScreen} />
+    </Stack.Navigator>
+  );
 
+  // return (
+  //   <Tab.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+  //     {isLoggedIn ? (
+  //         <>
+  //         </>
+  //       ) : (
+  //         null
+  //         <>
+  //         <Stack.Screen name="Login" component={LoginScreen} /> 
+  //         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+  //         </>
+  //       )}
+  //   </Tab.Navigator>
     // <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
     //   {isLoggedIn ? (
     //     <>
@@ -85,7 +110,7 @@ const Navigator = () => {
     //     </>
     //   )}
     // </Stack.Navigator>
-  );
+  // );
 };
 
 export default Navigator;
