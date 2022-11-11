@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect } from "react";
+import { Image } from "react-native";
 
 import { AuthContext } from "../contexts/AuthContext";
 import Chess from "../screens/Chess";

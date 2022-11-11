@@ -45,8 +45,6 @@ export const AuthProvider: React.FC = ({ children }) => {
           method: "POST",
         });
 
-        setIsLoggedIn(true);
-        return;
 
         if (res.ok) {
           const tokenJson = await res.json();
