@@ -107,4 +107,35 @@ export const AppStylesheet = StyleSheet.create({
   stemmettImage: {
     height: "55%",
   },
+  lessonView: {
+    backgroundColor: "#96C957",
+    marginHorizontal: 10,
+    width: 90,
+    height: 50,
+  },
+
+  lessonText: {
+    top: 15,
+    textAlign: "center"
+  },
+
+  lessonSubContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  lessonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  starImage: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'left'
+  }
 });
