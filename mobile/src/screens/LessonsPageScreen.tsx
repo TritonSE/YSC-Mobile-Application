@@ -4,9 +4,11 @@ import { Text, View, Image } from "react-native";
 
 // import stemettImage from "../../assets/Stemett.png";
 import starImage from "../../assets/star.png";
+import mascotImage from "../../assets/mascot_stemett.png";
 
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
+import App from "../../App";
 
 const LessonsPageScreen = () => {
   const navigation = useNavigation();
@@ -15,77 +17,103 @@ const LessonsPageScreen = () => {
     <View style={AppStylesheet.container}>
       {/* header portion with % bar */}
       {/* <Image style={AppStylesheet.stemmettImage} source={stemettImage} /> */}
-      <Text style={AppStylesheet.headerHomeScreen}>Great Job!</Text>
-      <View style={AppStylesheet.starImage}>
-        <Image  source={starImage} />
+      <View style={AppStylesheet.lessonHeader}>
+        <Image source={mascotImage}/>
+        <View style={{flexDirection: "row", flex: 1}}>
+          <View style={{justifyContent: 'center'}}>
+            <Text style={AppStylesheet.lessonHeaderText}>Great Job!</Text>
+            <Text style={AppStylesheet.lessonHeaderText}>35% Levels Complete</Text>
+          </View>
+          <View style={AppStylesheet.starImage}>
+            <Image  source={starImage} />
+          </View>
+        </View>
       </View>
       {/* grid with lessons */}
       <View style={AppStylesheet.lessonContainer}>
         <View style={AppStylesheet.lessonSubContainer}>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 1</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 2</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 3</Text>
-          </View>
+          <Button 
+            text="Lesson 1"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 2"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 3"
+            style={AppStylesheet.lessonView}
+          />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 4</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 5</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 6</Text>
-          </View>
+          <Button 
+            text="Lesson 4"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 5"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 6"
+            style={AppStylesheet.lessonView}
+          />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 7</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 8</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 9</Text>
-          </View>
+          <Button 
+            text="Lesson 7"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 8"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 9"
+            style={AppStylesheet.lessonView}
+          />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 10</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 11</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 12</Text>
-          </View>
+          <Button 
+            text="Lesson 10"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 11"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 12"
+            style={AppStylesheet.lessonView}
+          />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 13</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 14</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 15</Text>
-          </View>
+          <Button 
+            text="Lesson 13"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 14"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 15"
+            style={AppStylesheet.lessonView}
+          />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 16</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 17</Text>
-          </View>
-          <View style={AppStylesheet.lessonView}>
-            <Text style={AppStylesheet.lessonText}>Lesson 18</Text>
-          </View>
+          <Button 
+            text="Lesson 16"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 17"
+            style={AppStylesheet.lessonView}
+          />
+          <Button 
+            text="Lesson 18"
+            style={AppStylesheet.lessonView}
+          />
         </View>
       </View>
     </View>

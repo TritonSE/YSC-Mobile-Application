@@ -110,8 +110,8 @@ export const AppStylesheet = StyleSheet.create({
   lessonView: {
     backgroundColor: "#96C957",
     marginHorizontal: 10,
-    width: 90,
-    height: 50,
+    width: 120,
+    height: 60,
   },
 
   lessonText: {
@@ -127,14 +127,25 @@ export const AppStylesheet = StyleSheet.create({
   },
 
   lessonContainer: {
-    flex: 1,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
+  },
+
+  lessonHeader: {
+    flex: 2,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  lessonHeaderText: {
+    fontSize: 20
   },
 
   starImage: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'left'
   }
