@@ -1,17 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Text, View, Image } from "react-native";
 
 // import stemettImage from "../../assets/Stemett.png";
 import starImage from "../../assets/star.png";
 import mascotImage from "../../assets/mascot_stemett.png";
-
+import progressBarImage from "../../assets/progress-bar.png";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
-import App from "../../App";
 
 const LessonsPageScreen = () => {
-  const navigation = useNavigation();
 
   return (
     <View style={AppStylesheet.container}>
@@ -19,14 +16,17 @@ const LessonsPageScreen = () => {
       {/* <Image style={AppStylesheet.stemmettImage} source={stemettImage} /> */}
       <View style={AppStylesheet.lessonHeader}>
         <Image source={mascotImage}/>
-        <View style={{flexDirection: "row", flex: 1}}>
-          <View style={{justifyContent: 'center'}}>
-            <Text style={AppStylesheet.lessonHeaderText}>Great Job!</Text>
-            <Text style={AppStylesheet.lessonHeaderText}>35% Levels Complete</Text>
+        <View style={{flex: 1}}>
+          <View style={{flexDirection: "row"}}>
+            <View style={{justifyContent: 'center'}}>
+              <Text style={AppStylesheet.lessonHeaderText}>Great Job!</Text>
+              <Text style={AppStylesheet.lessonHeaderText}>35% Levels Complete</Text>
+            </View>
+            <View style={AppStylesheet.starImage}>
+              <Image  source={starImage} />
+            </View>
           </View>
-          <View style={AppStylesheet.starImage}>
-            <Image  source={starImage} />
-          </View>
+          <Image source={progressBarImage} style={{width: 290, height: 40, resizeMode: "cover"}}/>
         </View>
       </View>
       {/* grid with lessons */}
