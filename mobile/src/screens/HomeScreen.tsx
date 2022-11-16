@@ -1,4 +1,4 @@
-import { useNavigation, NavigationContainer} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { Text, View, Image } from "react-native";
 
@@ -19,7 +19,7 @@ const HomeScreen = () => {
 
   const moveToLoading = () => {
     socket.emit("assign to room");
-    navigation.navigate('LoadingScreen');
+    navigation.navigate("LoadingScreen");
   };
 
   return (
@@ -27,13 +27,13 @@ const HomeScreen = () => {
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
 
       <View>
-        {(userState.role === 'student') && (
-            <Button
-              text="Play Game With A Mentor"
-              image={<Image style={{ marginRight: "2%" }} source={PlayIcon} />}
-              onPress={moveToLoading}
-              style={{ flexDirection: "row", alignItems: "center" }}
-            />
+        {userState.role === "student" && (
+          <Button
+            text="Play Game With A Mentor"
+            image={<Image style={{ marginRight: "2%" }} source={PlayIcon} />}
+            onPress={moveToLoading}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          />
         )}
         <Button
           text="Play Game With A Student"
@@ -52,11 +52,11 @@ const HomeScreen = () => {
 // const BottomNav = () =>  {
 //   return (
 //     <bottomNavigator.Navigator>
-//       <bottomNavigator.Screen name="Home" component={HomeScreenHelper}  
+//       <bottomNavigator.Screen name="Home" component={HomeScreenHelper}
 //       options={{
 //         tabBarIcon: () => (
-//           <Image source={ChessBottomNavigation} />) }} /> 
-//       <bottomNavigator.Screen name="Lessons" component={LessonsPageScreen} 
+//           <Image source={ChessBottomNavigation} />) }} />
+//       <bottomNavigator.Screen name="Lessons" component={LessonsPageScreen}
 //       options={{
 //         tabBarIcon: () => (
 //           <Image source={LessonsBottomNavigation} />) }}/>
@@ -71,6 +71,5 @@ const HomeScreen = () => {
 //     </NavigationContainer>
 //   );
 // }
-
 
 export default HomeScreen;

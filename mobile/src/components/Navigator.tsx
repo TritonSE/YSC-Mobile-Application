@@ -1,75 +1,78 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useContext, useEffect } from "react";
 import { Image } from "react-native";
 
+import HomeIcon from "../../assets/tab_home.png";
+import LessonsIcon from "../../assets/tab_lessons.png";
 import { AuthContext } from "../contexts/AuthContext";
 import Chess from "../screens/Chess";
-import ForgotPassword from "../screens/ForgotPassword";
+// import ForgotPassword from "../screens/ForgotPassword";
 import HomeScreen from "../screens/HomeScreen";
+import LessonsScreen from "../screens/LessonsScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import LessonsPageScreen from "../screens/LessonsPageScreen";
-import LessonsBottomNavigation from "../../assets/LessonsBottomNavigation.png";
-import ChessBottomNavigation from "../../assets/ChessBottomNav.png";
 
 type RootStackParamList = {
   Login: undefined;
-  ForgotPassword: undefined;
+  // ForgotPassword: undefined;
   HomeScreen: undefined;
   LoadingScreen: undefined;
   Chess: { color: string; players: string[] };
 };
 
-const screenOptions = {
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const HomeStack = createNativeStackNavigator();
+const LessonsStack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const stackOptions = {
   headerShown: false,
   gestureEnabled: false,
-  tabBarActiveBackgroundColor: '#96C957',
-  tabBarInactiveBackgroundColor: '#EDEDED'
 };
 
-function HomeScreenStack() {
-  const HomeStack = createNativeStackNavigator();
+const HomeStackScreen = () => (
+  <HomeStack.Navigator screenOptions={stackOptions}>
+    <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
+    <HomeStack.Screen name="LoadingScreen" component={LoadingScreen} options={stackOptions} />
+    <HomeStack.Screen name="Chess" component={Chess} options={stackOptions} />
+  </HomeStack.Navigator>
+);
 
-  return (
-    <HomeStack.Navigator screenOptions={screenOptions}>
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
-      <HomeStack.Screen name="LoadingScreen" component={LoadingScreen} />
-      <HomeStack.Screen name="Chess" component={Chess} />
-    </HomeStack.Navigator>
-  );
-}
+const LessonsStackScreen = () => (
+  <LessonsStack.Navigator screenOptions={stackOptions}>
+    <LessonsStack.Screen name="LessonsScreen" component={LessonsScreen} />
+  </LessonsStack.Navigator>
+);
 
-function LessonsPageScreenStack() {
-  const LessonsStack = createNativeStackNavigator();
+const HomeTabIcon = ({ size }) => <Image style={{ width: size, height: size }} source={HomeIcon} />;
+const LessonsTabIcon = ({ size }) => (
+  <Image style={{ width: size, height: size }} source={LessonsIcon} />
+);
 
-  return (
-    <LessonsStack.Navigator screenOptions={screenOptions}>
-      <LessonsStack.Screen name="LessonsScreen" component={LessonsPageScreen} />
-    </LessonsStack.Navigator>
-  );
-}
-
-function MainScreen() {
-  const Tab = createBottomTabNavigator();
-
-  return (
-    <Tab.Navigator screenOptions={screenOptions} >
-      <Tab.Screen name="Home" component={HomeScreenStack}  
-        options={{ tabBarIcon: () => (<Image source={ChessBottomNavigation} />) }} />
-      <Tab.Screen name="Lessons" component={LessonsPageScreenStack}
-      options={{ tabBarIcon: () => (<Image source={LessonsBottomNavigation} />) }} />
-    </Tab.Navigator>
-  )
-}
-
+const TabScreen = () => (
+  <Tab.Navigator
+    screenOptions={{
+      ...stackOptions,
+      tabBarActiveBackgroundColor: "#96C957",
+      tabBarActiveTintColor: "black",
+      tabBarInactiveBackgroundColor: "#EDEDED",
+      tabBarInactiveTintColor: "black",
+    }}
+  >
+    <Tab.Screen name="Home" component={HomeStackScreen} options={{ tabBarIcon: HomeTabIcon }} />
+    <Tab.Screen
+      name="Lessons"
+      component={LessonsStackScreen}
+      options={{ tabBarIcon: LessonsTabIcon }}
+    />
+  </Tab.Navigator>
+);
 
 const Navigator = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const navigation = useNavigation();
-
-  const Stack = createNativeStackNavigator();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -78,45 +81,11 @@ const Navigator = () => {
   }, [isLoggedIn]);
 
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={screenOptions}>
-      <Stack.Screen name="Login" component={LoginScreen} /> 
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      <Stack.Screen name="Main" component={MainScreen} />
+    <Stack.Navigator initialRouteName="Login" screenOptions={stackOptions}>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Main" component={TabScreen} />
     </Stack.Navigator>
   );
-
-  // return (
-  //   <Tab.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-  //     {isLoggedIn ? (
-  //         <>
-  //         </>
-  //       ) : (
-  //         null
-  //         <>
-  //         <Stack.Screen name="Login" component={LoginScreen} /> 
-  //         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-  //         </>
-  //       )}
-  //   </Tab.Navigator>
-    // <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-    //   {isLoggedIn ? (
-    //     <>
-    //       <Stack.Screen name="HomeScreen" component={HomeScreen} />
-    //       <Stack.Screen
-    //         name="LoadingScreen"
-    //         component={LoadingScreen}
-    //         options={{ gestureEnabled: false }}
-    //       />
-    //       <Stack.Screen name="Chess" component={Chess} options={{ gestureEnabled: false }} />
-    //     </>
-    //   ) : (
-    //     <>
-    //       <Stack.Screen name="Login" component={LoginScreen} />
-    //       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-    //     </>
-    //   )}
-    // </Stack.Navigator>
-  // );
 };
 
 export default Navigator;
