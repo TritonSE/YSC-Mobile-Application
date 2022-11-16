@@ -9,9 +9,10 @@ const StudentSelectionScreen = () => {
     <View style={AppStylesheet.container}>
         <Text>3 Students Online</Text>
 
-        <View style={[AppStylesheet.studentSelectionContainer, {flexDirection: "row"}]}>
+        {/* student selection layout */}
+        <View style={[AppStylesheet.studentSelectionContainer, {flexDirection: "column"}]}>
           <View style={{ flex: 1, backgroundColor: "#96C957" }} />
-          <View style={{ flex: 1, backgroundColor: "#96C957" }} />
+          <View style={{ flex: 1, backgroundColor: "#000000" }} />
           <View style={{ flex: 1, backgroundColor: "#96C957" }} />
         </View>
     

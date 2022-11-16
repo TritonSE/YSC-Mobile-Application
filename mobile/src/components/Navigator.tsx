@@ -32,6 +32,7 @@ const Navigator = () => {
             component={LoadingScreen}
             options={{ gestureEnabled: false }}
           />
+          <Stack.Screen name="StudentSelectionScreen" component={StudentSelectionScreen} />
           <Stack.Screen name="Chess" component={Chess} options={{ gestureEnabled: false }} />
         </>
       ) : (
