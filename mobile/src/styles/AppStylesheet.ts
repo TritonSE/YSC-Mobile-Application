@@ -108,8 +108,7 @@ export const AppStylesheet = StyleSheet.create({
     height: "55%",
   },
   studentSelectionContainer: {
-      flex: 1,
-      padding: 20,
-      height: 250
+    width: "90%",
+    height: "75%",
   }
 });
