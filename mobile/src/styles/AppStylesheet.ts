@@ -110,5 +110,16 @@ export const AppStylesheet = StyleSheet.create({
   studentSelectionContainer: {
     width: "90%",
     height: "75%",
+  },
+  headerStyleSheetText: {
+    position: "absolute",
+    top: "8%",
+    fontSize: 28,
+    fontWeight: "700" },
+
+  usernameHeader: {
+    left: 32,
+    fontWeight: "700",
+    fontSize: 24
   }
 });
