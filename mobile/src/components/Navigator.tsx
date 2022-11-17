@@ -13,6 +13,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LessonsPageScreen from "../screens/LessonsPageScreen";
 import LessonsBottomNavigation from "../../assets/LessonsBottomNavigation.png";
 import ChessBottomNavigation from "../../assets/ChessBottomNav.png";
+import Lesson from "../screens/LessonScreen";
 
 type RootStackParamList = {
   Login: undefined;
@@ -46,7 +47,8 @@ function LessonsPageScreenStack() {
 
   return (
     <LessonsStack.Navigator screenOptions={screenOptions}>
-      <LessonsStack.Screen name="LessonsScreen" component={LessonsPageScreen} />
+      <LessonsStack.Screen name="LessonsHomePage" component={LessonsPageScreen} />
+      <LessonsStack.Screen name="LessonsScreen" component={Lesson} />
     </LessonsStack.Navigator>
   );
 }

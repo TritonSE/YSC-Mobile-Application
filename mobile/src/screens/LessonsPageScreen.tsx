@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Text, View, Image } from "react-native";
 
@@ -9,6 +10,12 @@ import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LessonsPageScreen = () => {
+  const navigation = useNavigation();
+
+  const moveToLesson = () => {
+    
+    navigation.navigate("LessonsScreen", {color: "w", players: ["p1","p2"]});
+  }
 
   return (
     <View style={AppStylesheet.container}>
@@ -35,84 +42,102 @@ const LessonsPageScreen = () => {
           <Button 
             text="Lesson 1"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 2"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 3"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
           <Button 
             text="Lesson 4"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 5"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 6"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
           <Button 
             text="Lesson 7"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 8"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 9"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
           <Button 
             text="Lesson 10"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 11"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 12"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
           <Button 
             text="Lesson 13"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 14"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 15"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
         </View>
         <View style={AppStylesheet.lessonSubContainer}>
           <Button 
             text="Lesson 16"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 17"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
           <Button 
             text="Lesson 18"
             style={AppStylesheet.lessonView}
+            onPress={moveToLesson}
           />
         </View>
       </View>
