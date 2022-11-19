@@ -1,28 +1,29 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 
-import { SocketContext } from "../../contexts/SocketContext";
 import GameOverPopup from "../popups/GameOverPopup";
 
-const Gameover = ({ isGameOver, outcomeVar }) => {
-  const socket = useContext(SocketContext);
+const Gameover = ({ chess, state, draw, disconnect, resign }) => {
+  const [gameOver, setGameOver] = useState(false);
 
-  const quitGame = () => {
-    socket.emit("no rematch");
-  };
-
-  const rematchGame = () => {
-    socket.emit("rematch");
-  };
+  useEffect(() => {
+    if (disconnect) {
+      setGameOver("disconnect");
+    } else if (resign) {
+      setGameOver("resign");
+    } else if (chess.in_checkmate()) {
+      setGameOver(state.player === state.myColor ? "loss" : "win");
+    } else if (chess.in_stalemate()) {
+      setGameOver("stalemate");
+    } else if (draw || chess.in_draw()) {
+      setGameOver("draw");
+    } else {
+      setGameOver(false);
+    }
+  }, [state, draw, disconnect, resign]);
 
   // When gameover, display a popup to notify the players
-  return (
-    <View>
-      {isGameOver && (
-        <GameOverPopup outcomeVar={outcomeVar} noFunc={quitGame} yesFunc={rematchGame} />
-      )}
-    </View>
-  );
+  return <View>{gameOver && <GameOverPopup outcome={gameOver} />}</View>;
 };
 
 export default Gameover;

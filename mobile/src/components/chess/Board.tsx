@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color, players, draw }) => {
+const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
 
@@ -72,12 +72,15 @@ const Board = ({ color, players, draw }) => {
     player: chess.turn(),
     board: chess.board(),
     fenString: "Game has not started",
-    gameState: chess.game_over(),
     reverseString: "Game has not started",
+    gameState: chess.game_over(),
+    check: false,
   };
   const [state, setState] = useState(initChessState);
 
   // Updates game information after a turn
+  const [moves, setMoves] = useState([]);
+  const [focused, setFocused] = useState();
   const onTurn = useCallback(() => {
     setState({
       myColor: color,
@@ -86,37 +89,31 @@ const Board = ({ color, players, draw }) => {
       fenString: chess.fen(),
       reverseString: reverseFenString(chess.fen()),
       gameState: chess.game_over(),
+      check: chess.in_check() ? chess.turn() : false,
     });
+    setMoves([]);
   }, [chess, state.player]);
 
   useEffect(() => {
     socket.on("updated board", (fen: string) => {
       chess.load(fen);
       onTurn();
+      setDraw(false);
     });
 
     return () => socket.off("updated board");
   }, []);
 
-  const getPlayerOutcome = () => {
-    if (chess.in_checkmate()) {
-      return state.player === state.myColor ? "loss" : "win";
-    }
-    return "draw";
-  };
-
   return (
     <>
       <View>
-        <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
-        <Text style={{ color: "black" }}>{state.fenString}</Text>
-        <Text style={{ color: "black" }}>{state.reverseString}</Text>
+        <Gameover chess={chess} state={state} draw={draw} disconnect={disconnect} resign={resign} />
         <View style={[styles.turnContainer, { marginBottom: 12 }]}>
-          <View style={state.player === "b" ? styles.greenCircle : styles.emptyCircle} />
-          <Text style={styles.text}>{players[1]}</Text>
+          <View style={state.player !== state.myColor ? styles.greenCircle : styles.emptyCircle} />
+          <Text style={styles.text}>{players[state.myColor === "w" ? 1 : 0]}</Text>
         </View>
         <View style={styles.container}>
-          <Background />
+          <Background chess={chess} flip={state.myColor === "b"} moves={moves} onTurn={onTurn} />
           {state.board.map((row, y) =>
             row.map((piece, x) => {
               if (piece !== null) {
@@ -126,8 +123,30 @@ const Board = ({ color, players, draw }) => {
                     key={`${x}-${y}`}
                     id={`${piece.color}${piece.type}` as const}
                     startPosition={{ x, y }}
+                    flip={state.myColor === "b"}
                     chess={chess}
+                    check={state.check}
                     onTurn={onTurn}
+                    onTap={() => {
+                      if (state.player !== state.myColor) return;
+
+                      const rank = String.fromCharCode(97 + x);
+                      const file = "" + (8 - y);
+                      const square = rank + file;
+                      if (piece.color === state.myColor) {
+                        setMoves(chess.moves({ square, verbose: true }));
+                        setFocused(square);
+                      } else if (focused) {
+                        chess.move({
+                          from: focused,
+                          to: square,
+                        });
+                        socket.emit("send chess move", chess.fen());
+                        chess.load(chess.fen());
+                        onTurn();
+                        setFocused();
+                      }
+                    }}
                     enabled={state.player === piece.color && state.myColor === state.player}
                   />
                   /* eslint-enable react/no-array-index-key */
@@ -139,8 +158,8 @@ const Board = ({ color, players, draw }) => {
         </View>
       </View>
       <View style={[styles.turnContainer, { marginTop: 12 }]}>
-        <View style={state.player === "w" ? styles.greenCircle : styles.emptyCircle} />
-        <Text style={styles.text}>{players[0]}</Text>
+        <View style={state.player === state.myColor ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{players[state.myColor === "w" ? 0 : 1]}</Text>
       </View>
     </>
   );

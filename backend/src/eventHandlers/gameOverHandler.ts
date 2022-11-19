@@ -1,19 +1,9 @@
 import type { GameHandlerParams } from "../types";
+import endGame from "../utils/endGame";
 
 module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   socket.on("no rematch", () => {
-    const userRoomData = roomsMap.get(username);
-    if (userRoomData) {
-      const room = userRoomData.room;
-      const roomBoardData = boards.get(room);
-      if (roomBoardData) {
-        io.in(room).emit("game over");
-        io.socketsLeave(room);
-        roomsMap.delete(roomBoardData.players[0]);
-        roomsMap.delete(roomBoardData.players[1]);
-        boards.delete(room);
-      }
-    }
+    endGame(io, roomsMap.get(username)?.room, roomsMap, boards);
   });
   socket.on("rematch", () => {
     const userRoomData = roomsMap.get(username);

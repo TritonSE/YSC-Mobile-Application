@@ -35,7 +35,7 @@ export const AppStylesheet = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 15,
-    textAlign: "left",
+    textAlign: "center",
     textDecorationLine: "underline",
   },
   input: {
@@ -72,6 +72,8 @@ export const AppStylesheet = StyleSheet.create({
     top: "5%",
     left: 8,
     fontSize: 32,
+    marginTop: 16,
+    marginLeft: 16,
     fontWeight: "700",
   },
   centeredView: {

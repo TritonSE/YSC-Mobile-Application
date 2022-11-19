@@ -8,65 +8,55 @@ import HomeIcon from "../../assets/tab_home.png";
 import LessonsIcon from "../../assets/tab_lessons.png";
 import { AuthContext } from "../contexts/AuthContext";
 import Chess from "../screens/Chess";
-// import ForgotPassword from "../screens/ForgotPassword";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LessonsScreen from "../screens/LessonsScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
 
-type RootStackParamList = {
-  Login: undefined;
-  // ForgotPassword: undefined;
-  HomeScreen: undefined;
-  LoadingScreen: undefined;
-  Chess: { color: string; players: string[] };
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 const LessonsStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const stackOptions = {
-  headerShown: false,
-  gestureEnabled: false,
-};
-
 const HomeStackScreen = () => (
-  <HomeStack.Navigator screenOptions={stackOptions}>
+  <HomeStack.Navigator screenOptions={{ headerShown: false }}>
     <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
-    <HomeStack.Screen name="LoadingScreen" component={LoadingScreen} options={stackOptions} />
-    <HomeStack.Screen name="Chess" component={Chess} options={stackOptions} />
+    <HomeStack.Screen
+      name="LoadingScreen"
+      component={LoadingScreen}
+      options={{ gestureEnabled: false }}
+    />
+    <HomeStack.Screen name="Chess" component={Chess} options={{ gestureEnabled: false }} />
   </HomeStack.Navigator>
 );
 
 const LessonsStackScreen = () => (
-  <LessonsStack.Navigator screenOptions={stackOptions}>
+  <LessonsStack.Navigator screenOptions={{ headerShown: false }}>
     <LessonsStack.Screen name="LessonsScreen" component={LessonsScreen} />
   </LessonsStack.Navigator>
 );
 
-const HomeTabIcon = ({ size }) => <Image style={{ width: size, height: size }} source={HomeIcon} />;
-const LessonsTabIcon = ({ size }) => (
-  <Image style={{ width: size, height: size }} source={LessonsIcon} />
-);
-
 const TabScreen = () => (
   <Tab.Navigator
-    screenOptions={{
-      ...stackOptions,
+    screenOptions={({ route }) => ({
+      headerShown: false,
+      /* eslint-disable react/no-unstable-nested-components */
+      tabBarIcon: ({ size }) => (
+        <Image
+          style={{ width: size, height: size }}
+          source={route.name === "Home" ? HomeIcon : LessonsIcon}
+        />
+      ),
+      /* eslint-enable react/no-unstable-nested-components */
       tabBarActiveBackgroundColor: "#96C957",
       tabBarActiveTintColor: "black",
       tabBarInactiveBackgroundColor: "#EDEDED",
       tabBarInactiveTintColor: "black",
-    }}
+    })}
   >
-    <Tab.Screen name="Home" component={HomeStackScreen} options={{ tabBarIcon: HomeTabIcon }} />
-    <Tab.Screen
-      name="Lessons"
-      component={LessonsStackScreen}
-      options={{ tabBarIcon: LessonsTabIcon }}
-    />
+    <Tab.Screen name="Home" component={HomeStackScreen} />
+    <Tab.Screen name="Lessons" component={LessonsStackScreen} />
   </Tab.Navigator>
 );
 
@@ -81,8 +71,9 @@ const Navigator = () => {
   }, [isLoggedIn]);
 
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={stackOptions}>
+    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
       <Stack.Screen name="Main" component={TabScreen} />
     </Stack.Navigator>
   );
