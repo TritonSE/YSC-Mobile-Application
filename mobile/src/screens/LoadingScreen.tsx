@@ -4,6 +4,7 @@ import { Text, View, Image } from "react-native";
 
 import stemettImage from "../../assets/Stemett.png";
 import Button from "../components/Button";
+import PlayersOnline from "../components/PlayersOnline";
 import TwoButtonPopup from "../components/popups/TwoButtonPopup";
 import { SocketContext } from "../contexts/SocketContext";
 import { UserContext } from "../contexts/UserContext";
@@ -33,7 +34,7 @@ const LoadingScreen = () => {
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
       <Image style={AppStylesheet.stemmettImage} source={stemettImage} />
       <Button text="Waiting for Opponent..." style={{ opacity: 0.5 }} />
-      <Text style={{ fontSize: 18, marginTop: 16 }}>14 Players Online</Text>
+      <PlayersOnline />
       <View style={{ position: "absolute", right: "4%", bottom: "4%" }}>
         <Button
           text="Stop Searching"

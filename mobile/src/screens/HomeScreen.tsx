@@ -4,6 +4,7 @@ import { Text, View, Image } from "react-native";
 
 import PlayIcon from "../../assets/play-icon.png";
 import Button from "../components/Button";
+import PlayersOnline from "../components/PlayersOnline";
 import { SocketContext } from "../contexts/SocketContext";
 import { UserContext } from "../contexts/UserContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
@@ -27,17 +28,7 @@ const HomeScreen = () => {
         onPress={moveToLoading}
         style={{ flexDirection: "row", alignItems: "center" }}
       />
-      <Text style={{ fontSize: 18, marginTop: 16 }}>14 Players Online</Text>
-      {/*
-      <Button
-        text="reconnect"
-        onPress={() => {
-          socket.disconnect();
-          socket.connect();
-          socket.emit("successful login", userState.username);
-        }}
-      />
-      */}
+      <PlayersOnline />
     </View>
   );
 };
