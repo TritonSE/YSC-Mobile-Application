@@ -9,7 +9,7 @@ import { SocketContext } from "../../contexts/SocketContext";
 
 const WHITE = "rgb(100, 133, 68)";
 const BLACK = "rgb(230, 233, 198)";
-const MOVE = "rgb(243,206,129)";
+const MOVE = "rgb(243, 206, 129)";
 
 const styles = StyleSheet.create({
   container: {
