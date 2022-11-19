@@ -7,8 +7,7 @@ import { View } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 import Button from "../components/Button";
-import Board from "../components/chess/Board";
-import OneButtonPopup from "../components/popups/OneButtonPopup";
+import LessonBoard from "../components/chess/LessonBoard";
 import TwoButtonPopup from "../components/popups/TwoButtonPopup";
 import { AppStylesheet as styles } from "../styles/AppStylesheet";
 
@@ -16,81 +15,38 @@ import { AppStylesheet as styles } from "../styles/AppStylesheet";
 const Chessboard = gestureHandlerRootHOC(() => {
   const route = useRoute();
   const navigation = useNavigation();
-  const [grayButton, setGrayButton] = useState(false);
   // states for popups rendering
-  const [openDraw, setOpenDraw] = useState(false);
-  const [openDrawRejected, setOpenDrawRejected] = useState(false);
   const [isDrawn, setIsDrawn] = useState(false);
   const [openResign, setOpenResign] = useState(false);
-  const [isResigned, setIsResigned] = useState(false);
 
-  const proposeDraw = () => {
-    setGrayButton(true);
-  };
-
-  const acceptDraw = () => {
-    setOpenDraw(false);
-    setIsDrawn(true);
-  };
-
-  const rejectDraw = () => {
-    setOpenDraw(false);
-  };
-
-  const initiateResign = () => {
+  const initiateReturn = () => {
     setOpenResign(true);
   };
 
-  const rejectResign = () => {
+  const rejectReturn = () => {
     setOpenResign(false);
   };
 
-  const acceptResign = () => {
+  const acceptReturn = () => {
     setOpenResign(false);
-    navigation.navigate("HomeScreen");
+    navigation.navigate("LessonsHomePage");
   };
 
   return (
     <View style={styles.container}>
-      <Board color={route.params.color} players={route.params.players} draw={isDrawn} />
+      <LessonBoard draw={isDrawn} />
       <View style={{ flexDirection: "row" }}>
         <Button
-          text="Tie"
-          onPress={grayButton ? undefined : proposeDraw}
-          style={grayButton ? styles.grayButton : { width: 90 }}
-        />
-        <Button
-          text="Quit"
-          onPress={initiateResign}
-          style={{ backgroundColor: "#dbedf9", width: 90, marginLeft: 20 }}
+          text="Go Back"
+          onPress={initiateReturn}
+          style={{  backgroundColor: "#96C957", width: 150 }}
         />
       </View>
-      {openDraw && (
-        <TwoButtonPopup
-          labelText={"Your Opponent Would \n Like A Draw. Accept or Decline?"}
-          noFunc={rejectDraw}
-          yesFunc={acceptDraw}
-        />
-      )}
-      {openDrawRejected && (
-        <OneButtonPopup
-          labelText="Draw Request Declined"
-          buttonText="Continue Game"
-          buttonFunc={() => setOpenDrawRejected(false)}
-        />
-      )}
       {openResign && (
         <TwoButtonPopup
-          labelText={"Are You Sure \n You'd Like To Quit?"}
-          noFunc={rejectResign}
-          yesFunc={acceptResign}
-        />
-      )}
-      {isResigned && (
-        <OneButtonPopup
-          labelText="Your Opponent Has Resigned."
-          buttonText="Return To Home"
-          buttonFunc={() => navigation.navigate("HomeScreen")}
+          labelText={"Are You Sure You'd Like To \n Return to the Lessons Page?"}
+          noFunc={rejectReturn}
+          yesFunc={acceptReturn}
         />
       )}
     </View>
