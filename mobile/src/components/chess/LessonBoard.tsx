@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const LessonBoard = ({ draw }) => {
-  const chess = useConst(() => new Chess());
+const LessonBoard = ({}) => {
+  const chess = useConst(() => new Chess("8/3p4/2p5/3p4/8/4P3/8/8 w - - 0 1"));
 
   const initChessState = {
     player: "w",
@@ -94,26 +94,27 @@ const LessonBoard = ({ draw }) => {
       board: chess.board(),
       fenString: forceWhite(chess.fen()),
       reverseString: forceWhite(reverseFenString(chess.fen())),
-      gameState: chess.game_over(),
+      gameState: getPlayerOutcome(forceWhite(chess.fen())),
     });
     
   }, [chess, state.player]);
 
   useEffect(() => {
+    console.log(state.fenString);
     chess.load(state.fenString);
   }, [state.fenString]);
 
-  const getPlayerOutcome = () => {
-    if (chess.in_checkmate()) {
-      return state.player === state.myColor ? "loss" : "win";
+  const getPlayerOutcome = (fenString) => {
+    if (fenString == "8/3P4/8/8/8/8/8/8 w - - 0 1") {
+       return true;
     }
-    return "draw";
+    return false;
   };
 
   return (
     <>
       <View>
-        <Gameover isGameOver={state.gameState || draw} outcomeVar={getPlayerOutcome()} />
+        <Gameover isGameOver={state.gameState} outcomeVar={"win"} />
         <Text style={{ color: "black" }}>{state.fenString}</Text>
         <Text style={{ color: "black" }}>{state.reverseString}</Text>
         <View style={styles.container}>

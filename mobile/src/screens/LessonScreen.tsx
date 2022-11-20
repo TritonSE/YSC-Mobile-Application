@@ -34,7 +34,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
 
   return (
     <View style={styles.container}>
-      <LessonBoard draw={isDrawn} />
+      <LessonBoard  />
       <View style={{ flexDirection: "row" }}>
         <Button
           text="Go Back"
