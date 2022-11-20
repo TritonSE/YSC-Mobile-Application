@@ -76,6 +76,7 @@ const LessonBoard = ({ draw }) => {
   const forceWhite = (oldFenString) => {
     let fenArray = oldFenString.split(" ");
     fenArray[1] = "w";
+    fenArray[3] = "-";
     let newFenString = "";
     for (let index = 0; index < fenArray.length; index++) {
       newFenString += fenArray[index];
@@ -95,8 +96,12 @@ const LessonBoard = ({ draw }) => {
       reverseString: forceWhite(reverseFenString(chess.fen())),
       gameState: chess.game_over(),
     });
-    chess.load(forceWhite(chess.fen()));
+    
   }, [chess, state.player]);
+
+  useEffect(() => {
+    chess.load(state.fenString);
+  }, [state.fenString]);
 
   const getPlayerOutcome = () => {
     if (chess.in_checkmate()) {
