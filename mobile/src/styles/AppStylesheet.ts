@@ -110,16 +110,34 @@ export const AppStylesheet = StyleSheet.create({
   studentSelectionContainer: {
     width: "90%",
     height: "75%",
+    borderRadius: 10,
+    backgroundColor: "#96C9574F",
+  },
+  studentSelectionRow: {
+    flex: 1,
+    flexDirection: "row",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  studentSelectionColumn: {
+    flex: 1,
+  },
+  studentSelectionButton: {
+    backgroundColor: "#96C957",
+    borderRadius: 10,
+    padding: 10,
   },
   headerStyleSheetText: {
     position: "absolute",
     top: "8%",
     fontSize: 28,
-    fontWeight: "700" },
-
-  usernameHeader: {
-    left: 32,
     fontWeight: "700",
-    fontSize: 24
-  }
+  },
+  usernameHeader: {
+    fontWeight: "700",
+    fontSize: 18,
+  },
 });
