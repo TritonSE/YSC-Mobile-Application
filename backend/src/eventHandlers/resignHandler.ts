@@ -1,4 +1,5 @@
 import type { GameHandlerParams } from "../types";
+import endGame from "../utils/endGame";
 
 module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandlerParams) {
   // CLIENT WORKFLOW FOR RESIGNATION
@@ -6,18 +7,6 @@ module.exports = function ({ socket, io, username, roomsMap, boards }: GameHandl
   // all resignations are successful and both clients should handle "game resigned" event with the username of client A being sent
   // the server will handle deletion of rooms
   socket.on("resign", () => {
-    const userRoomData = roomsMap.get(username);
-    if (userRoomData) {
-      const room = userRoomData.room;
-      // emits "game resigned" to the other player in the room
-      socket.to(room).emit("game resigned", username);
-      const roomBoardData = boards.get(room);
-      if (roomBoardData) {
-        io.socketsLeave(room);
-        roomsMap.delete(roomBoardData.players[0]);
-        roomsMap.delete(roomBoardData.players[1]);
-        boards.delete(room);
-      }
-    }
+    endGame(io, roomsMap.get(username)?.room, roomsMap, boards, "game resigned", username);
   });
 };
