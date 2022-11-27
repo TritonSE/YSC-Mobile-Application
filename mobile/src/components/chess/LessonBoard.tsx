@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const LessonBoard = ({fenString}) => {
-  const chess = useConst(() => new Chess("8/3p4/2p5/3p4/8/4P3/8/8 w - - 0 1"));
+const LessonBoard = ({startFen, endFen}) => {
+  const chess = useConst(() => new Chess(startFen));
   const navigation = useNavigation();
 
   const initChessState = {
@@ -109,7 +109,7 @@ const LessonBoard = ({fenString}) => {
   }, [state.fenString]);
 
   const getPlayerOutcome = (fenString) => {
-    if (fenString == "8/3P4/8/8/8/8/8/8 w - - 0 1") {
+    if (fenString == endFen) {
        state.lessonWon = true;
     }
   };

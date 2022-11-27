@@ -16,8 +16,10 @@ const Chessboard = gestureHandlerRootHOC(() => {
   const route = useRoute();
   const navigation = useNavigation();
   // states for popups rendering
-  const [isDrawn, setIsDrawn] = useState(false);
   const [openResign, setOpenResign] = useState(false);
+
+  const startString = "8/3p4/2p5/3p4/4P3/8/8/8 w - - 0 1";
+  const endString = "8/3P4/8/8/8/8/8/8 w - - 0 1"
 
   const initiateReturn = () => {
     setOpenResign(true);
@@ -34,7 +36,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
 
   return (
     <View style={styles.container}>
-      <LessonBoard  />
+      <LessonBoard  startFen={startString} endFen={endString}/>
       <View style={{ flexDirection: "row" }}>
         <Button
           text="Go Back"
