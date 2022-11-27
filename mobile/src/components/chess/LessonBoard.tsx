@@ -2,13 +2,14 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess } from "chess.js";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import Background from "./Background";
-import Gameover from "./Gameover";
 import Piece from "./Piece";
 import { reverseFenString } from "./util";
+import LessonOverPopup from "../popups/LessonOverPopup";
 
 const { width } = Dimensions.get("window");
 
@@ -61,8 +62,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const LessonBoard = ({}) => {
+const LessonBoard = ({fenString}) => {
   const chess = useConst(() => new Chess("8/3p4/2p5/3p4/8/4P3/8/8 w - - 0 1"));
+  const navigation = useNavigation();
 
   const initChessState = {
     player: "w",
@@ -70,6 +72,7 @@ const LessonBoard = ({}) => {
     fenString: "Game has not started",
     gameState: chess.game_over(),
     reverseString: "Game has not started",
+    lessonWon: false,
   };
   const [state, setState] = useState(initChessState);
 
@@ -95,6 +98,7 @@ const LessonBoard = ({}) => {
       fenString: forceWhite(chess.fen()),
       reverseString: forceWhite(reverseFenString(chess.fen())),
       gameState: getPlayerOutcome(forceWhite(chess.fen())),
+      lessonWon: state.lessonWon,
     });
     
   }, [chess, state.player]);
@@ -106,15 +110,21 @@ const LessonBoard = ({}) => {
 
   const getPlayerOutcome = (fenString) => {
     if (fenString == "8/3P4/8/8/8/8/8/8 w - - 0 1") {
-       return true;
+       state.lessonWon = true;
     }
-    return false;
   };
+
+  const returnFunc = () => {
+    state.lessonWon = false;
+    navigation.navigate("LessonsHomePage");
+  }
 
   return (
     <>
       <View>
-        <Gameover isGameOver={state.gameState} outcomeVar={"win"} />
+        {state.lessonWon && (
+          <LessonOverPopup returnFunc={returnFunc} />
+        )}
         <Text style={{ color: "black" }}>{state.fenString}</Text>
         <Text style={{ color: "black" }}>{state.reverseString}</Text>
         <View style={styles.container}>
