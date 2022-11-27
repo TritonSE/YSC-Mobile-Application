@@ -1,15 +1,16 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
+import { useNavigation } from "@react-navigation/native";
 import { Chess } from "chess.js";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+
+import LessonOverPopup from "../popups/LessonOverPopup";
 
 import Background from "./Background";
 import Piece from "./Piece";
 import { reverseFenString } from "./util";
-import LessonOverPopup from "../popups/LessonOverPopup";
 
 const { width } = Dimensions.get("window");
 
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const LessonBoard = ({startFen, endFen}) => {
+const LessonBoard = ({ startFen, endFen }) => {
   const chess = useConst(() => new Chess(startFen));
   const navigation = useNavigation();
 
@@ -77,18 +78,24 @@ const LessonBoard = ({startFen, endFen}) => {
   const [state, setState] = useState(initChessState);
 
   const forceWhite = (oldFenString) => {
-    let fenArray = oldFenString.split(" ");
+    const fenArray = oldFenString.split(" ");
     fenArray[1] = "w";
     fenArray[3] = "-";
     let newFenString = "";
     for (let index = 0; index < fenArray.length; index++) {
       newFenString += fenArray[index];
-      if (index != fenArray.length - 1) {
+      if (index !== fenArray.length - 1) {
         newFenString += " ";
       }
     }
     return newFenString;
-  }
+  };
+
+  const getPlayerOutcome = (fenString) => {
+    if (endFen.includes(fenString)) {
+      state.lessonWon = true;
+    }
+  };
 
   // Updates game information after a turn
   const onTurn = useCallback(() => {
@@ -100,57 +107,45 @@ const LessonBoard = ({startFen, endFen}) => {
       gameState: getPlayerOutcome(forceWhite(chess.fen())),
       lessonWon: state.lessonWon,
     });
-    
   }, [chess, state.player]);
 
   useEffect(() => {
-    console.log(state.fenString);
     chess.load(state.fenString);
   }, [state.fenString]);
-
-  const getPlayerOutcome = (fenString) => {
-    if (fenString == endFen) {
-       state.lessonWon = true;
-    }
-  };
 
   const returnFunc = () => {
     state.lessonWon = false;
     navigation.navigate("LessonsHomePage");
-  }
+  };
 
   return (
-    <>
-      <View>
-        {state.lessonWon && (
-          <LessonOverPopup returnFunc={returnFunc} />
+    <View>
+      {state.lessonWon && <LessonOverPopup returnFunc={returnFunc} />}
+      <Text style={{ color: "black" }}>{state.fenString}</Text>
+      <Text style={{ color: "black" }}>{state.reverseString}</Text>
+      <View style={styles.container}>
+        <Background />
+        {state.board.map((row, y) =>
+          row.map((piece, x) => {
+            if (piece !== null) {
+              return (
+                /* eslint-disable react/no-array-index-key */
+                <Piece
+                  key={`${x}-${y}`}
+                  id={`${piece.color}${piece.type}` as const}
+                  startPosition={{ x, y }}
+                  chess={chess}
+                  onTurn={onTurn}
+                  enabled
+                />
+                /* eslint-enable react/no-array-index-key */
+              );
+            }
+            return null;
+          })
         )}
-        <Text style={{ color: "black" }}>{state.fenString}</Text>
-        <Text style={{ color: "black" }}>{state.reverseString}</Text>
-        <View style={styles.container}>
-          <Background />
-          {state.board.map((row, y) =>
-            row.map((piece, x) => {
-              if (piece !== null) {
-                return (
-                  /* eslint-disable react/no-array-index-key */
-                  <Piece
-                    key={`${x}-${y}`}
-                    id={`${piece.color}${piece.type}` as const}
-                    startPosition={{ x, y }}
-                    chess={chess}
-                    onTurn={onTurn}
-                    enabled={true}
-                  />
-                  /* eslint-enable react/no-array-index-key */
-                );
-              }
-              return null;
-            })
-          )}
-        </View>
       </View>
-    </>
+    </View>
   );
 };
 

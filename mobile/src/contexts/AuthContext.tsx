@@ -45,7 +45,6 @@ export const AuthProvider: React.FC = ({ children }) => {
           method: "POST",
         });
 
-
         if (res.ok) {
           const tokenJson = await res.json();
           const token = JSON.stringify(tokenJson);

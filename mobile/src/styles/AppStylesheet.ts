@@ -116,20 +116,20 @@ export const AppStylesheet = StyleSheet.create({
 
   lessonText: {
     top: 15,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   lessonSubContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   lessonContainer: {
     flex: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 10,
   },
 
@@ -141,12 +141,12 @@ export const AppStylesheet = StyleSheet.create({
   },
 
   lessonHeaderText: {
-    fontSize: 20
+    fontSize: 20,
   },
 
   starImage: {
     flex: 1,
-    justifyContent: 'center',
-    textAlign: 'left'
-  }
+    justifyContent: "center",
+    textAlign: "left",
+  },
 });

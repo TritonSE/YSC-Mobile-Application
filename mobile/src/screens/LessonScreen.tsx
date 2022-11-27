@@ -2,7 +2,7 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
@@ -18,8 +18,8 @@ const Chessboard = gestureHandlerRootHOC(() => {
   // states for popups rendering
   const [openResign, setOpenResign] = useState(false);
 
-  const startString = "8/3p4/2p5/3p4/4P3/8/8/8 w - - 0 1";
-  const endString = "8/3P4/8/8/8/8/8/8 w - - 0 1"
+  const startString = route.params.startString;
+  const endString = route.params.endString;
 
   const initiateReturn = () => {
     setOpenResign(true);
@@ -36,12 +36,12 @@ const Chessboard = gestureHandlerRootHOC(() => {
 
   return (
     <View style={styles.container}>
-      <LessonBoard  startFen={startString} endFen={endString}/>
+      <LessonBoard startFen={startString} endFen={endString} />
       <View style={{ flexDirection: "row" }}>
         <Button
           text="Go Back"
           onPress={initiateReturn}
-          style={{  backgroundColor: "#96C957", width: 150 }}
+          style={{ backgroundColor: "#96C957", width: 150 }}
         />
       </View>
       {openResign && (
