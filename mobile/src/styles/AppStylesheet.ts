@@ -130,6 +130,12 @@ export const AppStylesheet = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  studentSelectionBack: {
+    width: "20%",
+    position: "absolute",
+    top: "5%",
+    left: 23,
+  },
   headerStyleSheetText: {
     position: "absolute",
     top: "8%",
@@ -139,5 +145,16 @@ export const AppStylesheet = StyleSheet.create({
   usernameHeader: {
     fontWeight: "700",
     fontSize: 18,
+  },
+  searchInput: {
+    flexDirection: "row",
+    borderWidth: 1,
+    position: "relative",
+    left: "15%",
+    width: "35%",
+    height: 30,
+    borderRadius: 5,
+    padding: 3,
+    marginBottom: "3%",
   },
 });

@@ -13,6 +13,7 @@ type RootStackParamList = {
   Login: undefined;
   ForgotPassword: undefined;
   HomeScreen: undefined;
+  StudentSelectionScreen: undefined;
   LoadingScreen: undefined;
   Chess: { color: string; players: string[] };
 };
