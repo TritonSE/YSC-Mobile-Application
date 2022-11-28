@@ -52,8 +52,10 @@ const StudentSelectionScreen = () => {
             <Text>User</Text>
           </View>
           <View>
-            <Pressable style={AppStylesheet.studentSelectionButton}>
-              <Text style={{ fontSize: 18 }}>Play</Text>
+            <Pressable
+              style={[AppStylesheet.studentSelectionButton, { backgroundColor: "#DBEDF9" }]}
+            >
+              <Text style={{ fontSize: 18 }}>In Game</Text>
             </Pressable>
           </View>
         </View>
