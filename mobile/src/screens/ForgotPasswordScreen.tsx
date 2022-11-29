@@ -1,11 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Text, View, Image, TextInput, SafeAreaView } from "react-native";
+import { Text, View, Image, TextInput, SafeAreaView, Pressable } from "react-native";
 
 import img from "../../assets/mascot_waving.png";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const ForgotPassword = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState("Example Padding");
 
   return (
@@ -23,6 +25,10 @@ const ForgotPassword = () => {
       </View>
 
       <Button text="Reset Password" />
+
+      <Pressable style={AppStylesheet.forgotPassword} onPress={() => navigation.navigate("Login")}>
+        <Text style={AppStylesheet.forgotPasswordText}>Back</Text>
+      </Pressable>
     </View>
   );
 };

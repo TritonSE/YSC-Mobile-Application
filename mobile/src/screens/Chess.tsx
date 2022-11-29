@@ -16,13 +16,14 @@ import { AppStylesheet as styles } from "../styles/AppStylesheet";
 // Enable gestures to work for Android
 const Chessboard = gestureHandlerRootHOC(() => {
   const socket = useContext(SocketContext);
-  const route = useRoute();
   const navigation = useNavigation();
+  const route = useRoute();
   const [grayButton, setGrayButton] = useState(false);
   // states for popups rendering
   const [openDraw, setOpenDraw] = useState(false);
   const [openDrawRejected, setOpenDrawRejected] = useState(false);
   const [isDrawn, setIsDrawn] = useState(false);
+  const [isDisconnected, setIsDisconnected] = useState(false);
   const [openResign, setOpenResign] = useState(false);
   const [isResigned, setIsResigned] = useState(false);
 
@@ -71,6 +72,10 @@ const Chessboard = gestureHandlerRootHOC(() => {
       setGrayButton(false);
     });
 
+    socket.on("opponent disconnect", () => {
+      setIsDisconnected(true);
+    });
+
     socket.on("game resigned", () => {
       setIsResigned(true);
     });
@@ -79,13 +84,21 @@ const Chessboard = gestureHandlerRootHOC(() => {
       socket.off("draw request");
       socket.off("game drawn");
       socket.off("draw request rejected");
+      socket.off("opponent disconnect");
       socket.off("game resigned");
     };
   }, []);
 
   return (
     <View style={styles.container}>
-      <Board color={route.params.color} players={route.params.players} draw={isDrawn} />
+      <Board
+        color={route.params.color}
+        players={route.params.players}
+        draw={isDrawn}
+        setDraw={setIsDrawn}
+        disconnect={isDisconnected}
+        resign={isResigned}
+      />
       <View style={{ flexDirection: "row" }}>
         <Button
           text="Tie"
@@ -100,7 +113,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
       </View>
       {openDraw && (
         <TwoButtonPopup
-          labelText={"Your Opponent Would \n Like A Draw. Accept or Decline?"}
+          labelText={"Your Opponent Would \n Like A Draw. Accept It?"}
           noFunc={rejectDraw}
           yesFunc={acceptDraw}
         />
@@ -117,13 +130,6 @@ const Chessboard = gestureHandlerRootHOC(() => {
           labelText={"Are You Sure \n You'd Like To Quit?"}
           noFunc={rejectResign}
           yesFunc={acceptResign}
-        />
-      )}
-      {isResigned && (
-        <OneButtonPopup
-          labelText="Your Opponent Has Resigned."
-          buttonText="Return To Home"
-          buttonFunc={() => navigation.navigate("HomeScreen")}
         />
       )}
     </View>

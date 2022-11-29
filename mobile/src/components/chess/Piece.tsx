@@ -2,9 +2,9 @@
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { Chess, Position } from "chess.js";
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, createRef } from "react";
 import { StyleSheet, Image } from "react-native";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import { TapGestureHandler, PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
@@ -60,11 +60,13 @@ interface PieceProps {
   id: PlayerPiece;
   startPosition: Vector;
   chess: Chess;
+  check: boolean;
   onTurn: () => void;
+  onTap: () => void;
   enabled: boolean;
 }
 
-const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
+const Piece = ({ id, startPosition, flip, chess, check, onTurn, onTap, enabled }: PieceProps) => {
   const isGestureActive = useSharedValue(false);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -89,6 +91,8 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       if (move) {
         chess.move({ from, to });
         socket.emit("send chess move", chess.fen());
+        // Hack to ensure visual state updates (e.g. check)
+        chess.load(chess.fen());
         onTurn();
       }
     },
@@ -101,24 +105,45 @@ const Piece = ({ id, startPosition, chess, onTurn, enabled }: PieceProps) => {
       isGestureActive.value = true;
     },
     onActive: ({ translationX, translationY }) => {
-      translateX.value = offsetX.value + translationX;
-      translateY.value = offsetY.value + translationY;
+      translateX.value = offsetX.value + translationX * (flip ? -1 : 1);
+      translateY.value = offsetY.value + translationY * (flip ? -1 : 1);
     },
     onEnd: () => {
       runOnJS(movePiece)(toPosition({ x: translateX.value, y: translateY.value }));
     },
   });
+  const tapRef = createRef();
+  const panRef = createRef();
+
+  const hasGlow = id === `${check}k`;
   const style = useAnimatedStyle(() => ({
     position: "absolute",
     zIndex: isGestureActive.value ? 100 : 10,
-    transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
+    transform: [
+      { translateX: flip ? 7 * SIZE - translateX.value : translateX.value },
+      { translateY: flip ? 7 * SIZE - translateY.value : translateY.value },
+    ],
+    shadowColor: hasGlow ? "#ff3f3f" : "#171717",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: hasGlow ? 1 : 0.2,
+    shadowRadius: hasGlow ? 6 : 3,
   }));
+
   return (
-    <PanGestureHandler onGestureEvent={onGestureEvent} enabled={enabled}>
+    <TapGestureHandler ref={tapRef} onHandlerStateChange={onTap} simultaneousHandlers={panRef}>
       <Animated.View style={style}>
-        <Image source={PIECES[id]} style={styles.piece} />
+        <PanGestureHandler
+          ref={panRef}
+          onGestureEvent={onGestureEvent}
+          enabled={enabled}
+          simultaneousHandlers={tapRef}
+        >
+          <Animated.View>
+            <Image source={PIECES[id]} style={styles.piece} />
+          </Animated.View>
+        </PanGestureHandler>
       </Animated.View>
-    </PanGestureHandler>
+    </TapGestureHandler>
   );
 };
 

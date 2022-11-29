@@ -12,18 +12,32 @@ import { AppStylesheet } from "../../styles/AppStylesheet";
 import { PopupStyleSheet } from "../../styles/PopupStylesheet";
 
 // Pass in as props the button's label text, and what the button does when no and yes are pressed
-const GameOverPopup = ({ outcomeVar }) => {
+const GameOverPopup = ({ outcome }) => {
   const socket = useContext(SocketContext);
   const navigation = useNavigation();
-  const gameOverMessages = {
+  const messages = {
     win: "Great Work, You Win!",
     loss: "Good Effort, Try Again!",
     draw: "It's a Draw!",
+    disconnect: "Oops, Your Opponent Disconnected!",
+    stalemate: "Stalemate, It's a Draw!",
+    resign: "Your Opponent Resigned, You Win!",
   };
   const mascots = {
     win: [winMascot],
     loss: [loseMascot],
     draw: [drawMascot1, loseMascot],
+    disconnect: [winMascot],
+    stalemate: [drawMascot1, loseMascot],
+    resign: [winMascot],
+  };
+  const backgrounds = {
+    win: balloons,
+    loss: balloons,
+    draw: stars,
+    disconnect: balloons,
+    stalemate: stars,
+    resign: balloons,
   };
   const [wantRematch, setWantRematch] = useState(false);
 
@@ -32,16 +46,13 @@ const GameOverPopup = ({ outcomeVar }) => {
       <View style={[PopupStyleSheet.centeredView, { backgroundColor: "rgba(0, 0, 0, 0.25)" }]}>
         <View style={PopupStyleSheet.containerView}>
           <View style={PopupStyleSheet.imageContainerView}>
-            <ImageBackground
-              source={outcomeVar === "draw" ? stars : balloons}
-              style={PopupStyleSheet.balloonView}
-            >
+            <ImageBackground source={backgrounds[outcome]} style={PopupStyleSheet.balloonView}>
               <View style={PopupStyleSheet.imageRow}>
-                {mascots[outcomeVar].map((mas) => (
+                {mascots[outcome].map((mas) => (
                   <Image key={mas} source={mas} style={PopupStyleSheet.mascotView} />
                 ))}
               </View>
-              <Text style={PopupStyleSheet.gameOverText}>{gameOverMessages[outcomeVar]}</Text>
+              <Text style={PopupStyleSheet.gameOverText}>{messages[outcome]}</Text>
             </ImageBackground>
           </View>
           <View style={PopupStyleSheet.buttonContainer}>
@@ -58,7 +69,10 @@ const GameOverPopup = ({ outcomeVar }) => {
             </Pressable>
             <Pressable
               style={[PopupStyleSheet.modalButton, { backgroundColor: "#dbedf9" }]}
-              onPress={() => navigation.navigate("HomeScreen")}
+              onPress={() => {
+                socket.emit("no rematch");
+                navigation.navigate("HomeScreen");
+              }}
             >
               <Text style={AppStylesheet.buttonText}>Return Home</Text>
             </Pressable>

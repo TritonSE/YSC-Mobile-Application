@@ -40,6 +40,7 @@ export const PopupStyleSheet = StyleSheet.create({
     marginTop: 64,
     fontStyle: "normal",
     fontWeight: "700",
+    textAlign: "center",
   },
   centeredView: {
     flex: 1,
@@ -48,8 +49,11 @@ export const PopupStyleSheet = StyleSheet.create({
   },
   modalView: {
     backgroundColor: "white",
-    width: 337,
+    width: 250,
     height: 171,
+    borderWidth: 4,
+    borderColor: "#96C957",
+    borderRadius: 10,
   },
   modalText: {
     marginTop: 26,
