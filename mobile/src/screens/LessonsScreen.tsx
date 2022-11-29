@@ -1,18 +1,17 @@
-import React, { useContext } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { Text, View, Image } from "react-native";
 
-import { UserContext } from "../contexts/UserContext";
+import starImage from "../../assets/star.png";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
-const LessonsScreen = () => {
-  const { userState } = useContext(UserContext);
+const LessonsScreen = () => (
+  <View style={AppStylesheet.container}>
+    {/* header portion with % bar */}
+    {/* <Image style={AppStylesheet.stemmettImage} source={stemettImage} /> */}
+    <Text style={AppStylesheet.headerHomeScreen}>Great Job!</Text>
+    <Image style={AppStylesheet.starImage} source={starImage} />
 
-  return (
-    <View style={AppStylesheet.container}>
-      <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
-      <Text style={{ fontSize: 18, marginTop: 16 }}>Lessons</Text>
-    </View>
-  );
-};
-
+    {/* grid with lessons */}
+  </View>
+);
 export default LessonsScreen;

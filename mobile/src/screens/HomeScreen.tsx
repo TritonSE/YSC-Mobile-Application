@@ -22,12 +22,22 @@ const HomeScreen = () => {
   return (
     <View style={AppStylesheet.container}>
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
-      <Button
-        text="Play Game"
-        image={<Image style={{ marginRight: "2%" }} source={PlayIcon} />}
-        onPress={moveToLoading}
-        style={{ flexDirection: "row", alignItems: "center" }}
-      />
+      <View>
+        {userState.role === "student" && (
+          <Button
+            text="Play Game With A Mentor"
+            image={<Image style={{ marginRight: "2%" }} source={PlayIcon} />}
+            onPress={moveToLoading}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          />
+        )}
+        <Button
+          text="Play Game With A Student"
+          image={<Image style={{ marginRight: "2%" }} source={PlayIcon} />}
+          onPress={moveToLoading}
+          style={{ flexDirection: "row", alignItems: "center" }}
+        />
+      </View>
       <PlayersOnline />
     </View>
   );

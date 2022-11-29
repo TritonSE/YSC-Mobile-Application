@@ -8,21 +8,13 @@ import HomeIcon from "../../assets/tab_home.png";
 import LessonsIcon from "../../assets/tab_lessons.png";
 import { AuthContext } from "../contexts/AuthContext";
 import Chess from "../screens/Chess";
-// import ForgotPassword from "../screens/ForgotPassword";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LessonsScreen from "../screens/LessonsScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
 
-type RootStackParamList = {
-  Login: undefined;
-  // ForgotPassword: undefined;
-  HomeScreen: undefined;
-  LoadingScreen: undefined;
-  Chess: { color: string; players: string[] };
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 const LessonsStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -81,6 +73,7 @@ const Navigator = () => {
   return (
     <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
       <Stack.Screen name="Main" component={TabScreen} />
     </Stack.Navigator>
   );

@@ -1,4 +1,4 @@
-// import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState, useContext } from "react";
 import {
   Text,
@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Pressable,
 } from "react-native";
 
 import mascotImg from "../../assets/mascot.png";
@@ -16,7 +17,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LoginScreen = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const { login } = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
@@ -61,14 +62,12 @@ const LoginScreen = () => {
 
             <Button text="Login" onPress={handleLogin} />
 
-            {/* TODO: The new website doesn't have any ability to change passwords?
             <Pressable
               style={AppStylesheet.forgotPassword}
-              onPress={() => navigation.navigate("ForgotPassword")}
+              onPress={() => navigation.navigate("Forgot Password")}
             >
               <Text style={AppStylesheet.forgotPasswordText}>Forgot Password</Text>
             </Pressable>
-            */}
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
