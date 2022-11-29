@@ -110,26 +110,45 @@ export const AppStylesheet = StyleSheet.create({
   lessonView: {
     backgroundColor: "#96C957",
     marginHorizontal: 10,
-    width: 120,
+    width: 100,
     height: 60,
+  },
+  lessonViewIncomplete: {
+    backgroundColor: "#DBEDF9",
+  },
+
+  lessonProgressOuter: {
+    backgroundColor: "#DBEDF9",
+    height: 30,
+    borderRadius: 10,
+    overflow: "hidden",
+    marginRight: 10,
+    marginTop: 30,
+  },
+  lessonProgressInner: {
+    backgroundColor: "#96C957",
+    width: 100,
+    height: 30,
+    borderRadius: 10,
+    overflow: "hidden",
   },
 
   lessonText: {
     top: 15,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   lessonSubContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   lessonContainer: {
     flex: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 10,
   },
 
@@ -141,12 +160,15 @@ export const AppStylesheet = StyleSheet.create({
   },
 
   lessonHeaderText: {
-    fontSize: 20
+    fontSize: 20,
   },
 
   starImage: {
     flex: 1,
-    justifyContent: 'center',
-    textAlign: 'left'
-  }
+    justifyContent: "center",
+    textAlign: "left",
+    position: "relative",
+    top: 12,
+    left: 5,
+  },
 });

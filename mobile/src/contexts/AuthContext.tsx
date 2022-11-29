@@ -36,15 +36,15 @@ export const AuthProvider: React.FC = ({ children }) => {
   const authContextValue = React.useMemo(
     () => ({
       login: async (username: string, password: string) => {
-        const params = {
+        /* const params = {
           username,
           password,
         };
-        const url = YSC_SERVER_URI + "auth/login?" + new URLSearchParams(params).toString();
+        const url = YSC_SERVER_URI + "auth/login?" + new URLSearchParams(params).toString(); */
+        const url = `${YSC_SERVER_URI}auth/login?username=${username}&password=${password}`;
         const res = await fetch(url, {
           method: "POST",
         });
-
 
         if (res.ok) {
           const tokenJson = await res.json();
