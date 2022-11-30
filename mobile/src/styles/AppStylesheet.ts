@@ -146,11 +146,16 @@ export const AppStylesheet = StyleSheet.create({
     fontWeight: "700",
     fontSize: 18,
   },
+  searchFlex: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    width: "90%",
+  },
   searchInput: {
+    flex: 2,
     flexDirection: "row",
     borderWidth: 1,
-    position: "relative",
-    left: "15%",
     width: "35%",
     height: 30,
     borderRadius: 5,
