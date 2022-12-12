@@ -10,6 +10,7 @@ import { SocketContext } from "../../contexts/SocketContext";
 import Background from "./Background";
 import Gameover from "./Gameover";
 import Piece from "./Piece";
+import Promotion from "./Promotion";
 import { reverseFenString } from "./util";
 
 const { width } = Dimensions.get("window");
@@ -81,6 +82,8 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
   // Updates game information after a turn
   const [moves, setMoves] = useState([]);
   const [focused, setFocused] = useState();
+  const [promotion, setPromotion] = useState();
+  const [promotionOpen, setPromotionOpen] = useState(false);
   const onTurn = useCallback(() => {
     setState({
       myColor: color,
@@ -104,8 +107,31 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
     return () => socket.off("updated board");
   }, []);
 
+  useEffect(() => {
+    if (promotion && focused) {
+      chess.move({
+        ...focused,
+        promotion,
+      });
+      socket.emit("send chess move", chess.fen());
+      chess.load(chess.fen());
+      onTurn();
+      setFocused();
+    }
+  }, [promotion]);
+
   return (
     <>
+      {promotionOpen && (
+        <Promotion
+          color={color}
+          setValue={(v) => {
+            setPromotion(v);
+            setPromotionOpen(false);
+          }}
+        />
+      )}
+
       <View>
         <Gameover chess={chess} state={state} draw={draw} disconnect={disconnect} resign={resign} />
         <View style={[styles.turnContainer, { marginBottom: 12 }]}>
@@ -130,15 +156,29 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
                     onTap={() => {
                       if (state.player !== state.myColor) return;
 
-                      const rank = String.fromCharCode(97 + x);
-                      const file = "" + (8 - y);
-                      const square = rank + file;
+                      const rank = "" + (8 - y);
+                      const file = String.fromCharCode(97 + x);
+                      const square = file + rank;
                       if (piece.color === state.myColor) {
                         setMoves(chess.moves({ square, verbose: true }));
-                        setFocused(square);
-                      } else if (focused) {
+                        setFocused({
+                          from: square,
+                        });
+                      } else if (focused && focused.from) {
+                        if (
+                          (rank === "1" || rank === "8") &&
+                          chess.get(focused.from)?.type === "p" &&
+                          moves.find(({ to }) => to === square)
+                        ) {
+                          setFocused({
+                            from: focused.from,
+                            to: square,
+                          });
+                          setPromotionOpen(true);
+                          return;
+                        }
                         chess.move({
-                          from: focused,
+                          from: focused.from,
                           to: square,
                         });
                         socket.emit("send chess move", chess.fen());
@@ -146,6 +186,10 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
                         onTurn();
                         setFocused();
                       }
+                    }}
+                    onPromote={(move) => {
+                      setFocused(move);
+                      setPromotionOpen(true);
                     }}
                     enabled={state.player === piece.color && state.myColor === state.player}
                   />

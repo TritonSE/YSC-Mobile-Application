@@ -63,6 +63,12 @@ export const AppStylesheet = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
   },
+  textInputError: {
+    borderColor: "#EF1234",
+  },
+  textHeaderError: {
+    color: "#EF1234",
+  },
   forgotPasswordImage: {
     width: 234,
     height: 395,
@@ -172,5 +178,14 @@ export const AppStylesheet = StyleSheet.create({
     position: "relative",
     top: 12,
     left: 5,
+  },
+
+  loginError: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "20%",
+    backgroundColor: "#FF5555",
   },
 });

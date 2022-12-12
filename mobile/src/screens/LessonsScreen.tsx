@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LessonsPageScreen = () => (
-  <SafeAreaView style={{ backgroundColor: "white" }}>
+  <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
     <ScrollView>
       {/* header portion with % bar */}
       {/* <Image style={AppStylesheet.stemmettImage} source={stemettImage} /> */}

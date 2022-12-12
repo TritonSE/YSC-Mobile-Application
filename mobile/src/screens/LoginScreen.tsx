@@ -21,10 +21,28 @@ const LoginScreen = () => {
   const { login } = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
+  const [usernameErr, setUsernameErr] = useState(false);
   const [password, setPassword] = useState("");
+  const [passwordErr, setPasswordErr] = useState(false);
+  const [error, setError] = useState();
 
-  const handleLogin = () => {
-    login(username, password);
+  const handleLogin = async () => {
+    let err = false;
+    setUsernameErr(false);
+    setPasswordErr(false);
+    setError();
+    if (username.trim() === "") {
+      err = true;
+      setUsernameErr(true);
+    }
+    if (password.trim() === "") {
+      err = true;
+      setPasswordErr(true);
+    }
+
+    if (err) return;
+
+    setError(await login(username, password));
   };
 
   return (
@@ -40,21 +58,41 @@ const LoginScreen = () => {
             </View>
 
             <View style={AppStylesheet.input}>
-              <Text style={AppStylesheet.textInputHeader}>Username</Text>
+              <Text
+                style={[
+                  AppStylesheet.textInputHeader,
+                  usernameErr ? AppStylesheet.textHeaderError : {},
+                ]}
+              >
+                Username
+              </Text>
               {/* username text input field */}
               <TextInput
-                style={AppStylesheet.textInputField}
+                style={[
+                  AppStylesheet.textInputField,
+                  usernameErr ? AppStylesheet.textInputError : {},
+                ]}
                 onChangeText={setUsername}
                 value={username}
               />
             </View>
 
             <View style={AppStylesheet.input}>
-              <Text style={AppStylesheet.textInputHeader}>Password</Text>
+              <Text
+                style={[
+                  AppStylesheet.textInputHeader,
+                  passwordErr ? AppStylesheet.textHeaderError : {},
+                ]}
+              >
+                Password
+              </Text>
               {/* password text input field */}
               <TextInput
                 secureTextEntry
-                style={AppStylesheet.textInputField}
+                style={[
+                  AppStylesheet.textInputField,
+                  passwordErr ? AppStylesheet.textInputError : {},
+                ]}
                 onChangeText={setPassword}
                 value={password}
               />
@@ -68,6 +106,10 @@ const LoginScreen = () => {
             >
               <Text style={AppStylesheet.forgotPasswordText}>Forgot Password</Text>
             </Pressable>
+
+            <View style={[AppStylesheet.loginError, { opacity: 0 + !!error }]}>
+              <Text>{error}</Text>
+            </View>
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
