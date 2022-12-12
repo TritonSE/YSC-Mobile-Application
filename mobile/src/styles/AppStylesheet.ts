@@ -115,6 +115,7 @@ export const AppStylesheet = StyleSheet.create({
   stemmettImage: {
     height: "55%",
   },
+
   lessonView: {
     backgroundColor: "#96C957",
     marginHorizontal: 10,
@@ -187,5 +188,61 @@ export const AppStylesheet = StyleSheet.create({
     justifyContent: "center",
     marginTop: "20%",
     backgroundColor: "#FF5555",
+  },
+
+  studentSelectionContainer: {
+    width: "90%",
+    height: "75%",
+    borderRadius: 10,
+    backgroundColor: "#96C9574F",
+  },
+  studentSelectionRow: {
+    flex: 1,
+    flexDirection: "row",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  studentSelectionColumn: {
+    flex: 1,
+  },
+  studentSelectionButton: {
+    backgroundColor: "#96C957",
+    borderRadius: 10,
+    padding: 10,
+  },
+  studentSelectionBack: {
+    width: "20%",
+    position: "absolute",
+    top: "5%",
+    left: 23,
+  },
+  headerStyleSheetText: {
+    position: "absolute",
+    top: "8%",
+    fontSize: 28,
+    fontWeight: "700",
+  },
+  usernameHeader: {
+    fontWeight: "700",
+    fontSize: 18,
+  },
+  searchFlex: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    width: "90%",
+  },
+  searchInput: {
+    flex: 2,
+    flexDirection: "row",
+    borderWidth: 1,
+    width: "35%",
+    height: 30,
+    borderRadius: 5,
+    padding: 3,
+    marginBottom: "3%",
   },
 });

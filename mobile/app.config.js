@@ -7,7 +7,7 @@ export default {
   slug: "ysc-mobile",
   version: "1.0.0",
   orientation: "portrait",
-  icon: "./assets/icon.png",
+  icon: "./assets/yscIcon.png",
   splash: {
     image: "./assets/YStemLogo.png",
     resizeMode: "contain",

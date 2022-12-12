@@ -13,15 +13,16 @@ import HomeScreen from "../screens/HomeScreen";
 import LessonsScreen from "../screens/LessonsScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
+import SelectionScreen from "../screens/SelectionScreen";
 
 const Stack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 const LessonsStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
 const HomeStackScreen = () => (
   <HomeStack.Navigator screenOptions={{ headerShown: false }}>
     <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
+    <HomeStack.Screen name="SelectionScreen" component={SelectionScreen} />
     <HomeStack.Screen
       name="LoadingScreen"
       component={LoadingScreen}

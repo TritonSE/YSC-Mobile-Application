@@ -16,7 +16,7 @@ const HomeScreen = () => {
 
   const moveToLoading = () => {
     socket.emit("assign to room");
-    navigation.navigate("LoadingScreen");
+    navigation.navigate("SelectionScreen");
   };
 
   return (
