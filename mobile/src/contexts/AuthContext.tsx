@@ -69,7 +69,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             setIsLoggedIn(true);
             socket.connect();
             socket.emit("authenticate connection", token);
-            socket.emit("successful login", decoded.username);
+            socket.emit("successful login", decoded.username, decoded.role);
             return null;
           }
 
@@ -122,7 +122,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           setUserState(decodedValidation);
           setIsLoggedIn(true);
           socket.connect();
-          socket.emit("successful login", decodedValidation.username);
+          socket.emit("successful login", decodedValidation.username, decodedValidation.role);
         }
       },
       isLoggedIn,

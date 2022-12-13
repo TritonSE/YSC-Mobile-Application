@@ -32,7 +32,7 @@ const styles = {
   },
   modal: {
     backgroundColor: "white",
-    width: 230,
+    width: 240,
     height: 121,
     borderWidth: 4,
     borderColor: "#96C957",

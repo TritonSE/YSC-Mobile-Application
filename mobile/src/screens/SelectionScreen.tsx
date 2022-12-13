@@ -4,9 +4,7 @@ import { Text, View, Image, Pressable, ScrollView, SafeAreaView, TextInput } fro
 
 import BackArrow from "../../assets/back_Arrow.png";
 import SearchIcon from "../../assets/searchIcon.png";
-import PlayersOnline from "../components/PlayersOnline";
 import OneButtonPopup from "../components/popups/OneButtonPopup";
-import TwoButtonPopup from "../components/popups/TwoButtonPopup";
 import { SocketContext } from "../contexts/SocketContext";
 import { UserContext } from "../contexts/UserContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
@@ -23,8 +21,10 @@ const SelectionRow = ({ socket, username, status, alt, setDialog }) => (
           status === "ingame" ? { backgroundColor: "#DBEDF9" } : {},
         ]}
         onPress={() => {
-          socket.emit("send invite", username);
-          setDialog({ variant: 1 });
+          if (status === "ready") {
+            socket.emit("send invite", username);
+            setDialog({ variant: 1 });
+          }
         }}
       >
         <Text style={{ fontSize: 18 }}>{status === "ingame" ? "In Game" : "Play"}</Text>
@@ -33,14 +33,14 @@ const SelectionRow = ({ socket, username, status, alt, setDialog }) => (
   </View>
 );
 
-const StudentSelectionScreen = () => {
+const StudentSelectionScreen = ({ role }) => {
   const navigation = useNavigation();
   const socket = useContext(SocketContext);
   const { userState } = useContext(UserContext);
 
   const [search, setSearch] = useState("");
   const [players, setPlayers] = useState([]);
-  const [dialog, setDialog] = useState({ variant: 0 });
+  const [dialog, setDialog] = useState(false);
 
   useEffect(() => {
     const int = setInterval(() => {
@@ -49,37 +49,24 @@ const StudentSelectionScreen = () => {
     socket.emit("request list of players");
     socket.on("send list of players", setPlayers);
 
-    socket.on("invited", (username) => {
-      setDialog({ variant: 2, username });
-    });
-    socket.on("uninvited", () => {
-      setDialog({ variant: 0 });
-    });
-
     socket.on("failed to send invite", (reason: string | undefined) => {
-      setDialog({ variant: 3, text: reason ?? "Failed to send invite." });
+      setDialog({ variant: 2, text: reason ?? "Failed to send invite." });
     });
 
     socket.on("invite accepted", () => {
       setDialog({ variant: 0 });
     });
     socket.on("invite declined", () => {
-      setDialog({ variant: 3, text: "Invite request declined." });
-    });
-
-    socket.on("successful assign", (color: string, names: string[]) => {
-      navigation.navigate("Chess", { color, players: names });
+      setDialog({ variant: 2, text: "Invite request declined." });
     });
 
     return () => {
       clearInterval(int);
       socket.off("send list of players");
-      socket.off("invited");
-      socket.off("uninvited");
+      socket.off("failed to send invite");
       socket.off("failed to send invite");
       socket.off("invite accepted");
       socket.off("invite declined");
-      socket.off("successful assign");
     };
   }, []);
 
@@ -97,23 +84,9 @@ const StudentSelectionScreen = () => {
       )}
 
       {dialog.variant === 2 && (
-        <TwoButtonPopup
-          labelText={`${dialog.username} has invited you to a game.  Accept?`}
-          noFunc={() => {
-            socket.emit("decline invite");
-            setDialog({ variant: 0 });
-          }}
-          yesFunc={() => {
-            socket.emit("accept invite");
-            setDialog({ variant: 0 });
-          }}
-        />
-      )}
-
-      {dialog.variant === 3 && (
         <OneButtonPopup
           labelText={dialog.text}
-          buttonText="Ok"
+          buttonText="Cancel"
           buttonFunc={() => {
             setDialog({ variant: 0 });
           }}
@@ -133,8 +106,8 @@ const StudentSelectionScreen = () => {
               </Pressable>
             </View>
 
-            <Text style={{ flex: 1, fontWeight: "bold", textAlign: "center" }}>
-              <PlayersOnline isSmall />{" "}
+            <Text style={{ flex: 1, fontSize: 14, fontWeight: "bold", textAlign: "center" }}>
+              {players.length} Player{players.length !== 1 ? "s" : ""} Online{" "}
               <View
                 style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#96C957" }}
               />
@@ -179,8 +152,10 @@ const StudentSelectionScreen = () => {
             )}
             {players
               .filter(
-                ({ username }) =>
-                  username.includes(search.trim()) && username !== userState.username
+                ({ username, userRole }) =>
+                  username.includes(search.trim()) &&
+                  username !== userState.username &&
+                  (!role || userRole === role)
               )
               .map(({ username, status }, i) => (
                 <SelectionRow

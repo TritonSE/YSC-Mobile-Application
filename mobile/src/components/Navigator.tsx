@@ -15,6 +15,8 @@ import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SelectionScreen from "../screens/SelectionScreen";
 
+import InviteDialogs from "./InviteDialogs";
+
 const Stack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 const LessonsStack = createNativeStackNavigator();
@@ -39,26 +41,29 @@ const LessonsStackScreen = () => (
 );
 
 const TabScreen = () => (
-  <Tab.Navigator
-    screenOptions={({ route }) => ({
-      headerShown: false,
-      /* eslint-disable react/no-unstable-nested-components */
-      tabBarIcon: ({ size }) => (
-        <Image
-          style={{ width: size, height: size }}
-          source={route.name === "Home" ? HomeIcon : LessonsIcon}
-        />
-      ),
-      /* eslint-enable react/no-unstable-nested-components */
-      tabBarActiveBackgroundColor: "#96C957",
-      tabBarActiveTintColor: "black",
-      tabBarInactiveBackgroundColor: "#EDEDED",
-      tabBarInactiveTintColor: "black",
-    })}
-  >
-    <Tab.Screen name="Home" component={HomeStackScreen} />
-    <Tab.Screen name="Lessons" component={LessonsStackScreen} />
-  </Tab.Navigator>
+  <>
+    <InviteDialogs />
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        /* eslint-disable react/no-unstable-nested-components */
+        tabBarIcon: ({ size }) => (
+          <Image
+            style={{ width: size, height: size }}
+            source={route.name === "Home" ? HomeIcon : LessonsIcon}
+          />
+        ),
+        /* eslint-enable react/no-unstable-nested-components */
+        tabBarActiveBackgroundColor: "#96C957",
+        tabBarActiveTintColor: "black",
+        tabBarInactiveBackgroundColor: "#EDEDED",
+        tabBarInactiveTintColor: "black",
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen name="Lessons" component={LessonsStackScreen} />
+    </Tab.Navigator>
+  </>
 );
 
 const Navigator = () => {

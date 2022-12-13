@@ -67,7 +67,6 @@ module.exports = function ({
   clientMap,
   invites,
 }: RoomHandlerParams) {
-  clientMap.set(username, socket);
   socket.on("disconnect", () => {
     clientMap.delete(username);
 

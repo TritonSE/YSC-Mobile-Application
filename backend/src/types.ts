@@ -30,6 +30,7 @@ interface GameHandlerParams extends BaseHandlerParams {
 
 interface RoomHandlerParams extends GameHandlerParams {
   clientMap: Map<string, Socket>;
+  roleMap: Map<string, string>;
   invites: Map<string, GameInvite>;
 }
 

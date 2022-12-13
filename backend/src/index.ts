@@ -20,6 +20,7 @@ const boards = new Map<string, BoardState>();
 const roomsMap = new Map<string, RoomData>();
 
 const clientMap = new Map<string, Socket>();
+const roleMap = new Map<string, string>();
 const invites = new Map<string, GameInvite>();
 
 server.listen(PORT, () => {
@@ -33,7 +34,15 @@ io.on("connection", (socket: Socket) => {
     validateToken(token, socket); // socket will disconnect in this method if invalid token
   });
 
-  require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards, clientMap, invites });
+  require("./eventHandlers/loginHandler.ts")({
+    socket,
+    io,
+    roomsMap,
+    boards,
+    clientMap,
+    roleMap,
+    invites,
+  });
 });
 
 io.of("/").adapter.on("delete-room", (room: string) => {

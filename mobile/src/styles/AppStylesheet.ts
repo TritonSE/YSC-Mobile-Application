@@ -205,7 +205,7 @@ export const AppStylesheet = StyleSheet.create({
     marginBottom: 10,
   },
   studentSelectionRow: {
-    height: 100,
+    height: 70,
     flexDirection: "row",
     borderRadius: 10,
     alignItems: "center",

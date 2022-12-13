@@ -1,6 +1,6 @@
 import type { RoomHandlerParams } from "../types";
 
-module.exports = function ({ socket, io, roomsMap, clientMap }: RoomHandlerParams) {
+module.exports = function ({ socket, io, roomsMap, clientMap, roleMap }: RoomHandlerParams) {
   socket.on("request player count", () => {
     socket.emit("send player count", io.engine.clientsCount);
   });
@@ -10,6 +10,7 @@ module.exports = function ({ socket, io, roomsMap, clientMap }: RoomHandlerParam
       Array.from(clientMap).map(([name]) => ({
         username: name,
         status: roomsMap.get(name) ? "ingame" : "ready",
+        userRole: roleMap.get(name),
       }))
     );
   });
