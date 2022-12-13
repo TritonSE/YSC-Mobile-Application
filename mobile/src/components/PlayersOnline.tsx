@@ -3,7 +3,7 @@ import { Text } from "react-native";
 
 import { SocketContext } from "../contexts/SocketContext";
 
-const PlayersOnline = () => {
+const PlayersOnline = ({ isSmall }) => {
   const socket = useContext(SocketContext);
   const [playerCount, setPlayerCount] = useState(0);
   let interval;
@@ -23,7 +23,7 @@ const PlayersOnline = () => {
   }, []);
 
   return (
-    <Text style={{ fontSize: 18, marginTop: 5 }}>
+    <Text style={{ fontSize: isSmall ? 14 : 18, marginTop: 5 }}>
       {playerCount} Player{playerCount !== 1 ? "s" : ""} Online
     </Text>
   );

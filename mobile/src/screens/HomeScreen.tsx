@@ -14,10 +14,7 @@ const HomeScreen = () => {
   const { userState } = useContext(UserContext);
   const socket = useContext(SocketContext);
 
-  const moveToLoading = () => {
-    socket.emit("assign to room");
-    navigation.navigate("SelectionScreen");
-  };
+  const moveToSelection = () => navigation.navigate("SelectionScreen");
 
   return (
     <View style={AppStylesheet.container}>
@@ -27,15 +24,22 @@ const HomeScreen = () => {
           <Button
             text="Play Game With A Mentor"
             image={<Image style={{ marginRight: "2%" }} source={PlayIcon} />}
-            onPress={moveToLoading}
+            onPress={moveToSelection}
             style={{ flexDirection: "row", alignItems: "center" }}
           />
         )}
         <Button
           text="Play Game With A Student"
           image={<Image style={{ marginRight: "2%" }} source={PlayIcon} />}
-          onPress={moveToLoading}
-          style={{ flexDirection: "row", alignItems: "center" }}
+          onPress={moveToSelection}
+          style={{ flexDirection: "row", alignItems: "center", marginBottom: "2%" }}
+        />
+        <Button
+          text={socket.connected.toString()}
+          onPress={() => {
+            socket.connect();
+            socket.emit("successful login", userState.username);
+          }}
         />
       </View>
       <PlayersOnline />

@@ -19,8 +19,7 @@ const LoadingScreen = () => {
   const quitSearch = () => {
     setStopPopup(false);
 
-    navigation.navigate("HomeScreen");
-    socket.emit("quit searching");
+    navigation.navigate("SelectionScreen");
   };
 
   useEffect(() => {

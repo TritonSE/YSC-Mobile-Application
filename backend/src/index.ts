@@ -1,6 +1,6 @@
 import type { Socket } from "socket.io";
 
-import type { RoomData, BoardState } from "./types";
+import type { RoomData, BoardState, GameInvite } from "./types";
 import validateToken from "./utils/auth";
 
 const http = require("http");
@@ -19,6 +19,9 @@ const boards = new Map<string, BoardState>();
 // rooms maps username to RoomData (RoomData contains connection information for users and is declared in types.d.ts)
 const roomsMap = new Map<string, RoomData>();
 
+const clientMap = new Map<string, Socket>();
+const invites = new Map<string, GameInvite>();
+
 server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
@@ -30,7 +33,7 @@ io.on("connection", (socket: Socket) => {
     validateToken(token, socket); // socket will disconnect in this method if invalid token
   });
 
-  require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards });
+  require("./eventHandlers/loginHandler.ts")({ socket, io, roomsMap, boards, clientMap, invites });
 });
 
 io.of("/").adapter.on("delete-room", (room: string) => {

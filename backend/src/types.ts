@@ -12,6 +12,11 @@ type BoardState = {
   rematchAccept: string[];
 };
 
+type GameInvite = {
+  from: string;
+  to: string;
+};
+
 interface BaseHandlerParams {
   socket: Socket;
   io: Server;
@@ -23,4 +28,16 @@ interface GameHandlerParams extends BaseHandlerParams {
   username: string;
 }
 
-export { RoomData, BoardState, GameHandlerParams, BaseHandlerParams };
+interface RoomHandlerParams extends GameHandlerParams {
+  clientMap: Map<string, Socket>;
+  invites: Map<string, GameInvite>;
+}
+
+export {
+  RoomData,
+  BoardState,
+  GameInvite,
+  GameHandlerParams,
+  RoomHandlerParams,
+  BaseHandlerParams,
+};

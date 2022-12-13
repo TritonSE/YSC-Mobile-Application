@@ -190,14 +190,22 @@ export const AppStylesheet = StyleSheet.create({
     backgroundColor: "#FF5555",
   },
 
+  studentSelectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 20,
+    marginBottom: 10,
+  },
   studentSelectionContainer: {
     width: "90%",
     height: "75%",
     borderRadius: 10,
     backgroundColor: "#96C9574F",
+    marginBottom: 10,
   },
   studentSelectionRow: {
-    flex: 1,
+    height: 100,
     flexDirection: "row",
     borderRadius: 10,
     alignItems: "center",
@@ -214,10 +222,7 @@ export const AppStylesheet = StyleSheet.create({
     padding: 10,
   },
   studentSelectionBack: {
-    width: "20%",
-    position: "absolute",
-    top: "5%",
-    left: 23,
+    width: "10%",
   },
   headerStyleSheetText: {
     position: "absolute",
@@ -238,6 +243,7 @@ export const AppStylesheet = StyleSheet.create({
   searchInput: {
     flex: 2,
     flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     width: "35%",
     height: 30,
