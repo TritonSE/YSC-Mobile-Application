@@ -2,8 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect, useContext } from "react";
 import { Text, View, Image, Pressable, ScrollView, SafeAreaView, TextInput } from "react-native";
 
-import BackArrow from "../../assets/back_Arrow.png";
-import SearchIcon from "../../assets/searchIcon.png";
+import BackArrow from "../../assets/icons/back_arrow.png";
+import SearchIcon from "../../assets/icons/search.png";
+import Button from "../components/Button";
 import OneButtonPopup from "../components/popups/OneButtonPopup";
 import { SocketContext } from "../contexts/SocketContext";
 import { UserContext } from "../contexts/UserContext";
@@ -99,28 +100,29 @@ const StudentSelectionScreen = ({ role }) => {
             <View style={AppStylesheet.studentSelectionBack}>
               <Pressable
                 onPress={() => navigation.goBack()}
-                style={{ alignItems: "center", justifyContent: "center", flexDirection: "row" }}
+                style={{ alignItems: "center", justifyContent: "flex-start", flexDirection: "row" }}
               >
-                <Image style={{ width: 15, height: 15, marginRight: "15%" }} source={BackArrow} />
-                <Text>Back</Text>
+                <Image style={{ width: 20, height: 20, marginRight: "15%" }} source={BackArrow} />
+                <Text style={{ fontSize: 16, fontFamily: "Roboto", marginTop: "2%" }}>Back</Text>
               </Pressable>
             </View>
 
-            <Text style={{ flex: 1, fontSize: 14, fontWeight: "bold", textAlign: "center" }}>
+            <Text style={{ flex: 8, fontSize: 16, fontFamily: "RobotoBold", textAlign: "center" }}>
               {players.length} Player{players.length !== 1 ? "s" : ""} Online{" "}
               <View
                 style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#96C957" }}
               />
             </Text>
 
-            <View style={{ width: "10%" }} />
+            <View style={{ width: "20%" }} />
           </View>
 
           <View style={AppStylesheet.searchFlex}>
             <View style={{ flex: 3 }} />
             <View style={AppStylesheet.searchInput}>
-              <Image style={{ marginRight: "2%" }} source={SearchIcon} />
+              <Image style={{ width: 16, height: 16, marginRight: "2%" }} source={SearchIcon} />
               <TextInput
+                style={{ fontFamily: "Roboto", width: "88%" }}
                 onChangeText={setSearch}
                 value={search}
                 placeholder="Search"
@@ -133,21 +135,26 @@ const StudentSelectionScreen = ({ role }) => {
             style={[AppStylesheet.studentSelectionContainer, { flexDirection: "column" }]}
           >
             {players.length === 0 && (
-              <Text style={{ fontSize: 18, textAlign: "center", marginTop: "50%" }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  textAlign: "center",
+                  marginTop: "50%",
+                  fontFamily: "Roboto",
+                }}
+              >
                 No players online!
               </Text>
             )}
             {players.length > 0 && (
               <View style={AppStylesheet.studentSelectionRow}>
-                <Pressable
-                  style={AppStylesheet.studentSelectionButton}
+                <Button
+                  text="Play Someone Random!"
                   onPress={() => {
                     socket.emit("assign to room");
                     navigation.navigate("LoadingScreen");
                   }}
-                >
-                  <Text style={{ fontSize: 18 }}>Play Someone Random!</Text>
-                </Pressable>
+                />
               </View>
             )}
             {players

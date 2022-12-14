@@ -1,9 +1,8 @@
 import React from "react";
 import { Text, View, Image, ScrollView, SafeAreaView } from "react-native";
 
-// import stemettImage from "../../assets/Stemett.png";
-import mascotImage from "../../assets/mascot_stemett.png";
-import starImage from "../../assets/star.png";
+import starImage from "../../assets/icons/star.png";
+import mascotImage from "../../assets/mascots/mascot_stemett.png";
 import Button from "../components/Button";
 import { AppStylesheet } from "../styles/AppStylesheet";
 

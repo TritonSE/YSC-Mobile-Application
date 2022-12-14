@@ -88,6 +88,12 @@ module.exports = function ({
   socket.on("assign to room", () => {
     assignToRoom({ socket, io, username, roomsMap, boards } as GameHandlerParams);
   });
+  socket.on("unassign from room", () => {
+    const room: RoomData | undefined = roomsMap.get(username);
+    if (room) {
+      endGame(io, room.room, roomsMap, boards);
+    }
+  });
   socket.on("send invite", (dest) => {
     if (invites.get(username) || invites.get(dest)) {
       socket.emit("failed to send invite", "The user was invited to another game!");

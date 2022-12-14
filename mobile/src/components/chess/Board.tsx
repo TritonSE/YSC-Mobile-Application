@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontStyle: "normal",
     fontWeight: "normal",
+    fontFamily: "Roboto",
   },
 });
 

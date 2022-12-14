@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
   Text,
   View,
@@ -11,7 +11,7 @@ import {
   Pressable,
 } from "react-native";
 
-import img from "../../assets/mascot_waving.png";
+import img from "../../assets/mascots/mascot_waving.png";
 import Button from "../components/Button";
 import OneButtonPopup from "../components/popups/OneButtonPopup";
 import { AuthContext } from "../contexts/AuthContext";
@@ -52,6 +52,8 @@ const ForgotPassword = () => {
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
 
+  const emailRef = useRef();
+
   const handlePress = async () => {
     let err = false;
     setUsernameErr(false);
@@ -85,11 +87,11 @@ const ForgotPassword = () => {
       )}
 
       <View style={AppStylesheet.container}>
-        <ScrollView style={{ flex: 1, height: "100%" }}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{ flex: 1, height: "100%" }}
-          >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1, height: "100%" }}
+        >
+          <ScrollView style={{ flex: 1, height: "100%" }}>
             <View style={[AppStylesheet.container, { paddingTop: "20%" }]}>
               <View>
                 <Image style={AppStylesheet.forgotPasswordImage} source={img} />
@@ -109,6 +111,9 @@ const ForgotPassword = () => {
                     AppStylesheet.textInputField,
                     usernameErr ? AppStylesheet.textInputError : {},
                   ]}
+                  returnKeyType="next"
+                  onSubmitEditing={() => emailRef.current.focus()}
+                  blurOnSubmit={false}
                   onChangeText={setUsername}
                   value={username}
                 />
@@ -124,10 +129,13 @@ const ForgotPassword = () => {
                   Email
                 </Text>
                 <TextInput
+                  ref={emailRef}
                   style={[
                     AppStylesheet.textInputField,
                     emailErr ? AppStylesheet.textInputError : {},
                   ]}
+                  returnKeyType="done"
+                  onSubmitEditing={handlePress}
                   onChangeText={setEmail}
                   value={email}
                 />
@@ -143,11 +151,11 @@ const ForgotPassword = () => {
               </Pressable>
 
               <View style={[AppStylesheet.loginError, { opacity: 0 + !!error }]}>
-                <Text>{error}</Text>
+                <Text style={{ fontFamily: "Roboto" }}>{error}</Text>
               </View>
             </View>
-          </KeyboardAvoidingView>
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     </>
   );

@@ -113,21 +113,21 @@ const Chessboard = gestureHandlerRootHOC(() => {
       </View>
       {openDraw && (
         <TwoButtonPopup
-          labelText={"Your Opponent Would \n Like A Draw. Accept It?"}
+          labelText={"Your opponent would \n like a draw. accept it?"}
           noFunc={rejectDraw}
           yesFunc={acceptDraw}
         />
       )}
       {openDrawRejected && (
         <OneButtonPopup
-          labelText="Draw Request Declined"
+          labelText="Draw request declined."
           buttonText="Continue Game"
           buttonFunc={() => setOpenDrawRejected(false)}
         />
       )}
       {openResign && (
         <TwoButtonPopup
-          labelText={"Are You Sure \n You'd Like To Quit?"}
+          labelText={"Are you sure \n you'd like to quit?"}
           noFunc={rejectResign}
           yesFunc={acceptResign}
         />
@@ -136,6 +136,6 @@ const Chessboard = gestureHandlerRootHOC(() => {
   );
 });
 
-const Chess = () => <Chessboard />;
+const ChessScreen = () => <Chessboard />;
 
-export default Chess;
+export default ChessScreen;

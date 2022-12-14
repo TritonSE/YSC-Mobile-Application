@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState, useEffect } from "react";
 import { Text, View, Image } from "react-native";
 
-import stemettImage from "../../assets/Stemett.png";
+import stemettImage from "../../assets/mascots/Stemett.png";
 import Button from "../components/Button";
 import PlayersOnline from "../components/PlayersOnline";
 import TwoButtonPopup from "../components/popups/TwoButtonPopup";
@@ -19,7 +19,8 @@ const LoadingScreen = () => {
   const quitSearch = () => {
     setStopPopup(false);
 
-    navigation.navigate("SelectionScreen");
+    socket.emit("unassign from room");
+    navigation.navigate("HomeScreen");
   };
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const LoadingScreen = () => {
 
   return (
     <View style={AppStylesheet.container}>
-      <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
+      <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}!</Text>
       <Image style={AppStylesheet.stemmettImage} source={stemettImage} />
       <Button text="Waiting for Opponent..." style={{ opacity: 0.5 }} />
       <PlayersOnline />
@@ -43,7 +44,7 @@ const LoadingScreen = () => {
       </View>
       {stopPopup && (
         <TwoButtonPopup
-          labelText={"Are You Sure \n You'd Like To Quit?"}
+          labelText={"Are you sure \n you'd like to quit?"}
           yesFunc={quitSearch}
           noFunc={() => setStopPopup(false)}
         />

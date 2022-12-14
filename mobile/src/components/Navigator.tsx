@@ -1,13 +1,15 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useContext, useEffect } from "react";
-import { Image } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { AppState, Image } from "react-native";
 
-import HomeIcon from "../../assets/tab_home.png";
-import LessonsIcon from "../../assets/tab_lessons.png";
+import HomeIcon from "../../assets/icons/tab_home.png";
+import LessonsIcon from "../../assets/icons/tab_lessons.png";
 import { AuthContext } from "../contexts/AuthContext";
-import Chess from "../screens/Chess";
+import { SocketContext } from "../contexts/SocketContext";
+import { UserContext } from "../contexts/UserContext";
+import ChessScreen from "../screens/ChessScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LessonsScreen from "../screens/LessonsScreen";
@@ -16,6 +18,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SelectionScreen from "../screens/SelectionScreen";
 
 import InviteDialogs from "./InviteDialogs";
+import OneButtonPopup from "./popups/OneButtonPopup";
 
 const Stack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -30,7 +33,11 @@ const HomeStackScreen = () => (
       component={LoadingScreen}
       options={{ gestureEnabled: false }}
     />
-    <HomeStack.Screen name="Chess" component={Chess} options={{ gestureEnabled: false }} />
+    <HomeStack.Screen
+      name="ChessScreen"
+      component={ChessScreen}
+      options={{ gestureEnabled: false }}
+    />
   </HomeStack.Navigator>
 );
 
@@ -54,7 +61,7 @@ const TabScreen = () => (
           />
         ),
         /* eslint-enable react/no-unstable-nested-components */
-        tabBarActiveBackgroundColor: "#96C957",
+        tabBarActiveBackgroundColor: "#7FCC26",
         tabBarActiveTintColor: "black",
         tabBarInactiveBackgroundColor: "#EDEDED",
         tabBarInactiveTintColor: "black",
@@ -67,24 +74,60 @@ const TabScreen = () => (
 );
 
 const Navigator = () => {
-  const { isLoggedIn } = useContext(AuthContext);
   const navigation = useNavigation();
+  const { isLoggedIn } = useContext(AuthContext);
+  const { userState } = useContext(UserContext);
+  const socket = useContext(SocketContext);
+
+  const [dialog, setDialog] = useState(false);
+  const [oldState, setOldState] = useState("active");
 
   useEffect(() => {
+    let int;
     if (isLoggedIn) {
+      /* TODO: This doesn't work */
+      int = setInterval(() => {
+        if (!socket.connected) {
+          socket.connect();
+          socket.emit("successful login", userState.username, userState.role);
+          setDialog(true);
+        }
+      }, 10000);
+      AppState.addEventListener("change", (newState) => {
+        if (newState === "active" && (oldState === "background" || oldState === "inactive")) {
+          socket.disconnect();
+          socket.connect();
+          socket.emit("successful login", userState.username, userState.role);
+        }
+        setOldState(newState);
+      });
       navigation.navigate("Main");
     }
+
+    return () => {
+      if (int) clearInterval(int);
+    };
   }, [isLoggedIn]);
 
   return (
-    <Stack.Navigator
-      initialRouteName="Login"
-      screenOptions={{ headerShown: false, gestureEnabled: false }}
-    >
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
-      <Stack.Screen name="Main" component={TabScreen} />
-    </Stack.Navigator>
+    <>
+      {dialog && (
+        <OneButtonPopup
+          labelText="Oops! Lost connection to server, please retry."
+          buttonText="Retry"
+          buttonFunc={() => setDialog(false)}
+        />
+      )}
+
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{ headerShown: false, gestureEnabled: false }}
+      >
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
+        <Stack.Screen name="Main" component={TabScreen} />
+      </Stack.Navigator>
+    </>
   );
 };
 

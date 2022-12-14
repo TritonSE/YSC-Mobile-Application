@@ -8,7 +8,7 @@ export const PopupStyleSheet = StyleSheet.create({
     height: 425,
     borderWidth: 5,
     backgroundColor: "white",
-    borderColor: "#96C957",
+    borderColor: "#7FCC26",
   },
   imageContainerView: {
     justifyContent: "center",
@@ -52,7 +52,7 @@ export const PopupStyleSheet = StyleSheet.create({
     width: 250,
     height: 171,
     borderWidth: 4,
-    borderColor: "#96C957",
+    borderColor: "#7FCC26",
     borderRadius: 10,
   },
   modalText: {
@@ -66,7 +66,7 @@ export const PopupStyleSheet = StyleSheet.create({
     justifyContent: "center",
   },
   modalButton: {
-    backgroundColor: "#96C957",
+    backgroundColor: "#7FCC26",
     borderRadius: 3,
     alignItems: "center",
     justifyContent: "center",

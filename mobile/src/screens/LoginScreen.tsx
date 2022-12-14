@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
   Text,
   View,
@@ -11,7 +11,7 @@ import {
   Pressable,
 } from "react-native";
 
-import mascotImg from "../../assets/mascot.png";
+import mascotImg from "../../assets/mascots/mascot.png";
 import Button from "../components/Button";
 import { AuthContext } from "../contexts/AuthContext";
 import { AppStylesheet } from "../styles/AppStylesheet";
@@ -25,6 +25,8 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [passwordErr, setPasswordErr] = useState(false);
   const [error, setError] = useState();
+
+  const passwordRef = useRef();
 
   const handleLogin = async () => {
     let err = false;
@@ -47,11 +49,11 @@ const LoginScreen = () => {
 
   return (
     <View style={AppStylesheet.container}>
-      <ScrollView style={{ flex: 1, height: "100%" }}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1, height: "100%" }}
-        >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1, height: "100%" }}
+      >
+        <ScrollView style={{ flex: 1, height: "100%" }}>
           <View style={[AppStylesheet.container, { paddingTop: "20%" }]}>
             <View>
               <Image style={AppStylesheet.mascot} source={mascotImg} />
@@ -66,12 +68,14 @@ const LoginScreen = () => {
               >
                 Username
               </Text>
-              {/* username text input field */}
               <TextInput
                 style={[
                   AppStylesheet.textInputField,
                   usernameErr ? AppStylesheet.textInputError : {},
                 ]}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordRef.current.focus()}
+                blurOnSubmit={false}
                 onChangeText={setUsername}
                 value={username}
               />
@@ -86,13 +90,15 @@ const LoginScreen = () => {
               >
                 Password
               </Text>
-              {/* password text input field */}
               <TextInput
+                ref={passwordRef}
                 secureTextEntry
                 style={[
                   AppStylesheet.textInputField,
                   passwordErr ? AppStylesheet.textInputError : {},
                 ]}
+                returnKeyType="done"
+                onSubmitEditing={handleLogin}
                 onChangeText={setPassword}
                 value={password}
               />
@@ -108,11 +114,11 @@ const LoginScreen = () => {
             </Pressable>
 
             <View style={[AppStylesheet.loginError, { opacity: 0 + !!error }]}>
-              <Text>{error}</Text>
+              <Text style={{ fontFamily: "Roboto" }}>{error}</Text>
             </View>
           </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };

@@ -2,11 +2,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useContext, useState } from "react";
 import { Modal, Text, Pressable, View, ImageBackground, Image } from "react-native";
 
-import balloons from "../../../assets/balloon_background.png";
-import stars from "../../../assets/draw_background.png";
-import loseMascot from "../../../assets/mascot.png";
-import drawMascot1 from "../../../assets/mascot_stemett.png";
-import winMascot from "../../../assets/mascot_waving.png";
+import balloons from "../../../assets/backgrounds/balloon_background.png";
+import stars from "../../../assets/backgrounds/draw_background.png";
+import loseMascot from "../../../assets/mascots/mascot.png";
+import drawMascot1 from "../../../assets/mascots/mascot_stemett.png";
+import winMascot from "../../../assets/mascots/mascot_waving.png";
 import { SocketContext } from "../../contexts/SocketContext";
 import { AppStylesheet } from "../../styles/AppStylesheet";
 import { PopupStyleSheet } from "../../styles/PopupStylesheet";

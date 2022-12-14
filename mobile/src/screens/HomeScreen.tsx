@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { Text, View, Image } from "react-native";
 
-import PlayIcon from "../../assets/play-icon.png";
+import PlayIcon from "../../assets/icons/play.png";
 import Button from "../components/Button";
 import PlayersOnline from "../components/PlayersOnline";
 import { UserContext } from "../contexts/UserContext";
@@ -14,7 +14,7 @@ const HomeScreen = () => {
 
   return (
     <View style={AppStylesheet.container}>
-      <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}</Text>
+      <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName.trim()}!</Text>
       <View>
         {userState.role === "student" ? (
           <>

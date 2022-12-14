@@ -8,7 +8,7 @@ export const AppStylesheet = StyleSheet.create({
     backgroundColor: "white",
   },
   button: {
-    backgroundColor: "#96C957",
+    backgroundColor: "#7FCC26",
     width: 327,
     height: 52,
     borderRadius: 3,
@@ -25,6 +25,7 @@ export const AppStylesheet = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "normal",
     textAlign: "center",
+    fontFamily: "Roboto",
   },
   forgotPassword: {
     width: 114,
@@ -37,6 +38,7 @@ export const AppStylesheet = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     textDecorationLine: "underline",
+    fontFamily: "Roboto",
   },
   input: {
     padding: 10,
@@ -50,6 +52,7 @@ export const AppStylesheet = StyleSheet.create({
     padding: 5,
     fontStyle: "normal",
     fontWeight: "normal",
+    fontFamily: "Roboto",
     borderRadius: 3,
     width: 327,
     height: 37,
@@ -62,6 +65,7 @@ export const AppStylesheet = StyleSheet.create({
     fontStyle: "normal",
     fontSize: 16,
     fontWeight: "700",
+    fontFamily: "RobotoBold",
   },
   textInputError: {
     borderColor: "#EF1234",
@@ -81,6 +85,7 @@ export const AppStylesheet = StyleSheet.create({
     marginTop: 16,
     marginLeft: 16,
     fontWeight: "700",
+    fontFamily: "Lato",
   },
   centeredView: {
     flex: 1,
@@ -96,6 +101,7 @@ export const AppStylesheet = StyleSheet.create({
     marginTop: 26,
     fontSize: 18,
     textAlign: "center",
+    fontFamily: "Roboto",
   },
   buttonContainer: {
     flex: 1,
@@ -103,7 +109,7 @@ export const AppStylesheet = StyleSheet.create({
     justifyContent: "center",
   },
   modalButton: {
-    backgroundColor: "#96C957",
+    backgroundColor: "#7FCC26",
     borderRadius: 3,
     alignItems: "center",
     justifyContent: "center",
@@ -117,7 +123,7 @@ export const AppStylesheet = StyleSheet.create({
   },
 
   lessonView: {
-    backgroundColor: "#96C957",
+    backgroundColor: "#7FCC26",
     marginHorizontal: 10,
     width: 100,
     height: 60,
@@ -135,7 +141,7 @@ export const AppStylesheet = StyleSheet.create({
     marginTop: 30,
   },
   lessonProgressInner: {
-    backgroundColor: "#96C957",
+    backgroundColor: "#7FCC26",
     width: 100,
     height: 30,
     borderRadius: 10,
@@ -170,6 +176,7 @@ export const AppStylesheet = StyleSheet.create({
 
   lessonHeaderText: {
     fontSize: 20,
+    fontFamily: "Roboto",
   },
 
   starImage: {
@@ -184,10 +191,12 @@ export const AppStylesheet = StyleSheet.create({
   loginError: {
     flex: 1,
     width: "100%",
+    minHeight: "5%",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "20%",
+    marginVertical: "10%",
     backgroundColor: "#FF5555",
+    fontFamily: "Roboto",
   },
 
   studentSelectionHeader: {
@@ -216,13 +225,8 @@ export const AppStylesheet = StyleSheet.create({
   studentSelectionColumn: {
     flex: 1,
   },
-  studentSelectionButton: {
-    backgroundColor: "#96C957",
-    borderRadius: 10,
-    padding: 10,
-  },
   studentSelectionBack: {
-    width: "10%",
+    width: "20%",
   },
   headerStyleSheetText: {
     position: "absolute",

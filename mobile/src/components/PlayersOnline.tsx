@@ -22,7 +22,7 @@ const PlayersOnline = () => {
   }, []);
 
   return (
-    <Text style={{ fontSize: 18, marginTop: 5 }}>
+    <Text style={{ fontSize: 18, marginTop: 5, fontFamily: "Roboto" }}>
       {playerCount} Player{playerCount !== 1 ? "s" : ""} Online
     </Text>
   );
