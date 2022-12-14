@@ -12,7 +12,8 @@ import { UserContext } from "../contexts/UserContext";
 import ChessScreen from "../screens/ChessScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import HomeScreen from "../screens/HomeScreen";
-import LessonsScreen from "../screens/LessonsScreen";
+import LessonHomeScreen from "../screens/LessonHomeScreen";
+import LessonScreen from "../screens/LessonScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SelectionScreen from "../screens/SelectionScreen";
@@ -43,7 +44,8 @@ const HomeStackScreen = () => (
 
 const LessonsStackScreen = () => (
   <LessonsStack.Navigator screenOptions={{ headerShown: false }}>
-    <LessonsStack.Screen name="LessonsScreen" component={LessonsScreen} />
+    <LessonsStack.Screen name="LessonHomeScreen" component={LessonHomeScreen} />
+    <LessonsStack.Screen name="LessonScreen" component={LessonScreen} />
   </LessonsStack.Navigator>
 );
 
