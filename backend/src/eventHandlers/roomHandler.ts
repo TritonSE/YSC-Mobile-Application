@@ -1,16 +1,11 @@
 import type { Socket } from "socket.io";
 
-import type {
-  RoomData,
-  GameInvite,
-  GameHandlerParams,
-  RoomHandlerParams,
-  BoardState,
-} from "../types";
+import type { RoomData, GameInvite, RoomHandlerParams, BoardState } from "../types";
 import endGame from "../utils/endGame";
 
 const assignToRoom = (
-  { socket, io, username, roomsMap, boards }: GameHandlerParams,
+  { socket, io, username, roomsMap, boards }: RoomHandlerParams,
+  isMentorSession: boolean,
   id?: string
 ) => {
   // sockets always have at least 1 room (for private messaging)
@@ -41,7 +36,7 @@ const assignToRoom = (
 
   // sets board states, room data, and places socket in room
   boards.set(roomID, board);
-  roomsMap.set(username, { room: roomID, socket: socket.id });
+  roomsMap.set(username, { room: roomID, socket: socket.id, isMentorSession });
   socket.join(roomID);
   socket.on("disconnect", () => {
     endGame(io, roomID, roomsMap, boards, "opponent disconnect");
@@ -81,12 +76,39 @@ module.exports = function ({
   const userRoomData: RoomData | undefined = roomsMap.get(username);
   if (userRoomData) {
     // If so, place socket back into that room
-    const newSocket: RoomData = { room: userRoomData.room, socket: socket.id };
+    const newSocket: RoomData = { ...userRoomData, socket: socket.id };
     roomsMap.set(username, newSocket);
   }
 
-  socket.on("assign to room", () => {
-    assignToRoom({ socket, io, username, roomsMap, boards } as GameHandlerParams);
+  socket.on("assign to room", (needMentor: boolean) => {
+    if (needMentor) {
+      assignToRoom(
+        {
+          socket,
+          io,
+          username,
+          roomsMap,
+          boards,
+          clientMap,
+          invites,
+        } as RoomHandlerParams,
+        true,
+        `${username}'s Mentor Session`
+      );
+    } else {
+      assignToRoom(
+        {
+          socket,
+          io,
+          username,
+          roomsMap,
+          boards,
+          clientMap,
+          invites,
+        } as RoomHandlerParams,
+        false
+      );
+    }
   });
   socket.on("unassign from room", () => {
     const room: RoomData | undefined = roomsMap.get(username);
@@ -94,7 +116,14 @@ module.exports = function ({
       endGame(io, room.room, roomsMap, boards);
     }
   });
-  socket.on("send invite", (dest) => {
+  socket.on("join room", (name: string) => {
+    assignToRoom(
+      { socket, io, username, roomsMap, boards, clientMap, invites } as RoomHandlerParams,
+      true,
+      `${name}'s Mentor Session`
+    );
+  });
+  socket.on("send invite", (dest, isMentorSession) => {
     if (invites.get(username) || invites.get(dest)) {
       socket.emit("failed to send invite", "The user was invited to another game!");
       return;
@@ -117,7 +146,7 @@ module.exports = function ({
     };
     invites.set(username, inv);
     invites.set(dest, inv);
-    recip.emit("invited", username);
+    recip.emit("invited", username, isMentorSession);
   });
   socket.on("cancel invite", () => {
     const inv: GameInvite | undefined = invites.get(username);
@@ -152,7 +181,10 @@ module.exports = function ({
         username: inv.from,
         roomsMap,
         boards,
-      } as GameHandlerParams,
+        clientMap,
+        invites,
+      } as RoomHandlerParams,
+      false,
       `${username}'s Private Match`
     );
     assignToRoom(
@@ -162,7 +194,10 @@ module.exports = function ({
         username: inv.to,
         roomsMap,
         boards,
-      } as GameHandlerParams,
+        clientMap,
+        invites,
+      } as RoomHandlerParams,
+      false,
       `${username}'s Private Match`
     );
   });
@@ -175,5 +210,16 @@ module.exports = function ({
 
     invites.delete(inv.from);
     invites.delete(inv.to);
+  });
+
+  socket.on("send chat", (message: string) => {
+    const room: RoomData | undefined = roomsMap.get(username);
+    if (!room) return;
+
+    io.in(room.room).emit("chat message", {
+      timestamp: Date.now(),
+      sender: username,
+      message,
+    });
   });
 };

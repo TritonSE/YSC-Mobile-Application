@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
+const Board = ({ color, players, draw, setDraw, disconnect, resign, forceFlip }) => {
   const socket = useContext(SocketContext);
   const chess = useConst(() => new Chess());
 
@@ -84,6 +84,10 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
   const [moves, setMoves] = useState([]);
   const [focused, setFocused] = useState();
   const [promotionOpen, setPromotionOpen] = useState(false);
+  const [hudData, setHudData] = useState({
+    top: { name: "", turn: false },
+    bottom: { name: "", turn: false },
+  });
   const onTurn = useCallback(() => {
     setState({
       myColor: color,
@@ -107,6 +111,34 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
     return () => socket.off("updated board");
   }, []);
 
+  useEffect(() => {
+    setMoves([]);
+    setFocused();
+  }, [forceFlip]);
+
+  useEffect(() => {
+    let curIndex = 0 + !!(state.myColor === "w");
+    let curTurn = state.player === state.myColor;
+    if (forceFlip !== undefined) {
+      if (forceFlip) {
+        curIndex = 0;
+        curTurn = !curTurn;
+      } else {
+        curIndex = 1;
+      }
+    }
+    setHudData({
+      top: {
+        name: players[curIndex],
+        turn: !curTurn,
+      },
+      bottom: {
+        name: players[1 - curIndex],
+        turn: curTurn,
+      },
+    });
+  }, [forceFlip, state.player]);
+
   return (
     <>
       {promotionOpen && (
@@ -129,13 +161,13 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
       <View>
         <Gameover chess={chess} state={state} draw={draw} disconnect={disconnect} resign={resign} />
         <View style={[styles.turnContainer, { marginBottom: 12 }]}>
-          <View style={state.player !== state.myColor ? styles.greenCircle : styles.emptyCircle} />
-          <Text style={styles.text}>{players[state.myColor === "w" ? 1 : 0]}</Text>
+          <View style={hudData.top.turn ? styles.greenCircle : styles.emptyCircle} />
+          <Text style={styles.text}>{hudData.top.name}</Text>
         </View>
         <View style={styles.container}>
           <Background
             chess={chess}
-            flip={state.myColor === "b"}
+            flip={forceFlip !== undefined ? forceFlip : state.myColor === "b"}
             moves={moves}
             onTurn={onTurn}
             onPromote={(move) => {
@@ -152,7 +184,7 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
                     key={`${x}-${y}`}
                     id={`${piece.color}${piece.type}` as const}
                     startPosition={{ x, y }}
-                    flip={state.myColor === "b"}
+                    flip={forceFlip !== undefined ? forceFlip : state.myColor === "b"}
                     chess={chess}
                     check={state.check}
                     onTurn={onTurn}
@@ -205,8 +237,8 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
         </View>
       </View>
       <View style={[styles.turnContainer, { marginTop: 12 }]}>
-        <View style={state.player === state.myColor ? styles.greenCircle : styles.emptyCircle} />
-        <Text style={styles.text}>{players[state.myColor === "w" ? 0 : 1]}</Text>
+        <View style={hudData.bottom.turn ? styles.greenCircle : styles.emptyCircle} />
+        <Text style={styles.text}>{hudData.bottom.name}</Text>
       </View>
     </>
   );

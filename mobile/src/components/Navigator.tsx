@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useContext, useEffect } from "react";
-import { AppState, Image } from "react-native";
+import { Image } from "react-native";
 
 import HomeIcon from "../../assets/icons/tab_home.png";
 import LessonsIcon from "../../assets/icons/tab_lessons.png";
@@ -42,12 +42,29 @@ const HomeStackScreen = () => (
   </HomeStack.Navigator>
 );
 
-const LessonsStackScreen = () => (
-  <LessonsStack.Navigator screenOptions={{ headerShown: false }}>
-    <LessonsStack.Screen name="LessonHomeScreen" component={LessonHomeScreen} />
-    <LessonsStack.Screen name="LessonScreen" component={LessonScreen} />
-  </LessonsStack.Navigator>
-);
+const LessonsStackScreen = () => {
+  const { userState } = useContext(UserContext);
+
+  if (userState.role === "student") {
+    return (
+      <LessonsStack.Navigator screenOptions={{ headerShown: false }}>
+        <LessonsStack.Screen name="LessonHomeScreen" component={LessonHomeScreen} />
+        <LessonsStack.Screen name="LessonScreen" component={LessonScreen} />
+      </LessonsStack.Navigator>
+    );
+  }
+
+  return (
+    <LessonsStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen
+        name="SelectionScreen"
+        component={SelectionScreen}
+        initialParams={{ variant: 2 }}
+      />
+      <LessonsStack.Screen name="LessonHomeScreen" component={LessonHomeScreen} />
+    </LessonsStack.Navigator>
+  );
+};
 
 const TabScreen = () => (
   <>
@@ -85,27 +102,19 @@ const Navigator = () => {
   const socket = useContext(SocketContext);
 
   const [dialog, setDialog] = useState(false);
-  const [oldState, setOldState] = useState("active");
+
+  socket.on("disconnect", () => {
+    setDialog(true);
+  });
 
   useEffect(() => {
     let int;
     if (isLoggedIn) {
-      /* TODO: This doesn't work */
       int = setInterval(() => {
         if (!socket.connected) {
-          socket.connect();
-          socket.emit("successful login", userState.username, userState.role);
           setDialog(true);
         }
       }, 10000);
-      AppState.addEventListener("change", (newState) => {
-        if (newState === "active" && (oldState === "background" || oldState === "inactive")) {
-          socket.disconnect();
-          socket.connect();
-          socket.emit("successful login", userState.username, userState.role);
-        }
-        setOldState(newState);
-      });
       navigation.navigate("Main");
     }
 
@@ -120,7 +129,11 @@ const Navigator = () => {
         <OneButtonPopup
           labelText="Oops! Lost connection to server, please retry."
           buttonText="Retry"
-          buttonFunc={() => setDialog(false)}
+          buttonFunc={() => {
+            socket.connect();
+            socket.emit("successful login", userState.username, userState.role);
+            setDialog(false);
+          }}
         />
       )}
 

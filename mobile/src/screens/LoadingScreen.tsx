@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useContext, useState, useEffect } from "react";
 import { Text, View, Image } from "react-native";
 
@@ -12,9 +12,12 @@ import { AppStylesheet } from "../styles/AppStylesheet";
 
 const LoadingScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const socket = useContext(SocketContext);
   const { userState } = useContext(UserContext);
   const [stopPopup, setStopPopup] = useState(false);
+
+  const isMentorSession = route.params?.isMentorSession;
 
   const quitSearch = () => {
     setStopPopup(false);
@@ -33,7 +36,10 @@ const LoadingScreen = () => {
     <View style={AppStylesheet.container}>
       <Text style={AppStylesheet.headerHomeScreen}>Welcome, {userState.firstName}!</Text>
       <Image style={AppStylesheet.stemmettImage} source={stemettImage} />
-      <Button text="Waiting for Opponent..." style={{ opacity: 0.5 }} />
+      <Button
+        text={`Waiting for ${isMentorSession ? "Mentor" : "Opponent"}...`}
+        style={{ opacity: 0.5 }}
+      />
       <PlayersOnline />
       <View style={{ position: "absolute", right: "4%", bottom: "4%" }}>
         <Button

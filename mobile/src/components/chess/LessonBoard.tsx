@@ -3,10 +3,10 @@
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { useNavigation } from "@react-navigation/native";
 import { Chess } from "chess.js";
-import * as SecureStore from "expo-secure-store";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, useContext } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 
+import { SocketContext } from "../../contexts/SocketContext";
 import LessonOverPopup from "../popups/LessonOverPopup";
 
 import Background from "./Background";
@@ -67,8 +67,9 @@ const styles = StyleSheet.create({
 });
 
 const LessonBoard = ({ name, startFen, endFen }) => {
-  const chess = useConst(() => new Chess(startFen));
   const navigation = useNavigation();
+  const socket = useContext(SocketContext);
+  const chess = useConst(() => new Chess(startFen));
 
   const initChessState = {
     player: "w",
@@ -99,13 +100,7 @@ const LessonBoard = ({ name, startFen, endFen }) => {
 
   const getPlayerOutcome = async (fenString) => {
     if (endFen.includes(fenString)) {
-      try {
-        const str = (await SecureStore.getItemAsync("lessonProgress")) ?? "{}";
-        const progress = JSON.parse(str);
-        progress[name] = 1;
-        await SecureStore.setItemAsync("lessonProgress", JSON.stringify(progress));
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
+      socket.emit("lesson complete", name);
       state.lessonWon = true;
     }
   };

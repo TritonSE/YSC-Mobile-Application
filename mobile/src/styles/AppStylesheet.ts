@@ -258,5 +258,6 @@ export const AppStylesheet = StyleSheet.create({
     borderRadius: 5,
     padding: 3,
     marginBottom: "3%",
+    backgroundColor: "white",
   },
 });

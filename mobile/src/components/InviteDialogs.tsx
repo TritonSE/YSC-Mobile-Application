@@ -11,8 +11,8 @@ const InviteDialogs = () => {
   const [dialog, setDialog] = useState();
 
   useEffect(() => {
-    socket.on("invited", (username) => {
-      setDialog(username);
+    socket.on("invited", (username, isMentorSession) => {
+      setDialog({ username, isMentorSession });
     });
     socket.on("uninvited", () => {
       setDialog();
@@ -32,7 +32,9 @@ const InviteDialogs = () => {
   if (dialog) {
     return (
       <TwoButtonPopup
-        labelText={`${dialog} has invited you to a game.  Accept?`}
+        labelText={`${dialog.username} has invited you to a ${
+          dialog.isMentorSession ? "mentor session" : "game"
+        }.  Accept?`}
         noFunc={() => {
           socket.emit("decline invite");
           setDialog();

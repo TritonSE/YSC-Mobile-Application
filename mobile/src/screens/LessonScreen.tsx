@@ -3,12 +3,13 @@
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 
 import Button from "../components/Button";
 import LessonBoard from "../components/chess/LessonBoard";
 import TwoButtonPopup from "../components/popups/TwoButtonPopup";
+import lessons from "../const/lessons";
 import { AppStylesheet as styles } from "../styles/AppStylesheet";
 
 // Enable gestures to work for Android
@@ -19,8 +20,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
   const [openResign, setOpenResign] = useState(false);
 
   const name = route.params.name;
-  const startString = route.params.startString;
-  const endString = route.params.endString;
+  const { start, end, text } = lessons[name];
 
   const initiateReturn = () => {
     setOpenResign(true);
@@ -37,7 +37,12 @@ const Chessboard = gestureHandlerRootHOC(() => {
 
   return (
     <View style={styles.container}>
-      <LessonBoard name={name} startFen={startString} endFen={endString} />
+      <Text
+        style={{ fontFamily: "RobotoBold", fontSize: 18, textAlign: "center", marginBottom: 20 }}
+      >
+        {text}
+      </Text>
+      <LessonBoard name={name} startFen={start} endFen={end} />
       <View style={{ flexDirection: "row" }}>
         <Button text="End Lesson" onPress={initiateReturn} style={{ width: 150 }} />
       </View>

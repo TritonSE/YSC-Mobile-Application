@@ -3,6 +3,7 @@ import type { Socket, Server } from "socket.io";
 type RoomData = {
   room: string;
   socket: string;
+  isMentorSession: boolean;
 };
 
 type BoardState = {
