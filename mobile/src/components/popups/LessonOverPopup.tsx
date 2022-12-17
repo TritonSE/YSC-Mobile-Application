@@ -20,7 +20,7 @@ const LessonOverPopup = ({ returnFunc }) => (
         </View>
         <View style={PopupStyleSheet.buttonContainer}>
           <Pressable
-            style={[PopupStyleSheet.modalButton, { width: 100, marginTop: 40 }]}
+            style={[PopupStyleSheet.modalButton, { width: 100, marginTop: 20 }]}
             onPress={returnFunc}
           >
             <Text style={AppStylesheet.buttonText}>Return Home</Text>

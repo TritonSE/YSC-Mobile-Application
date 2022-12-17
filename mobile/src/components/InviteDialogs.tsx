@@ -19,7 +19,7 @@ const InviteDialogs = () => {
     });
 
     socket.on("successful assign", (color: string, names: string[]) => {
-      navigation.navigate("Chess", { color, players: names });
+      navigation.navigate("ChessScreen", { color, players: names });
     });
 
     return () => {

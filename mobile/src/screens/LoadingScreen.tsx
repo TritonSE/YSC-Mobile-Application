@@ -25,7 +25,7 @@ const LoadingScreen = () => {
 
   useEffect(() => {
     socket.once("successful assign", (color: string, players: string[]) => {
-      navigation.navigate("Chess", { color, players });
+      navigation.navigate("ChessScreen", { color, players });
     });
   }, []);
 

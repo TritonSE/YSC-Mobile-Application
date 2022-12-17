@@ -83,7 +83,6 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
   // Updates game information after a turn
   const [moves, setMoves] = useState([]);
   const [focused, setFocused] = useState();
-  const [promotion, setPromotion] = useState();
   const [promotionOpen, setPromotionOpen] = useState(false);
   const onTurn = useCallback(() => {
     setState({
@@ -108,27 +107,21 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
     return () => socket.off("updated board");
   }, []);
 
-  useEffect(() => {
-    if (promotion && focused) {
-      chess.move({
-        ...focused,
-        promotion,
-      });
-      socket.emit("send chess move", chess.fen());
-      chess.load(chess.fen());
-      onTurn();
-      setFocused();
-    }
-  }, [promotion]);
-
   return (
     <>
       {promotionOpen && (
         <Promotion
           color={color}
           setValue={(v) => {
-            setPromotion(v);
             setPromotionOpen(false);
+            chess.move({
+              ...focused,
+              promotion: v,
+            });
+            socket.emit("send chess move", chess.fen());
+            chess.load(chess.fen());
+            onTurn();
+            setFocused();
           }}
         />
       )}
@@ -140,7 +133,16 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign }) => {
           <Text style={styles.text}>{players[state.myColor === "w" ? 1 : 0]}</Text>
         </View>
         <View style={styles.container}>
-          <Background chess={chess} flip={state.myColor === "b"} moves={moves} onTurn={onTurn} />
+          <Background
+            chess={chess}
+            flip={state.myColor === "b"}
+            moves={moves}
+            onTurn={onTurn}
+            onPromote={(move) => {
+              setFocused(move);
+              setPromotionOpen(true);
+            }}
+          />
           {state.board.map((row, y) =>
             row.map((piece, x) => {
               if (piece !== null) {

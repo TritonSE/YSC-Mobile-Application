@@ -115,8 +115,8 @@ const Piece = ({
         socket.emit("send chess move", chess.fen());
         // Hack to ensure visual state updates (e.g. check)
         chess.load(chess.fen());
-        onTurn();
       }
+      onTurn();
     },
     [chess, isGestureActive, offsetX, offsetY, onTurn, translateX, translateY]
   );

@@ -63,6 +63,9 @@ const TabScreen = () => (
           />
         ),
         /* eslint-enable react/no-unstable-nested-components */
+        tabBarLabelStyle: {
+          fontFamily: "Roboto",
+        },
         tabBarActiveBackgroundColor: "#7FCC26",
         tabBarActiveTintColor: "black",
         tabBarInactiveBackgroundColor: "#EDEDED",

@@ -18,8 +18,9 @@ const SelectionRow = ({ socket, username, status, alt, setDialog }) => (
     <View>
       <Pressable
         style={[
-          AppStylesheet.studentSelectionButton,
-          status === "ingame" ? { backgroundColor: "#DBEDF9" } : {},
+          AppStylesheet.button,
+          { marginTop: 0, width: 100 },
+          status === "ingame" ? { backgroundColor: "#DBEDF9" } : { backgroundColor: "#7FCC26" },
         ]}
         onPress={() => {
           if (status === "ready") {
@@ -28,7 +29,9 @@ const SelectionRow = ({ socket, username, status, alt, setDialog }) => (
           }
         }}
       >
-        <Text style={{ fontSize: 18 }}>{status === "ingame" ? "In Game" : "Play"}</Text>
+        <Text style={{ fontSize: 18, fontFamily: "Roboto" }}>
+          {status === "ingame" ? "In Game" : "Play"}
+        </Text>
       </Pressable>
     </View>
   </View>
@@ -150,6 +153,7 @@ const StudentSelectionScreen = ({ role }) => {
               <View style={AppStylesheet.studentSelectionRow}>
                 <Button
                   text="Play Someone Random!"
+                  style={{ marginBottom: 20 }}
                   onPress={() => {
                     socket.emit("assign to room");
                     navigation.navigate("LoadingScreen");

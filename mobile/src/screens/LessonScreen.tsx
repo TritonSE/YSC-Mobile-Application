@@ -18,6 +18,7 @@ const Chessboard = gestureHandlerRootHOC(() => {
   // states for popups rendering
   const [openResign, setOpenResign] = useState(false);
 
+  const name = route.params.name;
   const startString = route.params.startString;
   const endString = route.params.endString;
 
@@ -31,22 +32,18 @@ const Chessboard = gestureHandlerRootHOC(() => {
 
   const acceptReturn = () => {
     setOpenResign(false);
-    navigation.navigate("LessonsHomePage");
+    navigation.navigate("LessonHomeScreen");
   };
 
   return (
     <View style={styles.container}>
-      <LessonBoard startFen={startString} endFen={endString} />
+      <LessonBoard name={name} startFen={startString} endFen={endString} />
       <View style={{ flexDirection: "row" }}>
-        <Button
-          text="Go Back"
-          onPress={initiateReturn}
-          style={{ backgroundColor: "#96C957", width: 150 }}
-        />
+        <Button text="End Lesson" onPress={initiateReturn} style={{ width: 150 }} />
       </View>
       {openResign && (
         <TwoButtonPopup
-          labelText={"Are You Sure You'd Like To \n Return to the Lessons Page?"}
+          labelText={"Are you sure you'd like to \n return to the lessons page?"}
           noFunc={rejectReturn}
           yesFunc={acceptReturn}
         />

@@ -128,7 +128,10 @@ export const AppStylesheet = StyleSheet.create({
     width: 100,
     height: 60,
   },
-  lessonViewIncomplete: {
+  lessonViewCompleted: {
+    backgroundColor: "#7FCC26",
+  },
+  lessonViewLocked: {
     backgroundColor: "#DBEDF9",
   },
 
@@ -237,6 +240,7 @@ export const AppStylesheet = StyleSheet.create({
   usernameHeader: {
     fontWeight: "700",
     fontSize: 18,
+    fontFamily: "RobotoBold",
   },
   searchFlex: {
     flexDirection: "row",

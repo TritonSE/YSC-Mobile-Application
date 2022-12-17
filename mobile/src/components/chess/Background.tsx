@@ -1,7 +1,6 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
-import { Chess } from "chess.js";
 import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
@@ -18,27 +17,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface BaseProps {
-  white: boolean;
-}
-
-interface RowProps extends BaseProps {
-  row: number;
-  moves: string[];
-  flip: boolean;
-  chess: Chess;
-  onTurn: () => void;
-}
-
-interface SquareProps extends RowProps {
-  col: number;
-  moves: string[];
-  chess: Chess;
-  flip: boolean;
-  onTurn: () => void;
-}
-
-function Square({ white, row, col, moves, chess, flip, onTurn }: SquareProps) {
+function Square({ white, row, col, moves, chess, flip, onTurn, offline, onPromote }) {
   const backgroundColor = white ? WHITE : BLACK;
   const color = white ? BLACK : WHITE;
   const textStyle = { fontWeight: "500" as const, color };
@@ -61,10 +40,14 @@ function Square({ white, row, col, moves, chess, flip, onTurn }: SquareProps) {
       }}
       onPress={() => {
         if (isValid) {
-          chess.move(isValid);
-          socket.emit("send chess move", chess.fen());
-          chess.load(chess.fen());
-          onTurn();
+          if ((file === "1" || file === "8") && chess.get(isValid.from)?.type === "p" && onPromote)
+            onPromote(isValid);
+          else {
+            chess.move(isValid);
+            if (!offline) socket.emit("send chess move", chess.fen());
+            chess.load(chess.fen());
+            onTurn();
+          }
         }
       }}
     >
@@ -74,7 +57,7 @@ function Square({ white, row, col, moves, chess, flip, onTurn }: SquareProps) {
   );
 }
 
-function Row({ white, row, moves, flip, chess, onTurn }: RowProps) {
+function Row({ white, row, moves, flip, chess, onTurn, offline, onPromote }) {
   const offset = white ? 0 : 1;
   return (
     <View style={styles.container}>
@@ -89,6 +72,8 @@ function Row({ white, row, moves, flip, chess, onTurn }: RowProps) {
           chess={chess}
           flip={flip}
           onTurn={onTurn}
+          offline={offline}
+          onPromote={onPromote}
         />
       ))}
       {/* eslint-enable react/no-array-index-key */}
@@ -96,7 +81,7 @@ function Row({ white, row, moves, flip, chess, onTurn }: RowProps) {
   );
 }
 
-const Background = ({ flip, moves, chess, onTurn }) => (
+const Background = ({ flip, moves, chess, onTurn, offline, onPromote }) => (
   <View style={{ flex: 1 }}>
     {/* eslint-disable react/no-array-index-key */}
     {new Array(8).fill(0).map((_, i) => (
@@ -108,6 +93,8 @@ const Background = ({ flip, moves, chess, onTurn }) => (
         flip={flip}
         chess={chess}
         onTurn={onTurn}
+        offline={offline}
+        onPromote={onPromote}
       />
     ))}
     {/* eslint-enable react/no-array-index-key */}
