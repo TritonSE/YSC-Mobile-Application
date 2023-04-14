@@ -25,6 +25,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [passwordErr, setPasswordErr] = useState(false);
   const [error, setError] = useState();
+  const [waiting, setWaiting] = useState(false);
 
   const passwordRef = useRef();
 
@@ -44,7 +45,8 @@ const LoginScreen = () => {
 
     if (err) return;
 
-    setError(await login(username, password));
+    setWaiting(true);
+    setError(await login(username, password, () => setWaiting(false)));
   };
 
   return (
@@ -104,7 +106,11 @@ const LoginScreen = () => {
               />
             </View>
 
-            <Button text="Login" onPress={handleLogin} />
+            <Button
+              text={waiting ? "Loading..." : "Login"}
+              onPress={handleLogin}
+              style={waiting ? { opacity: 0.5 } : {}}
+            />
 
             <Pressable
               style={AppStylesheet.forgotPassword}

@@ -34,13 +34,17 @@ const LessonHomeScreen = () => {
   ];
 
   const moveToLesson = (name) => {
-    navigation.navigate("LessonScreen", {
-      name,
-    });
+    if (userState.role !== "mentor") {
+      navigation.navigate("LessonScreen", {
+        name,
+      });
+    }
   };
 
   useEffect(() => {
     const setFromResponse = (progress) => {
+      if (!progress) progress = {};
+
       const out = [[]];
       let tot = 0;
       let complete = 0;

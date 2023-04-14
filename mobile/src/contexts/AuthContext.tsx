@@ -36,7 +36,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const authContextValue = React.useMemo(
     () => ({
-      login: async (username: string, password: string) => {
+      login: async (username: string, password: string, callback: () => void) => {
         /*
         const params = {
           username,
@@ -70,11 +70,14 @@ export const AuthProvider: React.FC = ({ children }) => {
             socket.connect();
             socket.emit("authenticate connection", token);
             socket.emit("successful login", decoded.username, decoded.role);
+            callback(true);
             return null;
           }
 
+          callback(false);
           return "Invalid username or password!";
         } catch (e) {
+          callback(false);
           return "Error connecting to server! Please try again.";
         }
       },
