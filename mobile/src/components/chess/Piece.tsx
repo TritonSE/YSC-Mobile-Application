@@ -63,10 +63,32 @@ interface PieceProps {
   check: boolean;
   onTurn: () => void;
   onTap: () => void;
+  onPromote: () => void;
   enabled: boolean;
 }
 
-const Piece = ({ id, startPosition, flip, chess, check, onTurn, onTap, enabled }: PieceProps) => {
+/*
+ * Hack to ensure move validation and promotion run on the JS thread
+ */
+function promoteMoveHack({ chess, from, to, onPromote, movePiece }) {
+  const moves = chess.moves({ square: from, verbose: true });
+  if (moves.find((move) => move.from === from && move.to === to)) {
+    onPromote({ from, to });
+  }
+  movePiece(to, true);
+}
+
+const Piece = ({
+  id,
+  startPosition,
+  flip,
+  chess,
+  check,
+  onTurn,
+  onTap,
+  onPromote,
+  enabled,
+}: PieceProps) => {
   const isGestureActive = useSharedValue(false);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -74,11 +96,11 @@ const Piece = ({ id, startPosition, flip, chess, check, onTurn, onTap, enabled }
   const translateY = useSharedValue(startPosition.y * SIZE);
   const socket = useContext(SocketContext);
   const movePiece = useCallback(
-    (to: Position) => {
+    (to: Position, skipSend: boolean | undefined) => {
       // Uses chess.js library to check for moves that are valid and enables
       // a piece to be moved then transfers turn to other player
-      const moves = chess.moves({ verbose: true });
       const from = toPosition({ x: offsetX.value, y: offsetY.value });
+      const moves = chess.moves({ square: from, verbose: true });
       const move = moves.find((m) => m.from === from && m.to === to);
       const { x, y } = toTranslation(move ? move.to : from);
       translateX.value = withTiming(x, {}, () => {
@@ -88,13 +110,13 @@ const Piece = ({ id, startPosition, flip, chess, check, onTurn, onTap, enabled }
         offsetY.value = translateY.value;
         isGestureActive.value = false;
       });
-      if (move) {
+      if (move && !skipSend) {
         chess.move({ from, to });
         socket.emit("send chess move", chess.fen());
         // Hack to ensure visual state updates (e.g. check)
         chess.load(chess.fen());
-        onTurn();
       }
+      onTurn();
     },
     [chess, isGestureActive, offsetX, offsetY, onTurn, translateX, translateY]
   );
@@ -107,9 +129,19 @@ const Piece = ({ id, startPosition, flip, chess, check, onTurn, onTap, enabled }
     onActive: ({ translationX, translationY }) => {
       translateX.value = offsetX.value + translationX * (flip ? -1 : 1);
       translateY.value = offsetY.value + translationY * (flip ? -1 : 1);
+
+      // Clamp to board's edges
+      translateX.value = Math.max(Math.min(translateX.value, 7 * SIZE), 0);
+      translateY.value = Math.max(Math.min(translateY.value, 7 * SIZE), 0);
     },
     onEnd: () => {
-      runOnJS(movePiece)(toPosition({ x: translateX.value, y: translateY.value }));
+      const from = toPosition({ x: offsetX.value, y: offsetY.value });
+      const to = toPosition({ x: translateX.value, y: translateY.value });
+      if ((to[1] === "1" || to[1] === "8") && id[1] === "p") {
+        runOnJS(promoteMoveHack)({ chess, from, to, onPromote, movePiece });
+      } else {
+        runOnJS(movePiece)(to);
+      }
     },
   });
   const tapRef = createRef();

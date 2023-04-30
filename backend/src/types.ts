@@ -3,6 +3,7 @@ import type { Socket, Server } from "socket.io";
 type RoomData = {
   room: string;
   socket: string;
+  isMentorSession: boolean;
 };
 
 type BoardState = {
@@ -10,6 +11,11 @@ type BoardState = {
   board: string;
   players: string[];
   rematchAccept: string[];
+};
+
+type GameInvite = {
+  from: string;
+  to: string;
 };
 
 interface BaseHandlerParams {
@@ -23,4 +29,17 @@ interface GameHandlerParams extends BaseHandlerParams {
   username: string;
 }
 
-export { RoomData, BoardState, GameHandlerParams, BaseHandlerParams };
+interface RoomHandlerParams extends GameHandlerParams {
+  clientMap: Map<string, Socket>;
+  roleMap: Map<string, string>;
+  invites: Map<string, GameInvite>;
+}
+
+export {
+  RoomData,
+  BoardState,
+  GameInvite,
+  GameHandlerParams,
+  RoomHandlerParams,
+  BaseHandlerParams,
+};

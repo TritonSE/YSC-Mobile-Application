@@ -7,9 +7,9 @@ export default {
   slug: "ysc-mobile",
   version: "1.0.0",
   orientation: "portrait",
-  icon: "./assets/icon.png",
+  icon: "./assets/icons/yscIcon.png",
   splash: {
-    image: "./assets/YStemLogo.png",
+    image: "./assets/logos/YStemLogo.png",
     resizeMode: "contain",
     backgroundColor: "#D4DDDD",
   },
@@ -22,12 +22,12 @@ export default {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/adaptive-icon.png",
+      foregroundImage: "./assets/icons/adaptive_icon.png",
       backgroundColor: "#FFFFFF",
     },
   },
   web: {
-    favicon: "./assets/favicon.png",
+    favicon: "./assets/icons/favicon.png",
   },
   extra: {
     YSC_SERVER_URI: "https://ystemandchess.com/middleware/",

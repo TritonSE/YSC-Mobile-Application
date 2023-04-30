@@ -13,8 +13,8 @@ interface OneButtonPopupProps {
 // Pass in as props the button's label text, button text, and what the button does when pressed
 const OneButtonPopup = ({ labelText, buttonText, buttonFunc, popupStyle }: OneButtonPopupProps) => (
   <Modal animationType="slide" transparent>
-    <View style={[PopupStyleSheet.centeredView, popupStyle ?? {}]}>
-      <View style={PopupStyleSheet.modalView}>
+    <View style={PopupStyleSheet.centeredView}>
+      <View style={[PopupStyleSheet.modalView, popupStyle ?? {}]}>
         <Text style={PopupStyleSheet.modalText}>{labelText}</Text>
         <View style={PopupStyleSheet.buttonContainer}>
           {buttonText.length > 10 ? (

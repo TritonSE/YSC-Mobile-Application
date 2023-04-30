@@ -1,14 +1,15 @@
 // Initial chessboard code credits go to William Candillon
 // Github: https://github.com/wcandillon
 // Source Code: https://github.com/wcandillon/can-it-be-done-in-react-native/tree/master/season4/src/Chess
+import { useNavigation } from "@react-navigation/native";
 import { Chess } from "chess.js";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import React, { useCallback, useEffect, useRef, useState, useContext } from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 import { SocketContext } from "../../contexts/SocketContext";
+import LessonOverPopup from "../popups/LessonOverPopup";
 
 import Background from "./Background";
-import Gameover from "./Gameover";
 import Piece from "./Piece";
 import Promotion from "./Promotion";
 import { reverseFenString } from "./util";
@@ -65,92 +66,81 @@ const styles = StyleSheet.create({
   },
 });
 
-const Board = ({ color, players, draw, setDraw, disconnect, resign, forceFlip }) => {
+const LessonBoard = ({ name, startFen, endFen }) => {
+  const navigation = useNavigation();
   const socket = useContext(SocketContext);
-  const chess = useConst(() => new Chess());
+  const chess = useConst(() => new Chess(startFen));
 
   const initChessState = {
-    myColor: color,
-    player: chess.turn(),
+    player: "w",
+    myColor: "w",
     board: chess.board(),
     fenString: "Game has not started",
     reverseString: "Game has not started",
-    gameState: chess.game_over(),
-    check: false,
+    lessonWon: false,
   };
   const [state, setState] = useState(initChessState);
-
-  // Updates game information after a turn
   const [moves, setMoves] = useState([]);
   const [focused, setFocused] = useState();
   const [promotionOpen, setPromotionOpen] = useState(false);
-  const [hudData, setHudData] = useState({
-    top: { name: "", turn: false },
-    bottom: { name: "", turn: false },
-  });
+
+  const forceWhite = (oldFenString) => {
+    const fenArray = oldFenString.split(" ");
+    fenArray[1] = "w";
+    fenArray[3] = "-";
+    let newFenString = "";
+    for (let index = 0; index < fenArray.length; index++) {
+      newFenString += fenArray[index];
+      if (index !== fenArray.length - 1) {
+        newFenString += " ";
+      }
+    }
+    return newFenString;
+  };
+
+  const getPlayerOutcome = async (fenString) => {
+    if (endFen.includes(fenString)) {
+      socket.emit("lesson complete", name);
+      state.lessonWon = true;
+    }
+  };
+
+  // Updates game information after a turn
   const onTurn = useCallback(() => {
-    setState({
-      myColor: color,
-      player: chess.turn(),
-      board: chess.board(),
-      fenString: chess.fen(),
-      reverseString: reverseFenString(chess.fen()),
-      gameState: chess.game_over(),
-      check: chess.in_check() ? chess.turn() : false,
-    });
-    setMoves([]);
+    const update = async () => {
+      await getPlayerOutcome(forceWhite(chess.fen()));
+      setState({
+        player: "w",
+        board: chess.board(),
+        fenString: forceWhite(chess.fen()),
+        reverseString: forceWhite(reverseFenString(chess.fen())),
+        lessonWon: state.lessonWon,
+      });
+      setMoves([]);
+    };
+    update();
   }, [chess, state.player]);
 
   useEffect(() => {
-    socket.on("updated board", (fen: string) => {
-      chess.load(fen);
-      onTurn();
-      setDraw(false);
-    });
+    chess.load(state.fenString);
+  }, [state.fenString]);
 
-    return () => socket.off("updated board");
-  }, []);
-
-  useEffect(() => {
-    setMoves([]);
-    setFocused();
-  }, [forceFlip]);
-
-  useEffect(() => {
-    let curIndex = 0 + !!(state.myColor === "w");
-    let curTurn = state.player === state.myColor;
-    if (forceFlip !== undefined) {
-      if (forceFlip) {
-        curIndex = 0;
-        curTurn = !curTurn;
-      } else {
-        curIndex = 1;
-      }
-    }
-    setHudData({
-      top: {
-        name: players[curIndex],
-        turn: !curTurn,
-      },
-      bottom: {
-        name: players[1 - curIndex],
-        turn: curTurn,
-      },
-    });
-  }, [forceFlip, state.player]);
+  const returnFunc = () => {
+    state.lessonWon = false;
+    navigation.navigate("LessonHomeScreen");
+  };
 
   return (
     <>
       {promotionOpen && (
         <Promotion
-          color={color}
+          color="w"
           setValue={(v) => {
             setPromotionOpen(false);
             chess.move({
               ...focused,
               promotion: v,
             });
-            socket.emit("send chess move", chess.fen());
             chess.load(chess.fen());
             onTurn();
             setFocused();
@@ -159,17 +149,13 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign, forceFlip })
       )}
 
       <View>
-        <Gameover chess={chess} state={state} draw={draw} disconnect={disconnect} resign={resign} />
-        <View style={[styles.turnContainer, { marginBottom: 12 }]}>
-          <View style={hudData.top.turn ? styles.greenCircle : styles.emptyCircle} />
-          <Text style={styles.text}>{hudData.top.name}</Text>
-        </View>
+        {state.lessonWon && <LessonOverPopup returnFunc={returnFunc} />}
         <View style={styles.container}>
           <Background
             chess={chess}
-            flip={forceFlip !== undefined ? forceFlip : state.myColor === "b"}
             moves={moves}
             onTurn={onTurn}
+            offline
             onPromote={(move) => {
               setFocused(move);
               setPromotionOpen(true);
@@ -184,22 +170,19 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign, forceFlip })
                     key={`${x}-${y}`}
                     id={`${piece.color}${piece.type}` as const}
                     startPosition={{ x, y }}
-                    flip={forceFlip !== undefined ? forceFlip : state.myColor === "b"}
                     chess={chess}
                     check={state.check}
                     onTurn={onTurn}
                     onTap={() => {
-                      if (state.player !== state.myColor) return;
-
                       const rank = "" + (8 - y);
                       const file = String.fromCharCode(97 + x);
                       const square = file + rank;
-                      if (piece.color === state.myColor) {
+                      if (piece.color === state.player) {
                         setMoves(chess.moves({ square, verbose: true }));
                         setFocused({
                           from: square,
                         });
-                      } else if (focused && focused.from) {
+                      } else if (focused?.from) {
                         if (
                           (rank === "1" || rank === "8") &&
                           chess.get(focused.from)?.type === "p" &&
@@ -216,7 +199,6 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign, forceFlip })
                           from: focused.from,
                           to: square,
                         });
-                        socket.emit("send chess move", chess.fen());
                         chess.load(chess.fen());
                         onTurn();
                         setFocused();
@@ -226,7 +208,7 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign, forceFlip })
                       setFocused(move);
                       setPromotionOpen(true);
                     }}
-                    enabled={state.player === piece.color && state.myColor === state.player}
+                    enabled
                   />
                   /* eslint-enable react/no-array-index-key */
                 );
@@ -236,12 +218,8 @@ const Board = ({ color, players, draw, setDraw, disconnect, resign, forceFlip })
           )}
         </View>
       </View>
-      <View style={[styles.turnContainer, { marginTop: 12 }]}>
-        <View style={hudData.bottom.turn ? styles.greenCircle : styles.emptyCircle} />
-        <Text style={styles.text}>{hudData.bottom.name}</Text>
-      </View>
     </>
   );
 };
 
-export default Board;
+export default LessonBoard;

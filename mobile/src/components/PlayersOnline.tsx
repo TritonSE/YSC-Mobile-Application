@@ -5,25 +5,24 @@ import { SocketContext } from "../contexts/SocketContext";
 
 const PlayersOnline = () => {
   const socket = useContext(SocketContext);
+
   const [playerCount, setPlayerCount] = useState(0);
-  let interval;
 
   useEffect(() => {
-    socket.on("send player count", setPlayerCount);
-    socket.emit("request player count");
-
-    interval = setInterval(() => {
+    const int = setInterval(() => {
       socket.emit("request player count");
     }, 5000);
+    socket.emit("request player count");
+    socket.on("send player count", setPlayerCount);
 
     return () => {
-      clearInterval(interval);
+      clearInterval(int);
       socket.off("send player count");
     };
   }, []);
 
   return (
-    <Text style={{ fontSize: 18, marginTop: 5 }}>
+    <Text style={{ fontSize: 18, marginTop: 5, fontFamily: "Roboto" }}>
       {playerCount} Player{playerCount !== 1 ? "s" : ""} Online
     </Text>
   );

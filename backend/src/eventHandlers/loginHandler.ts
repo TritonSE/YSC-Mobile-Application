@@ -1,19 +1,16 @@
-import type { BaseHandlerParams, RoomData } from "../types";
+import type { RoomHandlerParams } from "../types";
 
-module.exports = function ({ socket, io, roomsMap, boards }: BaseHandlerParams) {
-  socket.on("successful login", (username: string) => {
-    // Check if user is already in a room
-    const userRoomData = roomsMap.get(username);
-    if (userRoomData) {
-      // If so, place socket back into that room
-      const newSocket: RoomData = { room: userRoomData.room, socket: socket.id };
-      roomsMap.set(username, newSocket);
-    }
-    require("./roomHandler.ts")({ socket, io, username, roomsMap, boards });
-    require("./moveHandler.ts")({ socket, io, username, roomsMap, boards });
-    require("./resignHandler.ts")({ socket, io, username, roomsMap, boards });
-    require("./gameOverHandler.ts")({ socket, io, username, roomsMap, boards });
-    require("./drawHandler.ts")({ socket, io, username, roomsMap, boards });
-    require("./playerCountHandler.ts")({ socket, io, username, roomsMap, boards });
+module.exports = function (base_args: RoomHandlerParams) {
+  base_args.socket.on("successful login", (username: string, role: string) => {
+    base_args.clientMap.set(username, base_args.socket);
+    base_args.roleMap.set(username, role);
+
+    const args = { ...base_args, username };
+    require("./roomHandler.ts")(args);
+    require("./moveHandler.ts")(args);
+    require("./resignHandler.ts")(args);
+    require("./gameOverHandler.ts")(args);
+    require("./drawHandler.ts")(args);
+    require("./playerCountHandler.ts")(args);
   });
 };
